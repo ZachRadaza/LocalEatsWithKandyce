@@ -1,0 +1,100 @@
+.root-cont{
+    width: 100%;
+}
+
+.root-cont main{
+    margin: 1rem;
+    border: 0.1rem solid var(--color-text);
+}
+
+.root-cont header{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+    align-items: center;
+    border: 0.1rem solid var(--color-text);
+    margin: 1rem;
+}
+
+.root-cont header .header-part{
+    display: grid;
+    place-content: center;
+    height: 100%;
+    max-height: 3rem;
+    background: var(--color-text);
+    border-left: 0.1rem solid var(--color-text);
+    border-right: 0.1rem solid var(--color-text);
+    gap: 0.1rem;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.root-cont .logos-cont{ justify-self: left; }
+
+.root-cont .logos-cont >div{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    background: var(--color-yellow);
+}
+
+.root-cont nav{ grid-template-columns: auto auto auto; }
+
+.root-cont .nav-link{
+    all: unset;
+    height: 100%;
+    padding: 2rem;
+    font-family: var(--font-heading);
+    color: var(--color-text);
+    text-transform: capitalize;
+    background: var(--color-bg);
+    letter-spacing: 0.2em;
+    margin: 0px;
+}
+
+.root-cont .nav-link.active{
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.root-cont .nav-link:hover.active{
+    background: var(--color-text);
+    color: var(--color-blue);
+}
+
+.root-cont .nav-link:hover{
+    background: var(--color-blue);
+}
+
+.root-cont .order-cont{
+    grid-template-columns: auto auto;
+    justify-self: right;
+}
+
+.root-cont .order-cont button{
+    all: unset;
+    cursor: pointer;
+    font-family: var(--font-heading);
+    letter-spacing: 0.2em;
+    color: var(--color-text);
+    background: var(--color-bg);
+    padding: 2rem;
+}
+
+#order-now{ background: var(--color-red); }
+#order-now:hover{ background: var(--color-text); color: var(--color-red); }
+
+#shopping-cart{ background: var(--color-green); }
+#shopping-cart:hover{ background: var(--color-text); color: var(--color-green);}
+
+#shopping-cart svg{
+    height: 32px;
+    width: auto;
+    fill: var(--color-text);
+}
+
+#shopping-cart:hover svg{ fill: var(--color-green); }
+#shopping-cart svg .svg-cart-mid{ fill: var(--color-bg); }
+#shopping-cart:hover svg .svg-cart-mid{ fill: var(--color-green); }

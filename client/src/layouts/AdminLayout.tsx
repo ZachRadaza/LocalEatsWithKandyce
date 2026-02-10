@@ -1,13 +1,14 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
+import "./AdminLayout.css";
 
 export default function AdminLayout() {
     return (
         <div>
             <header>
                 <nav>
-                    <Link to="/admin">Dashboard</Link>
-                    <Link to="/admin/update-menu">Update Menu</Link>
-                    <Link to="/admin/orders">Orders</Link>
+                    <NavLink to="/admin">Dashboard</NavLink>
+                    <NavLink to="/admin/update-menu">Update Menu</NavLink>
+                    <NavLink to="/admin/orders">Orders</NavLink>
                 </nav>
             </header>
             <main>

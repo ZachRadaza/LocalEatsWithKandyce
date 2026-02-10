@@ -1,13 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
 import RootLayout from './layouts/RootLayout';
 import AdminLayout from './layouts/AdminLayout';
-import Home from './pages/Home';
-import Menu from './pages/Menu';
-import About from './pages/About';
+import Home from './pages/non-admin/Home';
+import Menu from './pages/non-admin/Menu';
+import About from './pages/non-admin/About';
+import Cart from './pages/non-admin/Cart';
 import Dashboard from './pages/admin/Dashboard';
 import Orders from './pages/admin/Orders';
 import UpdateMenu from './pages/admin/UpdateMenu';
-import NotFound from './pages/NotFound';
+import NotFound from './pages/non-admin/NotFound';
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/" element={ <Home />} />
                 <Route path="/about" element={ <About /> } />
                 <Route path="/menu" element={ <Menu /> } />
+                <Route path="/cart" element={ <Cart/> } />
             </Route>
 
             <Route path="admin" element={ <AdminLayout /> }>
