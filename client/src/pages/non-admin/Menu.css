@@ -1,6 +1,6 @@
 .menu-cont{
     width: 100%;
-    height: 100vh;
+    height: fit-content;
     display: flex;
     flex-direction: column;
 }
@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    overflow: hidden;
 }
 
 .menu-cont nav button{
@@ -22,8 +23,11 @@
     border-width: 0.1rem 0.05rem;
 
     padding: 0.5rem 3rem;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
+    text-transform: uppercase;
     text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.1em;
     width: 100%;
 
     flex-grow: 1;
@@ -44,3 +48,29 @@
     background: var(--color-text);
     color: var(--color-bg);
 }
+
+.menu-cont .menu{
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-cont .category{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    border: 0.1rem solid var(--color-text);
+}
+
+.menu-cont .category:has(.left){ flex-direction: row; }
+.menu-cont .category:has(.right){ flex-direction: row-reverse; }
+
+.menu-cont .category-name{
+    background: var(--color-text);
+    color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem;
+}
+
+.menu-cont .category-name h5{ color: var(--color-bg); }

@@ -1,0 +1,67 @@
+.item-comp{
+    all: unset;
+    cursor: pointer;
+    border: 0.1rem solid var(--color-text);
+    overflow: hidden;
+    display: grid;
+    height: fit-content;
+    margin: 0.5rem;
+}
+
+.item-comp img{
+    grid-area: 1 / 1;
+    height: auto;
+    width: 100%;
+    z-index: 0;
+}
+
+.item-comp >div{
+    grid-area: 1 / 1;
+    align-self: end;
+    z-index: 1;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    background: var(--color-text);
+}
+
+.item-comp >div .text{ color: var(--color-bg); }
+.item-comp >div .text.name{ font-weight: 600; font-size: 1.2rem; }
+
+.item-comp .right-end{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-comp .quantity-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    place-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    width: max-content;
+}
+
+.item-comp .quantity-cont p{ color: var(--color-bg); }
+
+.item-comp .quantity-cont button{
+    all: unset;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border: 0.05rem solid var(--color-bg);
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    padding: 0.2rem 0.4rem;
+    width: fit-content;
+    transition: all 100ms ease;
+}
+
+.item-comp .quantity-cont button.add-btn:hover{ background: var(--color-green); border: 0.05rem solid var(--color-green); }
+.item-comp .quantity-cont button.remove-btn:hover{ background: var(--color-red); border: 0.05rem solid var(--color-red); }

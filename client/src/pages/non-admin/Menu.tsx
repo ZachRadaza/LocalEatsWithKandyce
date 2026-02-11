@@ -2,6 +2,7 @@ import "./Menu.css";
 import { ExtensionService } from "../../utils/BackendExtension";
 import type { Category, Item } from "../../schemas/schemas";
 import { useState, useEffect } from "react";
+import ItemComp from "../../components/non-admin/ItemComp";
 
 
 export default function Menu(){
@@ -25,7 +26,7 @@ export default function Menu(){
                 if(cancelled) 
                     return;
 
-                const allCategories = [{ id: "all", name: "All" }, ...categoriesData];
+                const allCategories = [...categoriesData, { id: "custom", name: "Custom" }, ];
                 setCategories(allCategories);
 
                 if(allCategories.length > 0)
@@ -45,7 +46,7 @@ export default function Menu(){
 
                 setMenu(() => {
                     const next = new Map<Category, Item[]>();
-                    for (const [category, items] of results) 
+                    for(const [category, items] of results) 
                         next.set(category, items);
 
                     return next;
@@ -89,7 +90,7 @@ export default function Menu(){
             <nav>
                 { categories.map(category => (
                     <button 
-                        key={ category.id }
+                        key={ `nav-${ category.id }` }
                         className={ category.id === activeNavId ? "active" : "inactive" }
                         onClick={ () => categoryClicked(category.id) }
                     >
@@ -97,8 +98,28 @@ export default function Menu(){
                     </button>
                 )) }
             </nav>
-            <div>
-                //loops through map
+            <div className="menu">
+                { [...menu.entries()].map(([category, items], index) => {
+                    const isLeft = index % 2 === 0;
+
+                    return (
+                        <div 
+                            className="category"
+                            key={ `div-${ category.id! }` } 
+                            id={ category.id! }
+                        >
+                            <div className={ isLeft ? "category-name left" : "category-name right" }>
+                                { [...category.name].map(c => (
+                                    <h5>{ c }</h5>
+                                )) }
+                            </div>
+                            { items.map(item => (
+                                <ItemComp key={ item.id } item={ item } widthPx={ 300 } />
+                            )) }
+                        </div>
+                    );
+                })
+                }
             </div>
         </div>
     );
