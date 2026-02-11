@@ -4,8 +4,8 @@
     border: 0.1rem solid var(--color-text);
     overflow: hidden;
     display: grid;
-    height: fit-content;
-    margin: 0.5rem;
+    height: auto;
+    width: 95%;
 }
 
 .item-comp img{
@@ -60,8 +60,10 @@
     font-family: var(--font-body);
     padding: 0.2rem 0.4rem;
     width: fit-content;
-    transition: all 100ms ease;
+    transition: background 100ms ease, border 100ms ease;
 }
+
+.item-comp .quantity-cont button:active{ transform: scale(0.95); }
 
 .item-comp .quantity-cont button.add-btn:hover{ background: var(--color-green); border: 0.05rem solid var(--color-green); }
 .item-comp .quantity-cont button.remove-btn:hover{ background: var(--color-red); border: 0.05rem solid var(--color-red); }

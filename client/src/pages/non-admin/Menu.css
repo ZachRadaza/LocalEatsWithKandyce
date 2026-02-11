@@ -69,8 +69,26 @@
     color: var(--color-bg);
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-around;
     padding: 1rem;
 }
 
 .menu-cont .category-name h5{ color: var(--color-bg); }
+
+.menu-cont .category-items{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.menu-cont .category-col{
+    display: flex;
+    margin: 0.5rem 0.2rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.menu-cont #custom-item{}
+

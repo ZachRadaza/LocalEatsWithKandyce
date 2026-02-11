@@ -4,10 +4,9 @@ import "./ItemComp.css";
 
 type ItemCompProp = {
     item: Item;
-    widthPx: number;
 }
 
-export default function ItemComp({ item, widthPx }: ItemCompProp){
+export default function ItemComp({ item }: ItemCompProp){
     const [quantity, setQuantity] = useState<number>(0);
 
     function addPressed(){
@@ -20,10 +19,9 @@ export default function ItemComp({ item, widthPx }: ItemCompProp){
     }
 
     return (
-        <button 
+        <div 
             className="item-comp" 
             id={ item.id! } 
-            style={{ maxWidth: widthPx }}
         >
             <img src={ item.imageLink }/>
             <div>
@@ -41,6 +39,6 @@ export default function ItemComp({ item, widthPx }: ItemCompProp){
                     </div>
                 </div>
             </div>
-        </button>
+        </div>
     );
 }
