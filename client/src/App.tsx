@@ -23,8 +23,8 @@ function App() {
 
             <Route path="admin" element={ <AdminLayout /> }>
                 <Route index element={ <Dashboard /> } />
-                <Route path="/admin/orders" element={ <Orders /> } />
-                <Route path="/admin/update-menu" element={ <UpdateMenu /> } />
+                <Route path="orders" element={ <Orders /> } />
+                <Route path="update-menu" element={ <UpdateMenu /> } />
             </Route>
 
             <Route path="*" element={ <NotFound />} />

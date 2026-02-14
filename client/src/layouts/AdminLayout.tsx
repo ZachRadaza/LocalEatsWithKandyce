@@ -3,12 +3,13 @@ import "./AdminLayout.css";
 
 export default function AdminLayout() {
     return (
-        <div>
+        <div className="admin-cont">
             <header>
                 <nav>
-                    <NavLink to="/admin">Dashboard</NavLink>
-                    <NavLink to="/admin/update-menu">Update Menu</NavLink>
-                    <NavLink to="/admin/orders">Orders</NavLink>
+                    <NavLink to="">Dashboard</NavLink>
+                    <NavLink to="update-menu">Update Menu</NavLink>
+                    <NavLink to="orders">Orders</NavLink>
+                    <NavLink to="/">Back To Home</NavLink>
                 </nav>
             </header>
             <main>

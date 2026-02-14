@@ -2,13 +2,13 @@ import "./Menu.css";
 import { ExtensionService } from "../../utils/BackendExtension";
 import type { Category, Item } from "../../schemas/schemas";
 import { useState, useEffect } from "react";
-import ItemComp from "../../components/non-admin/ItemComp";
+import CategoryComp from "../../components/non-admin/CategoryComp";
+import { scrollToID } from "../../utils/RandomFunctions";
 
 
 export default function Menu(){
     const [categories, setCategories] = useState<Category[]>([]);
     const [menu, setMenu] = useState<Map<Category, Item[]>>(new Map());
-    const [categoryCols, setCategoryCols] = useState<Map<Category, number>>(new Map());
     const [activeNavId, setActiveNavId] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -23,11 +23,11 @@ export default function Menu(){
                 setLoading(true);
                 setError(null);
 
-                const categoriesData = await ExtensionService.fetchCategories();
+                const categoriesData = await ExtensionService.getCategories();
                 if(cancelled) 
                     return;
 
-                const allCategories = [...categoriesData, { id: "custom", name: "Custom" }, ];
+                const allCategories = [...categoriesData, { id: "custom-item", name: "Custom" }, ];
                 setCategories(allCategories);
 
                 if(allCategories.length > 0)
@@ -37,7 +37,7 @@ export default function Menu(){
 
                 const results = await Promise.all(
                     realCategories.map(async (category) => {
-                        const items = await ExtensionService.fetchMenuItems(category);
+                        const items = await ExtensionService.getMenuItems(category.id!);
                         return [category, items] as const;
                     })
                 );
@@ -68,32 +68,13 @@ export default function Menu(){
         };
     }, []);
 
-    useEffect(() => {
-        const widths = new Map<Category, number>();
-
-        if(loading)
+    function categoryClicked(clickedId: string | null){
+        if(!clickedId)
             return;
 
-        for(const [category, items] of menu){
-            let divideBy = 1;
-            let maxCols = items.length < 5 ? items.length : 5;
-
-            for(let i = maxCols; i > 1; i--){
-                if(menu.size % i === 0){
-                    divideBy = i;
-                    break;
-                }
-            }
-
-            widths.set(category, maxCols);
-        }
-
-
-        setCategoryCols(widths);
-    }, [loading]);
-
-    function categoryClicked(clickedId: string | null){
         setActiveNavId(clickedId);
+
+        scrollToID(clickedId)
     }
 
     if(loading)
@@ -126,33 +107,9 @@ export default function Menu(){
             <div className="menu">
                 { [...menu.entries()].map(([category, items], index) => {
                     const isLeft = index % 2 === 0;
-                    const colCount = categoryCols.get(category) ?? 1;
-                    const cols: Item[][] = Array.from({ length: colCount }, () => []);
-                        items.forEach((item, idx) => {
-                        cols[idx % colCount].push(item);
-                    });
 
                     return (
-                        <div 
-                            className="category"
-                            key={ `div-${ category.id! }` } 
-                            id={ category.id! }
-                        >
-                            <div className={ isLeft ? "category-name left" : "category-name right" }>
-                                { [...category.name].map(c => (
-                                    <h5>{ c }</h5>
-                                )) }
-                            </div>
-                            <div className="category-items">
-                                { cols.map((colItems, i) => (
-                                    <div key={ `${category.id}-col-${i}` } className="category-col">
-                                        { colItems.map((item) => (
-                                            <ItemComp key={item.id} item={item} />
-                                        )) }
-                                    </div>
-                                )) }
-                            </div>
-                        </div>
+                        <CategoryComp key={ `div-${ category.id! }` } category={ category } items={ items } isLeft={ isLeft }/>
                     );
                 })
                 }

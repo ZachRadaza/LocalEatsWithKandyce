@@ -52,43 +52,14 @@
 .menu-cont .menu{
     display: flex;
     flex-direction: column;
+    height: 83vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
-.menu-cont .category{
-    display: flex;
-    width: 100%;
-    height: fit-content;
-    border: 0.1rem solid var(--color-text);
-}
-
-.menu-cont .category:has(.left){ flex-direction: row; }
-.menu-cont .category:has(.right){ flex-direction: row-reverse; }
-
-.menu-cont .category-name{
-    background: var(--color-text);
-    color: var(--color-bg);
+.menu-cont #custom-item .category-items{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    padding: 1rem;
-}
-
-.menu-cont .category-name h5{ color: var(--color-bg); }
-
-.menu-cont .category-items{
-    display: flex;
-    flex-direction: row;
     width: 100%;
 }
-
-.menu-cont .category-col{
-    display: flex;
-    margin: 0.5rem 0.2rem;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.menu-cont #custom-item{}
 

@@ -10,21 +10,34 @@ export interface Item{
     imageLink: string;
     contains: string[];
     vegan: boolean;
-    category: Category;
+    category: Category | null;
+    categoryID: string | null;
     price: number;
 }
 
+export interface Customer{
+    id: string | null;
+    name: string;
+    phone: string;
+    email: string;
+}
+
 export interface OrderItem{
+    id: string | null;
     itemID: string;
+    orderID: string | null;
     quantity: number;
+    price: number;
 }
 
 export interface Order{
     id: string | null;
-    items: OrderItem[];
+    orderItems: OrderItem[];
     dateOrdered: Date;
     dateDue: Date;
+    customer: Customer;
     accepted: boolean;
-    location: string; //change to something more robust
+    location: string;
+    finished: boolean;
 }
 
