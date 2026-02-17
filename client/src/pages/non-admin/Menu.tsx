@@ -1,5 +1,5 @@
 import "./Menu.css";
-import { ExtensionService } from "../../utils/BackendExtension";
+import { ExtensionService } from "../../utils/ExtensionService";
 import type { Category, Item } from "../../schemas/schemas";
 import { useState, useEffect } from "react";
 import CategoryComp from "../../components/non-admin/CategoryComp";
@@ -79,14 +79,14 @@ export default function Menu(){
 
     if(loading)
         return (
-            <div>
+            <div className="loading-page">
                 <h1>loading</h1>
             </div>
         );
 
     if(error)
         return (
-            <div>
+            <div className="error-page">
                 <h1>Error: {error} </h1>
             </div>
         );
@@ -111,8 +111,7 @@ export default function Menu(){
                     return (
                         <CategoryComp key={ `div-${ category.id! }` } category={ category } items={ items } isLeft={ isLeft }/>
                     );
-                })
-                }
+                }) }
                 <div 
                     className="category"
                     key={ `div-custom` }

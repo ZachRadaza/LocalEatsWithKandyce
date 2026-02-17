@@ -1,13 +1,14 @@
-.root-cont{
+.root-cont, .admin-cont{
     width: 100%;
 }
 
-.root-cont main{
+.root-cont main, .admin-cont main{
     margin: 1rem;
     border: 0.1rem solid var(--color-text);
 }
 
-.root-cont header{
+
+.layout header{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     place-items: center;
@@ -16,7 +17,7 @@
     margin: 1rem;
 }
 
-.root-cont header .header-part{
+.layout header .header-part{
     display: grid;
     place-content: center;
     height: 100%;
@@ -30,9 +31,9 @@
     overflow: hidden;
 }
 
-.root-cont .logos-cont{ justify-self: left; }
+.layout .logos-cont{ justify-self: left; }
 
-.root-cont .logos-cont >div{
+.layout .logos-cont >div{
     display: flex;
     flex-direction: row;
     gap: 1rem;
@@ -40,9 +41,9 @@
     background: var(--color-yellow);
 }
 
-.root-cont nav{ grid-template-columns: auto auto auto; }
+.layout nav{ grid-template-columns: auto auto auto; }
 
-.root-cont .nav-link{
+.layout .nav-link{
     all: unset;
     height: 100%;
     padding: 2rem;
@@ -55,26 +56,26 @@
     transition: all 200ms ease;
 }
 
-.root-cont .nav-link.active{
+.layout .nav-link.active{
     background: var(--color-text);
     color: var(--color-bg);
 }
 
-.root-cont .nav-link:hover.active{
+.layout .nav-link:hover.active{
     background: var(--color-text);
     color: var(--color-blue);
 }
 
-.root-cont .nav-link:hover{
+.layout .nav-link:hover{
     background: var(--color-blue);
 }
 
-.root-cont .order-cont{
+.layout .right-cont{
     grid-template-columns: auto auto;
     justify-self: right;
 }
 
-.root-cont .order-cont button{
+.layout .right-cont button{
     all: unset;
     cursor: pointer;
     font-family: var(--font-heading);
@@ -85,18 +86,18 @@
     transition: all 200ms ease;
 }
 
-#order-now{ background: var(--color-red); }
-#order-now:hover{ background: var(--color-text); color: var(--color-red); }
+.layout .right-cont .btn-1{ background: var(--color-red); }
+.layout .right-cont .btn-1:hover{ background: var(--color-text); color: var(--color-red); }
 
-#shopping-cart{ background: var(--color-green); }
-#shopping-cart:hover{ background: var(--color-text); color: var(--color-green);}
+.layout .right-cont .btn-2{ background: var(--color-green); }
+.layout .right-cont .btn-2:hover{ background: var(--color-text); color: var(--color-green);}
 
-#shopping-cart svg{
+.layout .right-cont .btn-2 svg{
     height: 32px;
     width: auto;
     fill: var(--color-text);
 }
 
-#shopping-cart:hover svg{ fill: var(--color-green); }
-#shopping-cart svg .svg-cart-mid{ fill: var(--color-bg); }
-#shopping-cart:hover svg .svg-cart-mid{ fill: var(--color-green); }
+.layout .right-cont .btn-2:hover svg{
+    fill: var(--color-green);
+}

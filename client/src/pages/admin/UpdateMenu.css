@@ -1,0 +1,46 @@
+.admin-menu-cont{
+    display: grid;
+    grid-template-rows: auto auto;
+    place-items: center;
+}
+
+.admin-menu-cont .categories{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: fit-content;
+}
+
+.admin-menu-cont .categories button{
+    all: unset;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.5rem;
+    border: 0.1rem solid var(--color-text);
+    transition: all 100ms ease;
+}
+
+.admin-menu-cont .categories .new-category-btn{
+    background: var(--color-green);
+}
+
+.admin-menu-cont .categories button:hover{
+    background: var(--color-blue);
+}
+
+.admin-menu-cont .categories button.current{
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.admin-menu-cont .items-cont{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}

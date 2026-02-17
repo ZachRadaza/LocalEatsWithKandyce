@@ -5,10 +5,10 @@ import Home from './pages/non-admin/Home';
 import Menu from './pages/non-admin/Menu';
 import About from './pages/non-admin/About';
 import Cart from './pages/non-admin/Cart';
-import Dashboard from './pages/admin/Dashboard';
 import Orders from './pages/admin/Orders';
 import UpdateMenu from './pages/admin/UpdateMenu';
 import NotFound from './pages/non-admin/NotFound';
+import Documentation from './pages/admin/Documentation';
 import './App.css';
 
 function App() {
@@ -22,9 +22,9 @@ function App() {
             </Route>
 
             <Route path="admin" element={ <AdminLayout /> }>
-                <Route index element={ <Dashboard /> } />
-                <Route path="orders" element={ <Orders /> } />
+                <Route index element={ <Orders /> } />
                 <Route path="update-menu" element={ <UpdateMenu /> } />
+                <Route path="documentation" element={ <Documentation /> } />
             </Route>
 
             <Route path="*" element={ <NotFound />} />

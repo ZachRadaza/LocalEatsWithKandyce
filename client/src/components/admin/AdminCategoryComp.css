@@ -1,0 +1,75 @@
+.admin-category-comp-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.admin-category-comp-cont .admin-category-cont{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    background: var(--color-yellow);
+    width: 100%;
+    border: 0.1rem solid var(--color-text);
+    transition: all 100ms ease;
+}
+
+.admin-category-comp-cont .admin-category-cont:has(.name-input.editing){
+    background-color: var(--color-blue);
+}
+
+.admin-category-comp-cont .admin-category-cont .name-input{
+    all: unset;
+    cursor: auto;
+    box-sizing: border-box;
+    background: transparent;
+    color: var(--color-text);
+    font-family: var(--font-heading);
+    font-size: 6rem;
+    padding: 1rem 2rem;
+    width: 100%;
+}
+
+.admin-category-comp-cont .admin-category-cont .name-input.editing{ cursor: text; }
+
+.admin-category-comp-cont .admin-category-cont .name-btns-cont button{ height: 100%; }
+.admin-category-comp-cont .admin-category-cont button.edit-btn{ background: var(--color-blue); }
+.admin-category-comp-cont .admin-category-cont button.edit-btn:hover{ background: var(--color-text); }
+
+.admin-category-comp-cont .admin-item-cont{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 0px;
+    place-items: center;
+    align-items: center;
+    gap: 1rem;
+    overflow: hidden;
+}
+
+.admin-category-comp-cont .changes-btn{
+    padding: 2rem;
+    background: var(--color-green);
+    width: 100%;
+}
+
+.admin-category-comp-cont .changes-btn:hover{
+    background: var(--color-text);
+}
+
+.admin-category-comp-cont .btns-cont{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.admin-category-comp-cont .btns-cont button{
+    width: 100%;
+    padding: 1rem;
+}
+
+.admin-category-comp-cont .save-btn{ background: var(--color-green); }
+.admin-category-comp-cont .add-item-btn{ background: var(--color-blue); }
+.admin-category-comp-cont .delete-btn{ background: var(--color-red); }
+.admin-category-comp-cont .btns-cont button:hover{ background: var(--color-text); }

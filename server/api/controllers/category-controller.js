@@ -9,7 +9,7 @@ export async function getAllCategoriesHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getAllCategorysHandler Error: ${error}`);
+        console.error(`getAllCategorysHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -36,7 +36,7 @@ export async function getCategoryHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getCategoryHandler Error: ${error}`);
+        console.error(`getCategoryHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -63,7 +63,7 @@ export async function addCategoryHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`addCategoryHandler Error: ${error}`);
+        console.error(`addCategoryHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -91,7 +91,7 @@ export async function updateCategoryHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`updateCategoryHandler Error: ${error}`);
+        console.error(`updateCategoryHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -118,7 +118,7 @@ export async function deleteCategoryHandler(req, res){
             data: true
         });
     } catch(error){
-        console.error(`deleteCategoryHandler Error: ${error}`);
+        console.error(`deleteCategoryHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error

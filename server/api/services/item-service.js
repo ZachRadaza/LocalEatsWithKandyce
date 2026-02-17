@@ -27,7 +27,7 @@ export async function getAllItems(){
 export async function getItem(id){
     const { data, error } = await supabase
         .from("item")
-        .select(fullObject)
+        .select(itemSelect)
         .eq("id", id)
         .single();
 
@@ -40,7 +40,7 @@ export async function getItem(id){
 export async function getItemsFromCategory(categoryID){
     const { data, error } = await supabase
         .from("item")
-        .select(fullObject)
+        .select(itemSelect)
         .eq("category_id", categoryID);
 
     if(error)
@@ -53,7 +53,7 @@ export async function addItem(item){
     const { data, error } = await supabase
         .from("item")
         .insert([item])
-        .select(fullObject)
+        .select(itemSelect)
         .single();
 
     if(error)
@@ -67,7 +67,7 @@ export async function updateItem(id, item){
         .from("item")
         .update(item)
         .eq("id", id)
-        .select(fullObject)
+        .select(itemSelect)
         .single();
 
     if(error)

@@ -1,0 +1,175 @@
+.admin-item-comp-cont{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    min-width: 0;
+    height: 100%;
+    border: 0.1rem solid var(--color-text);
+}
+
+.admin-item-comp-cont >div{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.admin-item-comp-cont input{
+    all: unset;
+    font-family: var(--font-body);
+    color: var(--color-text);
+    border-bottom: 0.1rem solid var(--color-text);
+    padding: 0.2rem 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    width: 100%;
+}
+
+.admin-item-comp-cont input:disabled{ border-bottom: 0.1rem solid var(--color-bg); }
+
+.admin-item-comp-cont .edit-btn-cont{
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+.admin-item-comp-cont .edit-btn{ background: var(--color-blue); }
+.admin-item-comp-cont:has(.editable) .edit-btn{ background: var(--color-green); }
+
+.admin-item-comp-cont .top-cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.admin-item-comp-cont .headers{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+    padding: 0.5rem 0px;
+    gap: 1rem;
+}
+
+.admin-item-comp-cont .name{
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.admin-item-comp-cont .price-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}
+
+.admin-item-comp-cont .price{ width: 5ch; }
+
+.admin-item-comp-cont input.price[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.admin-item-comp-cont input.price[type="number"]::-webkit-outer-spin-button,
+.admin-item-comp-cont input.price[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.admin-item-comp-cont .image-cont{
+    display: grid;
+    width: 100%;
+    place-items: center;
+}
+
+.admin-item-comp-cont .image-edit{
+    grid-area: 1 / 1;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: 100%;
+    width: 90%;
+    z-index: 1;
+}
+
+.admin-item-comp-cont .image-edit.editable{ display: flex; }
+
+.admin-item-comp-cont .image-url, .admin-item-comp-cont .image-file{
+    background: var(--color-blue);
+    width: 90%;
+    border: 0.1rem solid var(--color-text);
+}
+
+.admin-item-comp-cont .image-cont img{
+    grid-area: 1 / 1;
+    width: 95%;
+    height: auto;
+    object-fit: cover;
+    overflow: hidden;
+    border: 0.1rem solid var(--color-text);
+    z-index: 0;
+}
+
+.admin-item-comp-cont .image-cont:has(.editable) img{ filter: grayscale(100%); }
+
+.admin-item-comp-cont .description{
+    all: unset;
+    border: 0.1rem solid var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem;
+}
+
+.admin-item-comp-cont .description:disabled{ border: 0.1rem solid var(--color-bg); }
+
+.admin-item-comp-cont .bottom-cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content;
+    align-items: start;
+    justify-content: end;
+    gap: 0.5rem;
+}
+
+.admin-item-comp-cont .value-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-item-comp-cont .vegan{ 
+    display: grid; 
+    height: 1.2rem;
+    place-items: center;
+    align-items: center;
+}
+
+.admin-item-comp-cont .value{
+    display: none;
+    grid-area: 1 / 1;
+    flex-direction: row;
+}
+.admin-item-comp-cont .value.visible, .admin-item-comp-cont .vegan-checkbox.visible{ display: flex; }
+
+.admin-item-comp-cont .vegan-checkbox{
+    all: unset;
+    cursor: pointer;
+    grid-area: 1 / 1;
+    display: none;
+    border: 0.1rem solid var(--color-text);
+    height: 1rem;
+    width: 1rem;
+    background: var(--color-bg);
+    transition: all 100ms ease;
+}
+
+.admin-item-comp-cont .vegan-checkbox:hover{ background: var(--color-yellow); }
+.admin-item-comp-cont .vegan-checkbox:checked{ background: var(--color-green); }

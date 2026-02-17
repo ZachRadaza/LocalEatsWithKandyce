@@ -9,7 +9,7 @@ export async function getAllItemsHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getAllItemsHandler Error: ${error}`);
+        console.error(`getAllItemsHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -36,7 +36,7 @@ export async function getItemHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getItemHandler Error: ${error}`);
+        console.error(`getItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -63,7 +63,7 @@ export async function getItemsFromCategoryHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getItemsFromCategoryHandler Error: ${error}`);
+        console.error(`getItemsFromCategoryHandler Error:`, error);
         res.status(500).json({
             success: false,
             error: error
@@ -90,7 +90,7 @@ export async function addItemHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`addItemHandler Error: ${error}`);
+        console.error(`addItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -118,7 +118,7 @@ export async function updateItemHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`updateItemHandler Error: ${error}`);
+        console.error(`updateItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -145,7 +145,7 @@ export async function deleteItemHandler(req, res){
             data: true
         });
     } catch(error){
-        console.error(`deleteItemHandler Error: ${error}`);
+        console.error(`deleteItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error

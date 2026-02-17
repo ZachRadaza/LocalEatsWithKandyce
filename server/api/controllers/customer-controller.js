@@ -9,7 +9,7 @@ export async function getAllCustomersHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getAllCustomersHandler Error: ${error}`);
+        console.error(`getAllCustomersHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -36,7 +36,7 @@ export async function getCustomerHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getCustomerHandler Error: ${error}`);
+        console.error(`getCustomerHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -63,7 +63,7 @@ export async function addCustomerHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`addCustomerHandler Error: ${error}`);
+        console.error(`addCustomerHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -92,7 +92,7 @@ export async function updateCustomerHandler(req, res){
         });
 
     } catch(error){
-        console.error(`updateCustomerHandler Error: ${error}`);
+        console.error(`updateCustomerHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -119,7 +119,7 @@ export async function deleteCustomerHandler(req, res){
             data: true
         });
     } catch(error){
-        console.error(`deleteCustomerHandler Error: ${error}`);
+        console.error(`deleteCustomerHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error

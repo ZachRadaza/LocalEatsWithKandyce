@@ -23,7 +23,7 @@ export async function getAllOrdersHandler(req, res){
             data: orders
         });
     } catch(error){
-        console.error(`getAllOrdersHandler Error: ${error}`);
+        console.error(`getAllOrdersHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -53,7 +53,7 @@ export async function getOrderHandler(req, res){
             data: order
         });
     } catch(error){
-        console.error(`getOrderHandler Error: ${error}`);
+        console.error(`getOrderHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -89,7 +89,7 @@ export async function addOrderHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`addOrderHandler Error: ${error}`);
+        console.error(`addOrderHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -118,7 +118,7 @@ export async function updateOrderHandler(req, res){
         });
 
     } catch(error){
-        console.error(`updateOrderHandler Error: ${error}`);
+        console.error(`updateOrderHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -145,7 +145,7 @@ export async function deleteOrderHandler(req, res){
             data: true
         })
     } catch(error){
-        console.error(`deleteOrderHandler Error: ${error}`);
+        console.error(`deleteOrderHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error

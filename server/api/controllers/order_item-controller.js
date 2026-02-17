@@ -9,7 +9,7 @@ export async function getAllOrderItemsHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getAllOrderItemsHandler Error: ${error}`);
+        console.error(`getAllOrderItemsHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -36,7 +36,7 @@ export async function getAllOrderItemsFromHandler(req, res){
             data: data
         })
     } catch(error){
-        console.error(`getAllOrderItemsFromHandler Error: ${error}`);
+        console.error(`getAllOrderItemsFromHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -63,7 +63,7 @@ export async function getOrderItemHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`getOrderItemHandler Error: ${error}`);
+        console.error(`getOrderItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -90,7 +90,7 @@ export async function addOrderItemHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`addOrderItemHandler Error: ${error}`);
+        console.error(`addOrderItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -118,7 +118,7 @@ export async function updateOrderItemHandler(req, res){
             data: data
         });
     } catch(error){
-        console.error(`updateOrderItemHandler Error: ${error}`);
+        console.error(`updateOrderItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
@@ -145,7 +145,7 @@ export async function deleteOrderItemHandler(req, res){
             data: true
         });
     } catch(error){
-        console.error(`deleteOrderItemHandler Error: ${error}`);
+        console.error(`deleteOrderItemHandler Error: `, error);
         res.status(500).json({
             success: false,
             error: error
