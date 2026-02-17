@@ -1,26 +1,41 @@
-import type { Item } from "../../schemas/schemas";
 import { useState } from "react";
 import "./AdminItemComp.css";
+import type { AdminItem } from "./AdminCategoryComp";
 
 type AdminItemCompProp = {
-    item: Item;
-    onPatch: (patch: Partial<Item>) => void
+    item: AdminItem;
+    onPatch: (patch: Partial<AdminItem>) => void
 };
 
 export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
     const [canEdit, setCanEdit] = useState<boolean>(false);
+    const [deleted, setDeleted] = useState<boolean>(false);
 
     return (
-        <div className="admin-item-comp-cont">
+        <div className={ !deleted ? "admin-item-comp-cont" : "admin-item-comp-cont deleted" }>
             <div>
-                <div className="edit-btn-cont">
+                <div className="edit-btns-cont">
                     <p className="id">{`ID: ${item.id}`}</p>
-                    <button
-                        className="edit-btn"
-                        onClick={ () => setCanEdit(!canEdit) }
-                    >
-                        { canEdit ? "Save" : "Edit" }
-                    </button>
+                    <div className="btns-cont">
+                        <button
+                            className="edit-btn"
+                            onClick={ () => {
+                                setCanEdit(!canEdit);
+                                item.edited = true;
+                            }}
+                        >
+                            { canEdit ? "Save" : "Edit" }
+                        </button>
+                        <button
+                            className={ !deleted ? "delete-btn" : "delete-btn deleted" }
+                            onClick={ () => {
+                                setDeleted(!deleted);
+                                item.deleted = !item.deleted;
+                            } }
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
                 <div className="top-cont">
                     <div className="headers">
@@ -55,7 +70,14 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                                 onChange={ event => onPatch({ imageLink: event.target.value }) }
                                 placeholder="Image URL"
                             />
-                            <input className="image-file" type="file" />
+                            <input 
+                                className="image-file" 
+                                type="file" 
+                                onChange={ event => {
+                                    const file = event.target.files?.[0] ?? null;
+                                    item.file = file;
+                                }}
+                            />
                         </div>
                         <img 
                             src={ 
@@ -75,6 +97,8 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                         rows={ 3 }
                     ></textarea>
                 </div>
+            </div>
+            <div>
                 <div className="bottom-cont">
                     <div className="value-cont">
                         <h6>Vegan: </h6>

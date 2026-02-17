@@ -1,3 +1,4 @@
+import type { AdminItem } from "../components/admin/AdminCategoryComp";
 import type { Category, Customer, Item, Order, OrderItem } from "../schemas/schemas";
 
 const apiUrl = "http://localhost:3001/api";
@@ -184,11 +185,23 @@ export const ExtensionService = {
         return newCategory;
     },
 
-    async addMenuItem(item: Item): Promise<Item>{
+    async addMenuItem(item: AdminItem): Promise<Item>{
+        const form = new FormData();
+
+        form.append("name", item.name);
+        form.append("categoryID", item.categoryID!);
+        form.append("contains", JSON.stringify(item.contains));
+        form.append("description", item.description);
+        form.append("price", String(item.price));
+        form.append("imageLink", item.imageLink);
+        form.append("vegan", String(item.vegan));
+
+        if(item.file)
+            form.append("file", item.file);
+
         const res = await fetch(`${apiItem}/`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(item)
+            body: form
         });
 
         const body = await res.json();
@@ -256,11 +269,23 @@ export const ExtensionService = {
         return updatedCategory;
     },
 
-    async updateMenuItem(item: Item): Promise<Item>{
+    async updateMenuItem(item: AdminItem): Promise<Item>{
+        const form = new FormData();
+
+        form.append("name", item.name);
+        form.append("categoryID", item.categoryID!);
+        form.append("contains", JSON.stringify(item.contains));
+        form.append("description", item.description);
+        form.append("price", String(item.price));
+        form.append("imageLink", item.imageLink);
+        form.append("vegan", String(item.vegan));
+
+        if(item.file)
+            form.append("file", item.file);
+
         const res = await fetch(`${apiItem}/${item.id}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(item)
+            body: form
         });
 
         const body = await res.json();
@@ -327,10 +352,11 @@ export const ExtensionService = {
         return deleted;
     },
 
-    async deleteMenuItem(id: string): Promise<boolean>{
+    async deleteMenuItem(id: string, imageLink: string): Promise<boolean>{
         const res = await fetch(`${apiItem}/${id}`, {
             method: "DELETE",
-            headers: { "Content-Type": "application/json" }
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ imageLink })
         });
 
         const body = await res.json();

@@ -9,10 +9,17 @@ type AdminCategoryCompProp = {
     deleteCategory: () => void;
 }
 
+export type AdminItem = Item & {
+    edited: boolean;
+    deleted: boolean;
+    file: File | null;
+}
+
 export default function AdminCategoryComp({ category, deleteCategory }: AdminCategoryCompProp){
-    const [items, setItems] = useState<Item[]>([]);
+    const [items, setItems] = useState<AdminItem[]>([]);
     const [categoryName, setCategoryName] = useState<string>("");
     const [canEditName, setCanEditName] = useState<boolean>(false);
+    const [refresh, setRefesh] = useState<boolean>(false);
     const [savingItemChanges, setSavingItemChanges] = useState<boolean>(false);
     const [savingCatChanges, setSavingCatChanges] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
@@ -44,13 +51,21 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
                     return;
 
                 const items = await ExtensionService.getMenuItems(category.id!);
-
-                console.log(items);
+                const adminItems: AdminItem[] = items.map(item => {
+                    const adminItem = {
+                        ...item, 
+                        edited: false, 
+                        deleted: false,
+                        file: null 
+                    }
+                    adminItem.categoryID = category.id;
+                    return adminItem;
+                });
 
                 if(cancelled)
                     return;
 
-                setItems(items);
+                setItems(adminItems);
                 
             } catch(error){
                 if(cancelled) 
@@ -62,7 +77,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
                 setLoading(false);
             }
         }
-    }, [category]);
+    }, [category, refresh]);
 
     useEffect(() => {
         if(canEditName){
@@ -96,17 +111,21 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
         setSavingItemChanges(true);
 
         for(const item of items){
-            if(!item.id?.includes("new-item"))
-                continue;
-
-            await ExtensionService.addMenuItem(item);
+            if(item.id?.includes("new-item"))
+                await ExtensionService.addMenuItem(item);
+            else if(item.edited)
+                await ExtensionService.updateMenuItem(item);
+            
+            if(item.deleted && !item.id?.includes('new-item'))
+                await ExtensionService.deleteMenuItem(item.id!, item.imageLink);
         }
 
         setSavingItemChanges(false);
+        setRefesh(!refresh);
     }
 
     function createItem(){
-        const newItem: Item = {
+        const newItem: AdminItem = {
             id: `new-item-${items.length + 1}`,
             name: "",
             description: "",
@@ -115,7 +134,10 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             vegan: false,
             price: 0,
             category: category,
-            categoryID: category.id
+            categoryID: category.id,
+            edited: false,
+            deleted: false,
+            file: null
         };
 
         setItems(oldItems => [...oldItems, newItem]);

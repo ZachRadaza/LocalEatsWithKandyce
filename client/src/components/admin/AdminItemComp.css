@@ -1,11 +1,14 @@
 .admin-item-comp-cont{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 95%;
     min-width: 0;
     height: 100%;
     border: 0.1rem solid var(--color-text);
 }
+
+.admin-item-comp-cont.deleted{ opacity: 0.5; }
 
 .admin-item-comp-cont >div{
     display: flex;
@@ -26,20 +29,35 @@
 
 .admin-item-comp-cont input:disabled{ border-bottom: 0.1rem solid var(--color-bg); }
 
-.admin-item-comp-cont .edit-btn-cont{
+.admin-item-comp-cont .edit-btns-cont{
     display: flex;
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.admin-item-comp-cont .edit-btn-cont .id{ 
+.admin-item-comp-cont .edit-btns-cont .id{ 
     font-size: 0.8rem;
     opacity: 0.5;
 }
 
+.admin-item-comp-cont .btns-cont{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    flex: 0;
+}
+
+.admin-item-comp-cont .btns-cont button{ flex: 0;}
+
 .admin-item-comp-cont .edit-btn{ background: var(--color-blue); }
 .admin-item-comp-cont:has(.editable) .edit-btn{ background: var(--color-green); }
+
+.admin-item-comp-cont .delete-btn{ background: var(--color-red); }
+.admin-item-comp-cont .delete-btn.deleted{ background: var(--color-text); color: var(--color-red); }
+.admin-item-comp-cont .delete-btn.deleted:hover{ color: var(--color-bg); }
 
 .admin-item-comp-cont .top-cont{
     display: flex;

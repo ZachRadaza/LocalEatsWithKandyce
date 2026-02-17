@@ -83,6 +83,17 @@ export async function addItemHandler(req, res){
             });
         }
 
+        const file = req.file;
+        if(file){
+            const upload = await itemService.uploadImageToBucket({
+                buffer: file.buffer,
+                mimetype: file.mimetype,
+                originalName: file.originalname,
+            });
+
+            item.image_link = upload.publicUrl
+        }
+
         const data = await itemService.addItem(newItem);
 
         res.status(200).json({
@@ -102,6 +113,7 @@ export async function updateItemHandler(req, res){
     try{
         const item = objectizeItem(req.body);
         const { id } = req.params;
+        const file = req.file;
 
         if(!item || !id){
             console.error('Invalid body or params for updating Item');
@@ -109,6 +121,21 @@ export async function updateItemHandler(req, res){
                 success: false,
                 error: "invalid body or params for updating item"
             });
+        }
+
+        if(file){
+            const publicPath = publicUrlToPath(item.image_link);
+
+            if(item.image_link)
+                await itemService.deleteImagesFromBucket({ paths: publicPath })
+
+            const upload = await itemService.uploadImageToBucket({
+                buffer: file.buffer,
+                mimetype: file.mimetype,
+                originalName: file.originalname,
+            });
+
+            item.image_link = upload.publicUrl
         }
 
         const data = await itemService.updateItem(id, item);
@@ -129,6 +156,7 @@ export async function updateItemHandler(req, res){
 export async function deleteItemHandler(req, res){
     try{
         const { id } = req.params;
+        const { imageLink } = req.body;
 
         if(!id){
             console.error('Invalid id for deleting item');
@@ -136,6 +164,11 @@ export async function deleteItemHandler(req, res){
                 success: false,
                 error: 'invalid id for deleting item'
             });
+        }
+
+        if(imageLink){
+            const path = publicUrlToPath(imageLink)
+            await itemService.deleteImagesFromBucket({ paths: path })
         }
 
         await itemService.deleteItem(id);
@@ -167,7 +200,6 @@ export function objectizeItem(rawBody){
     if(
         !name ||
         !description ||
-        !imageLink ||
         !price ||
         !contains ||
         !categoryID
@@ -177,10 +209,16 @@ export function objectizeItem(rawBody){
     return {       
         name: name,
         description: description,
-        image_link: imageLink,
+        image_link: imageLink ?? "",
         price: price,
-        contains: contains,
-        vegan: vegan,
+        contains: JSON.parse(contains),
+        vegan: vegan === "true",
         category_id: categoryID
     };
+}
+
+function publicUrlToPath(publicUrl) {
+    const marker = "/object/public/menu_images/";
+    const index = publicUrl.indexOf(marker);
+    return publicUrl.slice(index + marker.length);
 }
