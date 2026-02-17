@@ -12,7 +12,7 @@ export interface Item{
     vegan: boolean;
     category: Category | null;
     categoryID: string | null;
-    price: number;
+    price: number | "";
 }
 
 export interface Customer{

@@ -29,7 +29,13 @@
 .admin-item-comp-cont .edit-btn-cont{
     display: flex;
     width: 100%;
-    flex-direction: row-reverse;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.admin-item-comp-cont .edit-btn-cont .id{ 
+    font-size: 0.8rem;
+    opacity: 0.5;
 }
 
 .admin-item-comp-cont .edit-btn{ background: var(--color-blue); }

@@ -73,7 +73,7 @@ export async function getItemsFromCategoryHandler(req, res){
 
 export async function addItemHandler(req, res){
     try{
-        const newItem = validateItemBody(req.body);
+        const newItem = objectizeItem(req.body);
 
         if(!newItem){
             console.error('Invalid body for new Item');
@@ -83,7 +83,7 @@ export async function addItemHandler(req, res){
             });
         }
 
-        const data = await itemService.addItem(data);
+        const data = await itemService.addItem(newItem);
 
         res.status(200).json({
             success: true,
@@ -100,7 +100,7 @@ export async function addItemHandler(req, res){
 
 export async function updateItemHandler(req, res){
     try{
-        const item = validateItemBody(req.body);
+        const item = objectizeItem(req.body);
         const { id } = req.params;
 
         if(!item || !id){
@@ -170,7 +170,6 @@ export function objectizeItem(rawBody){
         !imageLink ||
         !price ||
         !contains ||
-        !vegan ||
         !categoryID
     )
         return false;

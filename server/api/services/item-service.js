@@ -21,7 +21,12 @@ export async function getAllItems(){
     if(error)
         throw error;
 
-    return data;
+    const items = data.map(({ image_link, ...rest }) => ({
+        ...rest,
+        imageLink: image_link
+    }));
+
+    return items;
 }
 
 export async function getItem(id){
@@ -34,7 +39,13 @@ export async function getItem(id){
     if(error)
         throw error;
 
-    return data;
+    const itemRet = {
+        ...data,
+        imageLink: data.image_link,
+        image_link: undefined
+    };
+
+    return itemRet;
 }
 
 export async function getItemsFromCategory(categoryID){
@@ -46,7 +57,12 @@ export async function getItemsFromCategory(categoryID){
     if(error)
         throw error;
 
-    return data;
+    const items = data.map(({ image_link, ...rest }) => ({
+        ...rest,
+        imageLink: image_link
+    }));
+
+    return items;
 }
 
 export async function addItem(item){
@@ -59,7 +75,13 @@ export async function addItem(item){
     if(error)
         throw error;
 
-    return data;
+    const itemRet = {
+        ...data,
+        imageLink: data.image_link,
+        image_link: undefined
+    };
+
+    return itemRet;
 }
 
 export async function updateItem(id, item){
@@ -73,7 +95,13 @@ export async function updateItem(id, item){
     if(error)
         throw error;
 
-    return data;
+    const itemRet = {
+        ...data,
+        imageLink: data.image_link,
+        image_link: undefined
+    };
+
+    return itemRet;
 }
 
 export async function deleteItem(id){

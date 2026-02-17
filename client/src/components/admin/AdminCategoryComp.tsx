@@ -5,13 +5,16 @@ import AdminItemComp from "./AdminItemComp";
 import "./AdminCategoryComp.css";
 
 type AdminCategoryCompProp = {
-    category: Category
+    category: Category;
+    deleteCategory: () => void;
 }
 
-export default function AdminCategoryComp({ category }: AdminCategoryCompProp){
+export default function AdminCategoryComp({ category, deleteCategory }: AdminCategoryCompProp){
     const [items, setItems] = useState<Item[]>([]);
     const [categoryName, setCategoryName] = useState<string>("");
     const [canEditName, setCanEditName] = useState<boolean>(false);
+    const [savingItemChanges, setSavingItemChanges] = useState<boolean>(false);
+    const [savingCatChanges, setSavingCatChanges] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -42,6 +45,8 @@ export default function AdminCategoryComp({ category }: AdminCategoryCompProp){
 
                 const items = await ExtensionService.getMenuItems(category.id!);
 
+                console.log(items);
+
                 if(cancelled)
                     return;
 
@@ -60,21 +65,44 @@ export default function AdminCategoryComp({ category }: AdminCategoryCompProp){
     }, [category]);
 
     useEffect(() => {
-        if (canEditName) {
+        if(canEditName){
             nameInputRef.current?.focus();
         }
     }, [canEditName]);
 
+    function updateItem(id: string, patch: Partial<Item>){
+        setItems(lastList => lastList.map(
+            i => (i.id === id ? {...i, ...patch } : i)
+        ));
+    }
+
     async function nameEditBtnClick(){
         if(canEditName){
-            
+            setSavingCatChanges(true);
+            category.name = categoryName;
+
+            if(category.id?.includes('new-cat'))
+                await ExtensionService.addCategory(category);
+            else
+                await ExtensionService.updateCategory(category);
+
+            setSavingCatChanges(false);
         }
 
         setCanEditName(!canEditName);
     }
 
-    async function deleteBtnClick(){
+    async function saveChanges(){
+        setSavingItemChanges(true);
 
+        for(const item of items){
+            if(!item.id?.includes("new-item"))
+                continue;
+
+            await ExtensionService.addMenuItem(item);
+        }
+
+        setSavingItemChanges(false);
     }
 
     function createItem(){
@@ -128,7 +156,7 @@ export default function AdminCategoryComp({ category }: AdminCategoryCompProp){
             <div className="admin-item-cont">
                 { items.map(item => {
                     return (
-                        <AdminItemComp key={ item.id } item={ item }/>
+                        <AdminItemComp key={ item.id } item={ item } onPatch={(patch) => updateItem(item.id!, patch) }/>
                     )
                 })}
             </div>
@@ -141,11 +169,12 @@ export default function AdminCategoryComp({ category }: AdminCategoryCompProp){
                 </button>
                 <button
                     className="save-btn"
+                    onClick={ () => { saveChanges() }}
                 >
                     Save Changes
                 </button>
                 <button
-                    onClick={ () => { deleteBtnClick() }}
+                    onClick={ deleteCategory }
                     className="delete-btn"
                 >
                     Delete Category

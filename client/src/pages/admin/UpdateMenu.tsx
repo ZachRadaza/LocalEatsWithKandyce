@@ -48,6 +48,15 @@ export default function UpdateMenu(){
         setCurrentCategory(newCategory);
     }
 
+    async function deleteCategory(categoryID: string){
+        if(!categoryID.includes('new-cat'))
+            await ExtensionService.deleteCategory(categoryID);
+
+        setCategories(oldCat => oldCat.filter(cat => cat.id !== categoryID));
+
+        setCurrentCategory(categories[0] ?? { id:'temp', name: 'temp' });
+    }
+
     if(loading)
         return (
             <div className="loading-page">
@@ -87,6 +96,7 @@ export default function UpdateMenu(){
                 <AdminCategoryComp 
                     key={'current-category'} 
                     category={ currentCategory! }
+                    deleteCategory={ () => deleteCategory(currentCategory.id!) }
                 />
             </div>
         </div>
