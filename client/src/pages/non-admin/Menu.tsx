@@ -4,14 +4,44 @@ import type { Category, Item } from "../../schemas/schemas";
 import { useState, useEffect } from "react";
 import CategoryComp from "../../components/non-admin/CategoryComp";
 import { scrollToID } from "../../utils/RandomFunctions";
+import { useOutletContext } from "react-router-dom";
 
+export type MenuItem = Item & {
+    quantity: number;
+}
+
+type OutletContext = {
+    addOrderItem: (item: MenuItem) => void;
+}
 
 export default function Menu(){
-    const [categories, setCategories] = useState<Category[]>([]);
-    const [menu, setMenu] = useState<Map<Category, Item[]>>(new Map());
+    const { addOrderItem } = useOutletContext<OutletContext>();
+
+    const [categories, setCategories] = useState<Set<Category>>(new Set);
+    const [menu, setMenu] = useState<Map<string, MenuItem[]>>(new Map());
     const [activeNavId, setActiveNavId] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const patchMenuItem = (categoryID: string, itemID: string, patch: Partial<MenuItem>) => {
+        const items = menu.get(categoryID) ?? [];
+        const patchedItem = items.find(item => item.id === itemID);
+
+        if(!patchedItem)
+            return;
+
+        const updated = { ...patchedItem, ...patch };
+
+        setMenu(oldMenu => {
+            const newMenu = new Map(oldMenu);
+            const items = newMenu.get(categoryID) ?? [];
+            
+            newMenu.set(categoryID, items.map(item => (item.id === itemID ? updated : item)));
+            return newMenu;
+        });
+
+        addOrderItem(updated);
+    };
 
     useEffect(() => {
         let cancelled = false;
@@ -28,7 +58,7 @@ export default function Menu(){
                     return;
 
                 const allCategories = [...categoriesData, { id: "custom-item", name: "Custom" }, ];
-                setCategories(allCategories);
+                setCategories(new Set(allCategories));
 
                 if(allCategories.length > 0)
                     setActiveNavId(allCategories[0].id);
@@ -38,7 +68,12 @@ export default function Menu(){
                 const results = await Promise.all(
                     realCategories.map(async (category) => {
                         const items = await ExtensionService.getMenuItems(category.id!);
-                        return [category, items] as const;
+                        const menuItems = items.map(item => {
+                            const menuItem: MenuItem = { ...item, quantity: 0 };
+                            return menuItem
+                        })
+
+                        return [category.id!, menuItems] as const;
                     })
                 );
 
@@ -46,7 +81,7 @@ export default function Menu(){
                     return;
 
                 setMenu(() => {
-                    const next = new Map<Category, Item[]>();
+                    const next = new Map<string, MenuItem[]>();
                     for(const [category, items] of results) 
                         next.set(category, items);
 
@@ -94,7 +129,7 @@ export default function Menu(){
     return (
         <div className="menu-cont">
             <nav>
-                { categories.map(category => (
+                { [...categories].map(category => (
                     <button 
                         key={ `nav-${ category.id }` }
                         className={ category.id === activeNavId ? "active" : "inactive" }
@@ -105,11 +140,18 @@ export default function Menu(){
                 )) }
             </nav>
             <div className="menu">
-                { [...menu.entries()].map(([category, items], index) => {
+                { [...menu.entries()].map(([categoryID, items], index) => {
                     const isLeft = index % 2 === 0;
+                    const category = [...categories].find(cat => cat.id === categoryID)
 
                     return (
-                        <CategoryComp key={ `div-${ category.id! }` } category={ category } items={ items } isLeft={ isLeft }/>
+                        <CategoryComp 
+                            key={ `div-${ categoryID }` } 
+                            category={ category! } 
+                            items={ items } 
+                            isLeft={ isLeft }
+                            onPatchItem={ patchMenuItem }
+                        />
                     );
                 }) }
                 <div 

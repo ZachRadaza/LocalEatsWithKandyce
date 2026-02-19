@@ -1,74 +1,68 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { isPrime } from "../../utils/RandomFunctions";
-import type { Item, Category } from "../../schemas/schemas";
+import type { Category } from "../../schemas/schemas";
+import type { MenuItem } from "../../pages/non-admin/Menu";
 import ItemComp from "./ItemComp";
 import "./CategoryComp.css";
 
 type CategoryCompProp = {
-    items: Item[];
+    items: MenuItem[];
     category: Category;
-    isLeft: boolean
-}
+    isLeft: boolean;
+    onPatchItem: (categoryID: string, itemId: string, patch: Partial<MenuItem>) => void;
+};
 
-export default function CategoryComp({ items, category, isLeft }: CategoryCompProp){
-    const [numCols, setNumCols] = useState<number>(1);
-    const [cols, setCols] = useState<Item[][]>([[]]);
+export default function CategoryComp({ items, category, isLeft, onPatchItem }: CategoryCompProp) {
+    const numCols = useMemo(() => {
+        const length = items.length;
 
-    useEffect(() => {
-        if(isPrime(items.length) && items.length >= 5){
-            setNumCols(5);
-            return;
-        }
+        if(isPrime(length) && length >= 5) 
+            return 5;
 
-        let maxCols = items.length < 5 ? items.length : 5;
+        const maxCols = length < 5 ? length : 5;
         let optimalCols = 1;
 
         for(let i = maxCols; i > 0; i--){
-            if(items.length % i === 0){
+            if(length % i === 0){
                 optimalCols = i;
                 break;
             }
         }
 
-        setNumCols(optimalCols);
-    }, []);
+        return optimalCols;
+    }, [items.length]);
 
-    useEffect(() => {
-        const itemsSorted: Item[][] = [];
+    const cols = useMemo(() => {
+        const itemsSorted: MenuItem[][] = Array.from({ length: Math.max(1, numCols) }, () => []);
 
-        for(let i = 0; i < numCols; i++){
-            itemsSorted.push([]);
-        }
-
-        for(let i = 0; i < items.length; i++){
+        for (let i = 0; i < items.length; i++) {
             const col = i % numCols;
-
             itemsSorted[col].push(items[i]);
         }
 
-        setCols(itemsSorted);
-    }, [numCols]);
+        return itemsSorted;
+    }, [items, numCols]);
 
-    return (
-        <div 
-            className="category"
-            id={ category.id! }
-        >
-            <div className={ isLeft ? "category-name left" : "category-name right" }>
-                { [...category.name].map( (c, i) => (
-                    <h5 key={ `${category.id}-${i}${c}` }>{ c }</h5>
-                )) }
-            </div>
-            <div className="category-items">
-                { cols.map((colItems, i) => (
-                    <div key={ `${category.id}-col-${i}` } className="category-col">
-                        { colItems.map((item) => (
-                            <ItemComp key={ item.id } item={item} />
-                        )) }
-                    </div>
-                ))
-                }
-            </div>
+  return (
+    <div className="category" id={category.id!}>
+        <div className={ isLeft ? "category-name left" : "category-name right" }>
+            { [...category.name].map((c, i) => (
+                <h5 key={ `${category.id}-${i}${c}` }>{c}</h5>
+            )) }
         </div>
-    );
+        <div className="category-items">
+            { cols.map((colItems, i) => (
+                <div key={ `${category.id}-col-${i}` } className="category-col">
+                    { colItems.map((item) => (
+                        <ItemComp
+                            key={ item.id }
+                            item={ item }
+                            onPatch={ (patch) => onPatchItem(category.id!, item.id!, patch) }
+                        />
+                    )) }
+                </div>
+            )) }
+        </div>
+    </div>
+  );
 }

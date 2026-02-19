@@ -1,23 +1,12 @@
-import type { Item } from "../../schemas/schemas";
-import { useState } from "react";
+import type { MenuItem } from "../../pages/non-admin/Menu";
 import "./ItemComp.css";
 
 type ItemCompProp = {
-    item: Item;
+    item: MenuItem;
+    onPatch: (patch: Partial<MenuItem>) => void;
 }
 
-export default function ItemComp({ item }: ItemCompProp){
-    const [quantity, setQuantity] = useState<number>(0);
-
-    function addPressed(){
-        setQuantity(quantity + 1);
-
-    }
-
-    function removePressed(){
-        setQuantity(quantity - 1 >= 0 ? quantity - 1 : 0);
-    }
-
+export default function ItemComp({ item, onPatch }: ItemCompProp){
     return (
         <div 
             className="item-comp" 
@@ -29,11 +18,21 @@ export default function ItemComp({ item }: ItemCompProp){
                 <div className="right-end">
                     <p className="text">{ `$${item.price}` }</p>
                     <div className="quantity-cont">
-                        <button onClick={ () => removePressed() } className="remove-btn">
+                        <button 
+                            onClick={ () => onPatch({ 
+                                quantity: Math.max(item.quantity - 1, 0)
+                            }) } 
+                            className="remove-btn"
+                        >
                             -
                         </button>
-                        <p>{ quantity }</p>
-                        <button onClick={ () => addPressed() } className="add-btn">
+                        <p>{ item.quantity }</p>
+                        <button 
+                            onClick={ () => onPatch({
+                                quantity: item.quantity + 1
+                            }) } 
+                            className="add-btn"
+                        >
                             +
                         </button>
                     </div>

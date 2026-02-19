@@ -101,3 +101,13 @@
 .layout .right-cont .btn-2:hover svg{
     fill: var(--color-green);
 }
+
+.layout #shopping-cart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.7rem;
+}
+
+.layout #shopping-cart:hover .order-amount { color: var(--color-green); }

@@ -91,7 +91,7 @@ export async function addItemHandler(req, res){
                 originalName: file.originalname,
             });
 
-            item.image_link = upload.publicUrl
+            newItem.image_link = upload.publicUrl
         }
 
         const data = await itemService.addItem(newItem);

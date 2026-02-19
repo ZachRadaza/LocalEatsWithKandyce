@@ -172,7 +172,10 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
                     onClick={ () => { nameEditBtnClick() } }
                     className={ canEditName ? "edit-btn editing" : "edit-btn" }
                 >
-                    { canEditName ? "Save" : "Edit" }
+                    { canEditName 
+                        ? ( savingCatChanges ? "Saving..." : "Save" ) 
+                        : "Edit" 
+                    }
                 </button>
             </div>
             <div className="admin-item-cont">
@@ -193,7 +196,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
                     className="save-btn"
                     onClick={ () => { saveChanges() }}
                 >
-                    Save Changes
+                    { savingItemChanges ? "Saving Changes..." : "Save Changes" }
                 </button>
                 <button
                     onClick={ deleteCategory }

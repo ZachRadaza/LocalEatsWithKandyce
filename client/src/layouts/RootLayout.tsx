@@ -1,8 +1,52 @@
-import { Outlet, NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate} from "react-router-dom";
 import "./Layout.css";
+import { useState, useMemo } from "react";
+import type { OrderItem } from "../schemas/schemas";
+import type { MenuItem } from "../pages/non-admin/Menu";
 
 export default function RootLayout() {
+    const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+
+    const totalNumber = useMemo(() => {
+        return orderItems.reduce((sum, oi) => {
+            return sum + oi.quantity;
+        }, 0);
+    }, [orderItems]);
+
+    const addOrderItem = (item: MenuItem) => {
+        console.log(orderItems);
+        setOrderItems(oldOI => {
+            let found = false;
+
+            const newOI = oldOI.map(oi => {
+                if(oi.itemID !== item.id)
+                    return oi;
+
+                found = true;
+
+                if(item.quantity === 0)
+                    return null;
+
+                return { ...oi, quantity: item.quantity };
+            });
+
+            // removes null
+            const cleaned = newOI.filter(Boolean) as OrderItem[];
+
+            if(!found && item.quantity > 0){
+                cleaned.push({
+                    id: null,
+                    itemID: item.id!,
+                    orderID: null,
+                    price: Number(item.price),
+                    quantity: 1,
+                });
+            }
+
+            return cleaned;
+        });
+    }
+
     const navClass = ({ isActive }: { isActive: boolean }) => isActive ? "nav-link active" : "nav-link";
     const navigate = useNavigate();
 
@@ -31,6 +75,7 @@ export default function RootLayout() {
                         Order Now
                     </button>
                     <button id="shopping-cart" className="btn-2" onClick={ () => navigate("cart") }>
+                        <p className="order-amount">{ totalNumber }</p>
                         <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <path d="M845.4 383H758c-16.6 0-30-13.4-30-30s13.4-30 30-30h87.4c16.6 0 30 13.4 30 30s-13.5 30-30 30zM662.3 383H263.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h399.2c16.6 0 30 13.4 30 30s-13.5 30-30 30z" className="svg-cart-mid" />
                             <path d="M433.2 873.2m-55 0a55 55 0 1 0 110 0 55 55 0 1 0-110 0Z" className="svg-cart-mid" />
@@ -43,7 +88,7 @@ export default function RootLayout() {
                 </div>
             </header>
             <main>
-                <Outlet />
+                <Outlet context={{ addOrderItem }}/>
             </main>
         </div>
     );
