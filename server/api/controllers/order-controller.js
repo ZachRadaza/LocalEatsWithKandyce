@@ -79,9 +79,10 @@ export async function addOrderHandler(req, res){
         const data = await orderService.addOrder(order);
 
         for(const item of orderItems){
-            item.orderID = data.id;
+            item.orderID = data.id; 
+            const orderItem = objectizeOrderItem(item);
 
-            await orderItemService.addOrderItem(item);
+            await orderItemService.addOrderItem(orderItem);
         }
 
         res.status(200).json({
@@ -157,21 +158,16 @@ function objectizeOrder(rawBody){
     const {
         orderItems,
         customer,
-        dateOrdered,
         dateDue,
-        accepted,
         location,
-        finished
+        comment
     } = rawBody;
 
     if(
         !orderItems ||
         !customer ||
-        !dateOrdered ||
         !dateDue ||
-        !accepted ||
-        !location ||
-        !finished
+        !location
     )
         return false;
 
@@ -191,11 +187,11 @@ function objectizeOrder(rawBody){
         },
         order: {
             customer_id: "",
-            date_ordered: dateOrdered,
-            date_due: dateDue,
-            accepted: accepted,
+            date_due: new Date(dateDue).toISOString(),
+            accepted: false,
             location: location,
-            finished: finished
+            finished: false,
+            comment: comment
         }
     };
 }

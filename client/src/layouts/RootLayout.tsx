@@ -1,11 +1,11 @@
 import { Outlet, NavLink, useNavigate} from "react-router-dom";
 import "./Layout.css";
 import { useState, useMemo } from "react";
-import type { OrderItem } from "../schemas/schemas";
 import type { MenuItem } from "../pages/non-admin/Menu";
+import type { OrderMenuItem } from "../components/non-admin/OrderMenuItemComp";
 
 export default function RootLayout() {
-    const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+    const [orderItems, setOrderItems] = useState<OrderMenuItem[]>([]);
 
     const totalNumber = useMemo(() => {
         return orderItems.reduce((sum, oi) => {
@@ -14,7 +14,6 @@ export default function RootLayout() {
     }, [orderItems]);
 
     const addOrderItem = (item: MenuItem) => {
-        console.log(orderItems);
         setOrderItems(oldOI => {
             let found = false;
 
@@ -31,15 +30,17 @@ export default function RootLayout() {
             });
 
             // removes null
-            const cleaned = newOI.filter(Boolean) as OrderItem[];
+            const cleaned = newOI.filter(Boolean) as OrderMenuItem[];
 
             if(!found && item.quantity > 0){
                 cleaned.push({
-                    id: null,
+                    id: `new-order-menu-item-${totalNumber + 1}`,
                     itemID: item.id!,
                     orderID: null,
                     price: Number(item.price),
                     quantity: 1,
+                    name: item.name,
+                    imageLink: item.imageLink,
                 });
             }
 
@@ -88,7 +89,7 @@ export default function RootLayout() {
                 </div>
             </header>
             <main>
-                <Outlet context={{ addOrderItem }}/>
+                <Outlet context={{ addOrderItem, orderItems, setOrderItems }}/>
             </main>
         </div>
     );

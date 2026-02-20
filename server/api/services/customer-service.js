@@ -24,13 +24,13 @@ export async function getCustomer(id){
     return data;
 }
 
-export async function addCustomer({ name, email, phoneNumber }){
+export async function addCustomer({ name, email, phone }){
     const { data, error } = await supabase
         .from("customers")
         .insert([{
             name: name,
             email: email,
-            phone: phoneNumber
+            phone: phone
         }])
         .select("*")
         .single();

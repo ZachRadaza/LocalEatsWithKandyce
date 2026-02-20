@@ -6,7 +6,8 @@ const orderItem = `
     date_ordered,
     date_due,
     accepted,
-    location
+    location,
+    comment
 `;
 
 export async function getAllOrders(){

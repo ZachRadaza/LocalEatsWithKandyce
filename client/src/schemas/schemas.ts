@@ -33,11 +33,12 @@ export interface OrderItem{
 export interface Order{
     id: string | null;
     orderItems: OrderItem[];
-    dateOrdered: Date;
-    dateDue: Date;
+    dateOrdered: Date | string;
+    dateDue: Date | string;
     customer: Customer;
     accepted: boolean;
     location: string;
     finished: boolean;
+    comment: string | null;
 }
 
