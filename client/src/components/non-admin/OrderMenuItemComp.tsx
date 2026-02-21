@@ -1,10 +1,5 @@
-import type { OrderItem } from "../../schemas/schemas";
+import type { OrderMenuItem } from "../../schemas/schemas";
 import "./OrderMenuItemComp.css";
-
-export type OrderMenuItem = OrderItem & {
-    name: string;
-    imageLink: string;
-}
 
 type OrderMenuItemProp = {
     orderItem: OrderMenuItem;

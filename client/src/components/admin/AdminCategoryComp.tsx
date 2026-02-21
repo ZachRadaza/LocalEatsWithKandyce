@@ -1,4 +1,4 @@
-import type { Category, Item } from "../../schemas/schemas";
+import type { Category, Item, AdminItem } from "../../schemas/schemas";
 import { useEffect, useState, useRef } from "react";
 import { ExtensionService } from "../../utils/ExtensionService";
 import AdminItemComp from "./AdminItemComp";
@@ -7,12 +7,6 @@ import "./AdminCategoryComp.css";
 type AdminCategoryCompProp = {
     category: Category;
     deleteCategory: () => void;
-}
-
-export type AdminItem = Item & {
-    edited: boolean;
-    deleted: boolean;
-    file: File | null;
 }
 
 export default function AdminCategoryComp({ category, deleteCategory }: AdminCategoryCompProp){

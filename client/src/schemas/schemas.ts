@@ -15,6 +15,16 @@ export interface Item{
     price: number | "";
 }
 
+export type MenuItem = Item & {
+    quantity: number;
+}
+
+export type AdminItem = Item & {
+    edited: boolean;
+    deleted: boolean;
+    file: File | null;
+}
+
 export interface Customer{
     id: string | null;
     name: string;
@@ -28,6 +38,12 @@ export interface OrderItem{
     orderID: string | null;
     quantity: number;
     price: number;
+}
+
+export type OrderMenuItem = OrderItem & {
+    name: string;
+    imageLink: string;
+    categoryID: string;
 }
 
 export interface Order{

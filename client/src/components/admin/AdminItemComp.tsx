@@ -1,6 +1,6 @@
 import { useState } from "react";
+import type { AdminItem } from "../../schemas/schemas";
 import "./AdminItemComp.css";
-import type { AdminItem } from "./AdminCategoryComp";
 
 type AdminItemCompProp = {
     item: AdminItem;

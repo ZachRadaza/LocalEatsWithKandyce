@@ -1,27 +1,21 @@
-import "./Menu.css";
-import { ExtensionService } from "../../utils/ExtensionService";
-import type { Category, Item } from "../../schemas/schemas";
-import { useState, useEffect } from "react";
+import type { Category, MenuItem } from "../../schemas/schemas";
+import { useState } from "react";
 import CategoryComp from "../../components/non-admin/CategoryComp";
 import { scrollToID } from "../../utils/RandomFunctions";
 import { useOutletContext } from "react-router-dom";
+import "./Menu.css";
 
-export type MenuItem = Item & {
-    quantity: number;
-}
-
-type OutletContext = {
+type MenuContext = {
     addOrderItem: (item: MenuItem) => void;
+    categories: Set<Category>;
+    menu: Map<string, MenuItem[]>;
+    setMenu: React.Dispatch<React.SetStateAction<Map<string, MenuItem[]>>>;
 }
 
 export default function Menu(){
-    const { addOrderItem } = useOutletContext<OutletContext>();
+    const { addOrderItem, categories, menu, setMenu } = useOutletContext<MenuContext>();
 
-    const [categories, setCategories] = useState<Set<Category>>(new Set);
-    const [menu, setMenu] = useState<Map<string, MenuItem[]>>(new Map());
-    const [activeNavId, setActiveNavId] = useState<string | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [activeNavId, setActiveNavId] = useState<string | null>([...categories][0].id ?? null);
 
     const patchMenuItem = (categoryID: string, itemID: string, patch: Partial<MenuItem>) => {
         const items = menu.get(categoryID) ?? [];
@@ -43,66 +37,6 @@ export default function Menu(){
         addOrderItem(updated);
     };
 
-    useEffect(() => {
-        let cancelled = false;
-
-        init();
-
-        async function init(){
-            try{
-                setLoading(true);
-                setError(null);
-
-                const categoriesData = await ExtensionService.getCategories();
-                if(cancelled) 
-                    return;
-
-                const allCategories = [...categoriesData, { id: "custom-item", name: "Custom" }, ];
-                setCategories(new Set(allCategories));
-
-                if(allCategories.length > 0)
-                    setActiveNavId(allCategories[0].id);
-
-                const realCategories = categoriesData;
-
-                const results = await Promise.all(
-                    realCategories.map(async (category) => {
-                        const items = await ExtensionService.getMenuItems(category.id!);
-                        const menuItems = items.map(item => {
-                            const menuItem: MenuItem = { ...item, quantity: 0 };
-                            return menuItem
-                        })
-
-                        return [category.id!, menuItems] as const;
-                    })
-                );
-
-                if(cancelled) 
-                    return;
-
-                setMenu(() => {
-                    const next = new Map<string, MenuItem[]>();
-                    for(const [category, items] of results) 
-                        next.set(category, items);
-
-                    return next;
-                });
-            } catch(error){
-                if(cancelled) 
-                    return;
-                setError("Failed to load menu");
-            } finally {
-                if(cancelled) 
-                    return;
-                setLoading(false);
-            }
-        }
-
-        return () => {
-            cancelled = true;
-        };
-    }, []);
-
     function categoryClicked(clickedId: string | null){
         if(!clickedId)
             return;
@@ -111,20 +45,6 @@ export default function Menu(){
 
         scrollToID(clickedId)
     }
-
-    if(loading)
-        return (
-            <div className="loading-page">
-                <h1>loading</h1>
-            </div>
-        );
-
-    if(error)
-        return (
-            <div className="error-page">
-                <h1>Error: {error} </h1>
-            </div>
-        );
 
     return (
         <div className="menu-cont">

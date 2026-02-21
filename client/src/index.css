@@ -71,16 +71,14 @@ button:hover{
     color: var(--color-bg);
 }
 
-.error-page{
-    width: 100%;
-    height: 85vh;
+.loading-page, .error-page{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 2rem;
     align-items: center;
-}
-
-.error-page h1{
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
     text-align: center;
 }
 

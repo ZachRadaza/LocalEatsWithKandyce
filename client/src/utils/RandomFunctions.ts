@@ -20,3 +20,9 @@ export function scrollToID(id: string){
         element.scrollIntoView({ behavior: "smooth" });
     }
 }
+
+export function wait(ms: number) {
+    return new Promise<void>(resolve => {
+        setTimeout(resolve, ms);
+    });
+}

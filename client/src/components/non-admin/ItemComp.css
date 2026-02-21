@@ -1,11 +1,21 @@
 .item-comp{
     all: unset;
-    cursor: pointer;
     border: 0.1rem solid var(--color-text);
     overflow: hidden;
     display: grid;
+    grid-template-rows: auto auto;
     height: auto;
     width: 95%;
+    position: relative;
+}
+
+.item-comp .lay-cont{
+    position: relative;
+    display: grid;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .item-comp img{
@@ -15,21 +25,56 @@
     z-index: 0;
 }
 
-.item-comp >div{
+.item-comp .overlay{
     grid-area: 1 / 1;
-    align-self: end;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform: translateY(100%);
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    background: var(--color-bg);
+    transition: transform 400ms ease;
+    overflow-y: scroll;
     z-index: 1;
-    height: fit-content;
+}
+
+.item-comp .overlay.active{
+    transform: translateY(0%);
+}
+
+.item-comp .overlay .desc{
+    font-size: 1.1rem;
+    padding: 0.5rem;
+}
+
+.item-comp .overlay .non-desc{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.item-comp .overlay .non-desc span{
+    font-weight: 700;
+}
+
+.item-comp .bot-cont{
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
     background: var(--color-text);
+    height: fit-content;
+    z-index: 10;
 }
 
-.item-comp >div .text{ color: var(--color-bg); }
-.item-comp >div .text.name{ font-weight: 600; font-size: 1.2rem; }
+.item-comp .bot-cont .text{ color: var(--color-bg); }
+.item-comp .bot-cont .text.name{ font-weight: 600; font-size: 1.2rem; }
 
 .item-comp .right-end{
     display: flex;
@@ -58,9 +103,11 @@
     align-items: center;
     justify-content: center;
     font-family: var(--font-body);
-    padding: 0.2rem 0.4rem;
+    line-height: 0.8;
+    padding: 0.4rem;
     width: fit-content;
     transition: background 100ms ease, border 100ms ease;
+    cursor: pointer;
 }
 
 .item-comp .quantity-cont button:active{ transform: scale(0.95); }

@@ -1,23 +1,26 @@
 import type React from "react";
-import type { OrderMenuItem } from "../../components/non-admin/OrderMenuItemComp";
-import type { Order, Customer } from "../../schemas/schemas";
-import { useOutletContext } from "react-router-dom";
+import type { Order, Customer, MenuItem, OrderMenuItem } from "../../schemas/schemas";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import OrderMenuItemComp from "../../components/non-admin/OrderMenuItemComp";
 import { useMemo, useState } from "react";
-import "./Cart.css";
 import { ExtensionService } from "../../utils/ExtensionService";
+import { wait } from "../../utils/RandomFunctions";
+import "./Cart.css";
 
-type CartContextType = {
+type CartContext = {
     orderItems: OrderMenuItem[];
     setOrderItems: React.Dispatch<React.SetStateAction<OrderMenuItem[]>>;
+    setMenu: React.Dispatch<React.SetStateAction<Map<string, MenuItem[]>>>;
 };
 
 export default function Cart(){
-    const { orderItems, setOrderItems } = useOutletContext<CartContextType>()
+    const { orderItems, setOrderItems, setMenu } = useOutletContext<CartContext>()
 
     const [placingOrder, setPlacingOrder] = useState<boolean>(false);
     const [isPickUp, setIsPickUp] = useState<boolean>(false);
+    const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
 
+    const navigate = useNavigate();
     const [location, setLocation] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -54,14 +57,32 @@ export default function Cart(){
         return parts.join("");
     };
 
-    function updateOrderItem(id: string, patch: Partial<OrderMenuItem>){
-        setOrderItems(oldOI => {
-            const patched = oldOI.map(oi =>
-                oi.id === id ? { ...oi, ...patch } : oi
-            );
+    function updateOrderItem(id: string, patch: Partial<OrderMenuItem>) {
+        setOrderItems(prevOI => {
+            const next = prevOI
+                .map(oi => (oi.id === id ? { ...oi, ...patch } : oi))
+                .filter(oi => oi.quantity !== 0);
 
-            return patched.filter(oi => oi.quantity !== 0);
-        })
+            const qtyByItemID = new Map<string, number>();
+
+            for(const oi of next)
+                qtyByItemID.set(oi.itemID, oi.quantity);
+
+            setMenu(prevMenu => {
+                const newMenu = new Map(prevMenu);
+
+                for(const [category, items] of newMenu.entries()){
+                    newMenu.set(category, items.map(item => ({
+                            ...item,
+                            quantity: qtyByItemID.get(item.id!) ?? 0,
+                    })));
+                }
+
+                return newMenu;
+            });
+
+            return next;
+        });
     }
 
     function getTomorrowString() {
@@ -76,7 +97,6 @@ export default function Cart(){
 
         if(!validateInputs())
             return;
-
 
         setPlacingOrder(true);
 
@@ -99,13 +119,41 @@ export default function Cart(){
             comment: comment
         };
 
-        await ExtensionService.addOrder(order);
+        const success = await ExtensionService.addOrder(order);
         
         setPlacingOrder(false);
+
+        if(success){
+            setOrderSuccess(true);
+            await wait(4000)
+            clearCart();
+        } else {
+            setOrderSuccess(false);
+        }
     }
 
     function validateInputs(){
         return location && name && phoneNumber && email && dateDue;
+    }
+
+    function clearCart(){
+        setOrderItems([]);
+        setMenu(oldMenu => {
+            const newMenu = new Map(
+                [...oldMenu].map(([category, items]) => {
+                    const newItems = items.map(item => ({
+                        ...item,
+                        quantity: 0
+                    }));
+
+                    return [category, newItems];
+                })
+            );
+
+            return newMenu;
+        });
+
+        navigate('/');
     }
 
     return (
@@ -113,11 +161,14 @@ export default function Cart(){
             <div className="item-display">
                 <h1 className="my-order">My Order</h1>
                 <div className="orders">
-                    { orderItems && orderItems.map(oi => {
-                        return (
+                    { orderItems.length > 0 
+                        ? ( orderItems.map(oi =>
                             <OrderMenuItemComp key={ oi.id } orderItem={ oi } patchOrderItem={ (patch) => updateOrderItem(oi.id!, patch) }/>
-                        )
-                    })}
+                        )) : (
+                            <div className="empty-order">
+                                <p>{ !orderSuccess ? "No items on order" : "Order Successful! Please check you emails" }</p>
+                            </div>
+                        )}
                     <div className="input-cont">
                         <h6>Additional Information</h6>
                         <textarea 
@@ -214,7 +265,10 @@ export default function Cart(){
                         onClick={ () => placeOrder() }
                         id="place-order-btn"
                     >
-                        { placingOrder ? "Placing Order..." : "Place Order" }
+                        { placingOrder 
+                            ? "Placing Order..." 
+                            : ( orderSuccess ? "Successfully Ordered" : "Place Order") 
+                        }
                     </button>
                 </div>
             </div>

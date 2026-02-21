@@ -1,5 +1,4 @@
-import type { AdminItem } from "../components/admin/AdminCategoryComp";
-import type { Category, Customer, Item, Order, OrderItem } from "../schemas/schemas";
+import type { Category, Customer, Item, Order, OrderItem, AdminItem } from "../schemas/schemas";
 
 const apiUrl = "http://localhost:3001/api";
 const apiCustomer = `${apiUrl}/customer`;

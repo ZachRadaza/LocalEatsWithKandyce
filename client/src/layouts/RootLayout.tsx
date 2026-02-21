@@ -1,11 +1,18 @@
 import { Outlet, NavLink, useNavigate} from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import type { Category, MenuItem, OrderMenuItem } from "../schemas/schemas";
+import { ExtensionService } from "../utils/ExtensionService";
 import "./Layout.css";
-import { useState, useMemo } from "react";
-import type { MenuItem } from "../pages/non-admin/Menu";
-import type { OrderMenuItem } from "../components/non-admin/OrderMenuItemComp";
 
 export default function RootLayout() {
     const [orderItems, setOrderItems] = useState<OrderMenuItem[]>([]);
+    const [categories, setCategories] = useState<Set<Category>>(new Set);
+    const [menu, setMenu] = useState<Map<string, MenuItem[]>>(new Map());
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const navClass = ({ isActive }: { isActive: boolean }) => isActive ? "nav-link active" : "nav-link";
+    const navigate = useNavigate();
 
     const totalNumber = useMemo(() => {
         return orderItems.reduce((sum, oi) => {
@@ -41,6 +48,7 @@ export default function RootLayout() {
                     quantity: 1,
                     name: item.name,
                     imageLink: item.imageLink,
+                    categoryID: item.categoryID!
                 });
             }
 
@@ -48,8 +56,79 @@ export default function RootLayout() {
         });
     }
 
-    const navClass = ({ isActive }: { isActive: boolean }) => isActive ? "nav-link active" : "nav-link";
-    const navigate = useNavigate();
+    useEffect(() => {
+        let cancelled = false;
+
+        init();
+
+        async function init(){
+            try{
+                setLoading(true);
+                setError(null);
+
+                const categoriesData = await ExtensionService.getCategories();
+                if(cancelled) 
+                    return;
+
+                const allCategories = [...categoriesData, { id: "custom-item", name: "Custom" }, ];
+                setCategories(new Set(allCategories));
+
+                const realCategories = categoriesData;
+
+                const results = await Promise.all(
+                    realCategories.map(async (category) => {
+                        const items = await ExtensionService.getMenuItems(category.id!);
+                        const menuItems = items.map(item => {
+                            const menuItem: MenuItem = { ...item, quantity: 0 };
+                            return menuItem
+                        })
+
+                        return [category.id!, menuItems] as const;
+                    })
+                );
+
+                if(cancelled) 
+                    return;
+
+                setMenu(() => {
+                    const next = new Map<string, MenuItem[]>();
+                    for(const [category, items] of results) 
+                        next.set(category, items);
+
+                    return next;
+                });
+            } catch(error){
+                if(cancelled) 
+                    return;
+                setError("Failed to load menu");
+            } finally {
+                if(cancelled) 
+                    return;
+                setLoading(false);
+            }
+        }
+
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+
+    if(loading)
+        return (
+            <div className="loading-page">
+                <h5>Local Eats With Kandyce</h5>
+                <p>Loading Menu...</p>
+            </div>
+        );
+
+    if(error)
+        return (
+            <div className="error-page">
+                <h5>Local Eats With Kandyce</h5>
+                <p>Sorry for the inconvience</p>
+                <p>Error: { error } </p>
+            </div>
+        );
 
     return (
         <div className="root-cont layout">
@@ -89,7 +168,12 @@ export default function RootLayout() {
                 </div>
             </header>
             <main>
-                <Outlet context={{ addOrderItem, orderItems, setOrderItems }}/>
+                <Outlet 
+                    context={{ 
+                        addOrderItem, menu, setMenu, categories,
+                        orderItems, setOrderItems 
+                    }}
+                />
             </main>
         </div>
     );
