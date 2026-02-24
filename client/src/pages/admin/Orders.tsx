@@ -1,11 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
-import type { OrderFull } from "../../schemas/schemas";
+import type { OrderFull, Filter, Sort } from "../../schemas/schemas";
 import { ExtensionService } from "../../utils/ExtensionService";
 import "./Orders.css";
 import OrderComp from "../../components/admin/OrderComp";
-
-type Sort = "Alphabetical" | "DateOrdered" | "DateDue";
-type Filter = "All" | "Accepted" | "Not Accepted";
 
 export default function Orders(){
     const [orders, setOrders] = useState<OrderFull[]>([]);
@@ -16,7 +13,7 @@ export default function Orders(){
 
     const totalOrdersAccepted = useMemo(() => {
         const ordersAccepted = orders.filter(order => order.accepted);
-        return ordersAccepted.length
+        return ordersAccepted.length;
     }, [orders]);
 
     const totalMoney = useMemo(() => {
@@ -50,13 +47,59 @@ export default function Orders(){
         return ordersDeliver.length;
     }, [orders]);
 
-    function patchOrder(orderID: string, patch: Partial<OrderFull>){
+    const displayOrders = useMemo(() => {
+        let result = [...orders];
+
+        switch(filterType){
+            case "Accepted":
+                result = result.filter(o => o.accepted);
+                break;
+            case "Not Accepted":
+                result = result.filter(o => !o.accepted);
+                break;
+            case "All":
+            default:
+                break;
+        }
+
+        switch(sortType){
+            case "Alphabetical":
+                result.sort((a, b) => a.customers.name.localeCompare(b.customers.name));
+                break;
+            case "Date Ordered":
+                result.sort((a, b) => new Date(a.dateOrdered).getTime() - new Date(b.dateOrdered).getTime());
+                break;
+            case "Date Due":
+            default:
+                result.sort((a, b) => new Date(a.dateDue).getTime() - new Date(b.dateDue).getTime());
+                break;
+        }
+
+        return result;
+    }, [orders, sortType, filterType]);
+
+    async function acceptOrder(orderID: string){
+        const matchingOrder = orders.find(order => order.id === orderID)
+        if(!matchingOrder)
+            return;
+
         setOrders(oldOrders =>
-            oldOrders.map(order => 
+            oldOrders.map(order =>
                 order.id === orderID
-                    ? { ...order, patch }
+                    ? { ...order, accepted: true }
                     : order
-        ));
+            )
+        )
+
+        await ExtensionService.updateOrder({ ...matchingOrder, accepted: true });
+    }
+    
+    async function declineOrder(orderID: string){
+        setOrders(oldOrders => 
+            oldOrders.filter(order => order.id !== orderID)
+        )
+
+        await ExtensionService.deleteOrder(orderID);
     }
 
     useEffect(() => {
@@ -152,12 +195,12 @@ export default function Orders(){
                         onClick={ () => {
                             switch(sortType){
                                 case "Alphabetical":
-                                    setSortType("DateDue");
+                                    setSortType("Date Due");
                                     break;
-                                case "DateDue":
-                                    setSortType("DateOrdered");
+                                case "Date Due":
+                                    setSortType("Date Ordered");
                                     break;
-                                case "DateOrdered":
+                                case "Date Ordered":
                                     setSortType("Alphabetical");
                                     break;
                             }
@@ -184,8 +227,13 @@ export default function Orders(){
                     </button>
                 </div>
                 <div className="orders">
-                    { orders.map(order =>
-                        <OrderComp key={ order.id } order={ order } patchOrder={ (patch) => patchOrder(order.id!, patch) } />
+                    { displayOrders.map(order =>
+                        <OrderComp 
+                            key={ order.id } 
+                            order={ order } 
+                            acceptOrder={ () => acceptOrder(order.id!) } 
+                            declineOrder={ () => declineOrder(order.id!) }
+                        />
                     ) }
                 </div>
             </div>

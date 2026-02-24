@@ -48,7 +48,7 @@ export type OrderMenuItem = OrderItem & {
 
 export interface Order{
     id: string | null;
-    orderItems: OrderItem[];
+    orderItems: OrderMenuItem[];
     dateOrdered: Date | string;
     dateDue: Date | string;
     customers: Customer;
@@ -61,3 +61,6 @@ export interface Order{
 export type OrderFull = Order & {
     price: number;
 }
+
+export type Sort = "Alphabetical" | "Date Ordered" | "Date Due";
+export type Filter = "All" | "Accepted" | "Not Accepted";

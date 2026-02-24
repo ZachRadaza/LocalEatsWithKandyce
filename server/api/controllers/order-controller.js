@@ -2,6 +2,7 @@ import * as orderService from "../services/order-service.js";
 import * as orderItemService from "../services/order_item-service.js";
 import * as customerService from "../services/customer-service.js";
 import { objectizeOrderItem } from "./order_item-controller.js";
+import { convertToFrontEndOI } from "./order_item-controller.js";
 
 export async function getAllOrdersHandler(req, res){
     try{
@@ -9,8 +10,10 @@ export async function getAllOrdersHandler(req, res){
         
         const orders = await Promise.all(
             orderData.map(async (order) => {
-                const orderItems = await orderItemService.getOrderItemsFrom(order.id);
-
+                const orderItemsRaw = await orderItemService.getOrderItemsFrom(order.id);
+                const orderItems = orderItemsRaw.map(oi => 
+                    convertToFrontEndOI(oi)
+                )
                 return {
                     ...order,
                     orderItems
@@ -47,8 +50,12 @@ export async function getOrderHandler(req, res){
             });
         }
 
-        const orderItems = await orderItemService.getOrderItemsFrom(id);
+        const orderItemsRaw = await orderItemService.getOrderItemsFrom(id);
         const orderData = await orderService.getOrder(id);
+
+        const orderItems = orderItemsRaw.map(oi => 
+            convertToFrontEndOI(oi)
+        )
 
         const order = { ...orderData, orderItems };
         const data = convertToFrontEnd(order);
@@ -84,7 +91,7 @@ export async function addOrderHandler(req, res){
         const dataRaw = await orderService.addOrder(order);
 
         for(const item of orderItems){
-            item.orderID = data.id; 
+            item.orderID = dataRaw.id; 
             const orderItem = objectizeOrderItem(item);
 
             await orderItemService.addOrderItem(orderItem);
@@ -107,10 +114,10 @@ export async function addOrderHandler(req, res){
 
 export async function updateOrderHandler(req, res){
     try{
-        const { orderItems } = objectizeOrder(req.body);
+        const { order } = objectizeOrder(req.body);
         const { id } = req.params;
 
-        if(!orderItems || !id){
+        if(!order || !id){
             console.log('Invalid body or ID');
             return res.status(400).json({
                 success: false,
@@ -118,7 +125,7 @@ export async function updateOrderHandler(req, res){
             });
         }
         
-        const dataRaw = await orderService.updateOrder(order);
+        const dataRaw = await orderService.updateOrder(id, order);
 
         const data = convertToFrontEnd(dataRaw);
 
@@ -166,15 +173,17 @@ export async function deleteOrderHandler(req, res){
 function objectizeOrder(rawBody){
     const {
         orderItems,
-        customer,
+        customers,
         dateDue,
         location,
-        comment
+        comment,
+        accepted,
+        finished
     } = rawBody;
 
     if(
         !orderItems ||
-        !customer ||
+        !customers ||
         !dateDue ||
         !location
     )
@@ -190,17 +199,17 @@ function objectizeOrder(rawBody){
     return {
         orderItems: orderItems,
         customer: {
-            name: customer.name,
-            email: customer.email,
-            phone: customer.phone
+            name: customers.name,
+            email: customers.email,
+            phone: customers.phone
         },
         order: {
-            customer_id: "",
+            customer_id: customers.id ?? "",
             date_due: new Date(dateDue).toISOString(),
-            accepted: false,
+            accepted: accepted ?? false,
             location: location,
-            finished: false,
-            comment: comment
+            finished: finished ?? false,
+            comment: comment ?? ""
         }
     };
 }

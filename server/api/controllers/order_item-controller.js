@@ -2,7 +2,11 @@ import * as orderItemService from "../services/order_item-service.js";
 
 export async function getAllOrderItemsHandler(req, res){
     try{
-        const data = await orderItemService.getAllOrderItems();
+        const rawData = await orderItemService.getAllOrderItems();
+
+        const data = rawData.map(oi => 
+            convertToFrontEndOI(oi)
+        )
 
         res.status(200).json({
             success: true,
@@ -29,12 +33,16 @@ export async function getAllOrderItemsFromHandler(req, res){
             });
         }
 
-        const data = await orderItemService.getOrderItemsFrom(orderid);
+        const rawData = await orderItemService.getOrderItemsFrom(orderid);
+
+        const data = rawData.map(oi => 
+            convertToFrontEndOI(oi)
+        )
 
         res.status(200).json({
             success: true,
             data: data
-        })
+        });
     } catch(error){
         console.error(`getAllOrderItemsFromHandler Error: `, error);
         res.status(500).json({
@@ -56,7 +64,9 @@ export async function getOrderItemHandler(req, res){
             });
         }
 
-        const data = await orderItemService.getOrderItem(id);
+        const rawData = await orderItemService.getOrderItem(id);
+
+        const data = convertToFrontEndOI(rawData);
 
         res.status(200).json({
             success: true,
@@ -83,7 +93,9 @@ export async function addOrderItemHandler(req, res){
             });
         }
 
-        const data = await orderItemService.addOrderItem(orderItem);
+        const rawData = await orderItemService.addOrderItem(orderItem);
+
+        const data = convertToFrontEndOI(rawData);
 
         res.status(200).json({
             success: true,
@@ -111,7 +123,9 @@ export async function updateOrderItemHandler(req, res){
             });
         }
 
-        const data = await orderItemService.updateOrderItem(id, orderItem);
+        const rawData = await orderItemService.updateOrderItem(id, orderItem);
+
+        const data = convertToFrontEndOI(rawData);
 
         res.status(200).json({
             success: true,
@@ -175,4 +189,17 @@ export function objectizeOrderItem(rawBody){
         quantity: quantity,
         price: price,
     };
+}
+
+export function convertToFrontEndOI(orderItem){
+    return {
+        id: orderItem.id,
+        orderID: orderItem.order_id,
+        quantity: orderItem.quantity,
+        price: orderItem.price,
+        createdAt: orderItem.created_at,
+        name: orderItem.item.name,
+        imageLink: orderItem.item.image_link,
+        categoryID: orderItem.item.category.id
+    }
 }

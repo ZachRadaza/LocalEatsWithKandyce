@@ -5,10 +5,11 @@ import OrderItemComp from "../non-admin/OrderItemComp";
 
 type OrderCompProp = {
     order: OrderFull;
-    patchOrder: (patch: Partial<OrderFull>) => void;
+    acceptOrder: () => void;
+    declineOrder: () => void;
 }
 
-export default function OrderComp({ order, patchOrder }: OrderCompProp){
+export default function OrderComp({ order, acceptOrder, declineOrder }: OrderCompProp){
     const [extended, setExtended] = useState<boolean>(false);
 
     return (
@@ -17,7 +18,7 @@ export default function OrderComp({ order, patchOrder }: OrderCompProp){
         >
             <div className="header">
                 <div className="title pair">
-                    <h5>{ order.customers.name ?? "Customer" }</h5>
+                    <h5 className="customer-name">{ order.customers.name ?? "Customer" }</h5>
                     <p>ID: { order.id }</p>
                 </div>
                 <div className="logistics pair">
@@ -26,45 +27,67 @@ export default function OrderComp({ order, patchOrder }: OrderCompProp){
                 </div>
                 <h6>Deliver on { new Date(order.dateDue).toLocaleDateString() }</h6>
                 <div className="btns-cont">
-                    <button>Accept</button>
-                    <button>Decline</button>
+                    <button
+                        className="accept"
+                        onClick={ (event) => {
+                            event.stopPropagation();
+                            acceptOrder()
+                        } }
+                        disabled={ order.accepted }
+                    >
+                        { order.accepted ? "Accepted" : "Accept" }
+                    </button>
+                    <button
+                        className="decline"
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            declineOrder();
+                        }}
+                        
+                    >
+                        Decline
+                    </button>
                 </div>
             </div>
             <div className={ extended ? "extension extended" : "extension" }>
-                <div className="order-items">
-                    { order.orderItems.map(orderItem => 
-                        <OrderItemComp 
-                            key={ orderItem.id }
-                            orderItem={ orderItem }
-                            patchOrderItem={ () => null }
-                            enableBtns={ false }
-                        />
-                    ) }
-                    <div className="total">
-                        <h6>Total</h6>
-                        <p>${ order.price }</p>
-                    </div>
-                    <div className="comment">
-                        <h6>Comment: </h6>
-                        <p>{ order.comment }</p>
-                    </div>
-                </div>
-                <div className="info-cont">
-                    <div className="customer-info">
-                        <p>{ order.customers.name }</p>
-                        <p>{ order.customers.email }</p>
-                        <p>{ order.customers.phone }</p>
-                    </div>
-                    <div className="order-info">
-                        <div>
-                            <h6>Ordered At: </h6>
-                            <h6>Due At: </h6>
-                            <h6>Deliver At: </h6>
+                <div>
+                    <div className="order-items">
+                        { order.orderItems.map(orderItem => 
+                            <OrderItemComp 
+                                key={ orderItem.id }
+                                orderItem={ orderItem }
+                                patchOrderItem={ () => null }
+                                enableBtns={ false }
+                            />
+                        ) }
+                        <div className="total">
+                            <h6>Total</h6>
+                            <p>${ order.price }</p>
                         </div>
+                        <div className="comment">
+                            <h6>Comment: </h6>
+                            <p>{ order.comment }</p>
+                        </div>
+                    </div>
+                    <div className="information-cont">
                         <div>
-                            <p>{ new Date(order.dateOrdered).toLocaleDateString() }</p>
-                            <p>{ new Date(order.dateDue).toLocaleDateString() }</p>
-                            <p>{ order.location }</p>
+                            <div className="customer-info">
+                                <p>{ order.customers.name }</p>
+                                <p>{ order.customers.email }</p>
+                                <p>{ order.customers.phone }</p>
+                            </div>
+                            <div className="order-info">
+                                <div>
+                                    <h6>Ordered At: </h6>
+                                    <h6>Due At: </h6>
+                                    <h6>Deliver At: </h6>
+                                </div>
+                                <div>
+                                    <p>{ new Date(order.dateOrdered).toLocaleDateString() }</p>
+                                    <p>{ new Date(order.dateDue).toLocaleDateString() }</p>
+                                    <p>{ order.location }</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
