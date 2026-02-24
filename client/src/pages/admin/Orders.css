@@ -1,0 +1,77 @@
+.orders-page-cont{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.orders-page-cont .dashboard{
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: repeat(2, min-content);
+    height: fit-content;
+    gap: 0.5rem;
+    margin: 0.5rem;
+}
+
+.orders-page-cont .dashboard >div{
+    display: flex;
+    flex-direction: column;
+    border: 0.1rem solid var(--color-text);
+    justify-content: end;
+}
+
+.orders-page-cont .dashboard >div p{
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0px 0.5rem 0.5rem 0.5rem;
+    text-align: right;
+}
+
+.orders-page-cont .dashboard >div h1{
+    font-size: 6rem;
+    padding: 0px;
+    line-height: 1;
+    margin: 1rem 1rem 0px 1rem;
+}
+
+.orders-page-cont .total-num-orders{
+    grid-area: 1 / 1;
+    grid-row: span 2;
+}
+
+.orders-page-cont .total-num-orders-num{
+    font-size: 15rem;
+    line-height: 1;
+    text-align: center;
+}
+
+.orders-page-cont .soonest-date h2{ margin: 1rem; }
+
+.orders-page-cont .total-accepted-orders{ grid-area: 1 / 2; }
+.orders-page-cont .total-unaccepted-orders{ grid-area: 2 / 2; }
+.orders-page-cont .total-num-items{ grid-area: 1 / 3; }
+.orders-page-cont .soonest-date{ grid-area: 2 / 3; grid-column: span 2; }
+.orders-page-cont .total-money{ grid-area: 1 / 4; grid-column: span 2; }
+.orders-page-cont .total-num-libraries{ grid-area: 2 / 5; }
+
+.orders-page-cont .all-orders{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.orders-page-cont .options{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.orders-page-cont .all-orders >.orders{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}

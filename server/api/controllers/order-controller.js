@@ -18,9 +18,13 @@ export async function getAllOrdersHandler(req, res){
             })
         );
 
+        const data = orders.map(order => {
+            return convertToFrontEnd(order);
+        });
+
         res.status(200).json({
             success: true,
-            data: orders
+            data: data
         });
     } catch(error){
         console.error(`getAllOrdersHandler Error: `, error);
@@ -47,10 +51,11 @@ export async function getOrderHandler(req, res){
         const orderData = await orderService.getOrder(id);
 
         const order = { ...orderData, orderItems };
+        const data = convertToFrontEnd(order);
 
         res.status(200).json({
             success: true,
-            data: order
+            data: data
         });
     } catch(error){
         console.error(`getOrderHandler Error: `, error);
@@ -76,7 +81,7 @@ export async function addOrderHandler(req, res){
         const customerNew = await customerService.addCustomer(customer);
         order.customer_id = customerNew.id;
         
-        const data = await orderService.addOrder(order);
+        const dataRaw = await orderService.addOrder(order);
 
         for(const item of orderItems){
             item.orderID = data.id; 
@@ -84,6 +89,8 @@ export async function addOrderHandler(req, res){
 
             await orderItemService.addOrderItem(orderItem);
         }
+
+        const data = convertToFrontEnd(dataRaw);
 
         res.status(200).json({
             success: true,
@@ -111,7 +118,9 @@ export async function updateOrderHandler(req, res){
             });
         }
         
-        const data = await orderService.updateOrder(order);
+        const dataRaw = await orderService.updateOrder(order);
+
+        const data = convertToFrontEnd(dataRaw);
 
         res.status(200).json({
             success: true,
@@ -193,5 +202,13 @@ function objectizeOrder(rawBody){
             finished: false,
             comment: comment
         }
+    };
+}
+
+function convertToFrontEnd(order){
+    return { 
+        ...order, 
+        dateDue: order.date_due,
+        dateOrdered: order.date_ordered
     };
 }

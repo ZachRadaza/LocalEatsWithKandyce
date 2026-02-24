@@ -51,10 +51,13 @@ export interface Order{
     orderItems: OrderItem[];
     dateOrdered: Date | string;
     dateDue: Date | string;
-    customer: Customer;
+    customers: Customer;
     accepted: boolean;
     location: string;
     finished: boolean;
     comment: string | null;
 }
 
+export type OrderFull = Order & {
+    price: number;
+}

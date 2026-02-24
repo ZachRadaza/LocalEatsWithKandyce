@@ -1,0 +1,89 @@
+.order-comp-cont{
+    display: grid;
+    grid-template-rows: auto auto;
+    border: 0.1rem solid var(--color-text);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.order-comp-cont .header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+    justify-content: space-between;
+}
+
+.order-comp-cont .pair{
+    display: flex;
+    flex-direction: column;
+}
+
+.order-comp-cont .logistics{ align-items: center; }
+
+.order-comp-cont .extension{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    max-height: 0px;
+    height: 100%;
+    width: 100%;
+    place-items: center;
+    transition: max-height 500ms ease;
+}
+
+.order-comp-cont .extension.extended{
+    max-height: 1000px;
+}
+
+.order-comp-cont .order-items{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 0.5rem;
+    margin: 1rem 0px;
+}
+
+.order-comp-cont .total{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0.5rem 0px;
+}
+
+.order-comp-cont .total p{
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.order-comp-cont .comment{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0.5rem;
+    margin: 0.5rem 0px;
+}
+
+.order-comp-cont .info-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: end;
+    text-align: left;
+    width: 100%;
+    height: 80%;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.order-comp-cont .customer-info{
+
+}
+
+.order-comp-cont .order-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    gap: 1rem;
+}

@@ -1,7 +1,7 @@
 import type React from "react";
 import type { Order, Customer, MenuItem, OrderMenuItem } from "../../schemas/schemas";
 import { useOutletContext, useNavigate } from "react-router-dom";
-import OrderMenuItemComp from "../../components/non-admin/OrderMenuItemComp";
+import OrderItemComp from "../../components/non-admin/OrderItemComp";
 import { useMemo, useState } from "react";
 import { ExtensionService } from "../../utils/ExtensionService";
 import { wait } from "../../utils/RandomFunctions";
@@ -112,7 +112,7 @@ export default function Cart(){
             orderItems: orderItems,
             dateOrdered: "",
             dateDue: dateDue,
-            customer: customer,
+            customers: customer,
             accepted: false,
             location: location,
             finished: false,
@@ -161,23 +161,31 @@ export default function Cart(){
             <div className="item-display">
                 <h1 className="my-order">My Order</h1>
                 <div className="orders">
-                    { orderItems.length > 0 
-                        ? ( orderItems.map(oi =>
-                            <OrderMenuItemComp key={ oi.id } orderItem={ oi } patchOrderItem={ (patch) => updateOrderItem(oi.id!, patch) }/>
-                        )) : (
-                            <div className="empty-order">
-                                <p>{ !orderSuccess ? "No items on order" : "Order Successful! Please check you emails" }</p>
+                    { totalAmount > 0 ? ( 
+                        <>
+                            { orderItems.map(oi => (
+                                <OrderItemComp 
+                                    key={ oi.id } 
+                                    orderItem={ oi } 
+                                    patchOrderItem={ (patch) => updateOrderItem(oi.id!, patch) }
+                                    enableBtns={ true }
+                                />
+                            )) }
+                            <div className="input-cont">
+                                <h6>Additional Information</h6>
+                                <textarea 
+                                    value={ comment }
+                                    onChange={ (event) => setComment(event.target.value) }
+                                    placeholder="Ex. No peppers on the burgers please."
+                                    rows={ 3 }
+                                ></textarea>
                             </div>
-                        )}
-                    <div className="input-cont">
-                        <h6>Additional Information</h6>
-                        <textarea 
-                            value={ comment }
-                            onChange={ (event) => setComment(event.target.value) }
-                            placeholder="Ex. No peppers on the burgers please."
-                            rows={ 3 }
-                        ></textarea>
-                    </div>
+                        </>
+                    ) : (
+                        <div className="empty-order">
+                            <p>{ !orderSuccess ? "No items on order" : "Order Successful! Please check you emails" }</p>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className="info-display">
