@@ -1,6 +1,7 @@
 import * as orderService from "../services/order-service.js";
 import * as orderItemService from "../services/order_item-service.js";
 import * as customerService from "../services/customer-service.js";
+import * as emailService from "../services/email-service.js";
 import { objectizeOrderItem } from "./order_item-controller.js";
 import { convertToFrontEndOI } from "./order_item-controller.js";
 
@@ -43,15 +44,22 @@ export async function getOrderHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error('Invalid Params');
             return res.status(400).json({
                 success: true,
-                error: 'Invalid Params'
+                error: 'Order ID is required'
+            });
+        }
+
+        const orderData = await orderService.getOrder(id);
+
+        if(!orderData){
+            return res.status(404).json({
+                success: false,
+                error: "Order not found"
             });
         }
 
         const orderItemsRaw = await orderItemService.getOrderItemsFrom(id);
-        const orderData = await orderService.getOrder(id);
 
         const orderItems = orderItemsRaw.map(oi => 
             convertToFrontEndOI(oi)
@@ -78,10 +86,9 @@ export async function addOrderHandler(req, res){
         const { customer, orderItems, order } = objectizeOrder(req.body);
 
         if(!customer || !orderItems || !order){
-            console.log('Invalid body');
             return res.status(400).json({
                 success: false,
-                error: 'Invalid body'
+                error: 'Customer, OrderItems, Order are required'
             });
         }
 
@@ -117,15 +124,28 @@ export async function updateOrderHandler(req, res){
         const { order } = objectizeOrder(req.body);
         const { id } = req.params;
 
-        if(!order || !id){
-            console.log('Invalid body or ID');
+        if(!id){
+            return res.status(400).json({
+                success: true,
+                error: 'Order ID is required'
+            });
+        }
+
+        if(!order){
             return res.status(400).json({
                 success: false,
-                error: 'Invalid body or ID'
+                error: 'Valid Order is Required'
             });
         }
         
         const dataRaw = await orderService.updateOrder(id, order);
+
+        if(!dataRaw){
+            return res.status(404).json({
+                success: false,
+                error: "Order not found"
+            });
+        }
 
         const data = convertToFrontEnd(dataRaw);
 
@@ -148,14 +168,29 @@ export async function deleteOrderHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.log('Invalid Id');
             return res.status(400).json({
-                success: false,
-                error: "Invalid ID"
+                success: true,
+                error: 'Order ID is required'
             });
         }
 
-        await orderService.removeOrder(id);
+        const order = await orderService.removeOrder(id);
+
+        if(!order){
+            return res.status(404).json({
+                success: false,
+                error: "Rrder not found"
+            });
+        }
+
+        const customer = await customerService.deleteCustomer(order.customers.id);
+
+        if(!customer){
+            return res.status(404).json({
+                success: false,
+                error: "Customer not found"
+            });
+        }
 
         res.status(200).json({
             success: true,

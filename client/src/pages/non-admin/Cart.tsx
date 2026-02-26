@@ -92,43 +92,49 @@ export default function Cart(){
     }
 
     async function placeOrder(){
-        if(!orderItems.length)
-            return;
+        try{
+            if(!orderItems.length)
+                return;
 
-        if(!validateInputs())
-            return;
+            if(!validateInputs())
+                return;
 
-        setPlacingOrder(true);
+            setPlacingOrder(true);
 
-        const customer: Customer = {
-            id: null,
-            name: name,
-            phone: phoneNumber,
-            email: email
-        }
+            const customer: Customer = {
+                id: null,
+                name: name,
+                phone: phoneNumber,
+                email: email
+            }
 
-        const order: Order = {
-            id: null,
-            orderItems: orderItems,
-            dateOrdered: "",
-            dateDue: dateDue,
-            customers: customer,
-            accepted: false,
-            location: location,
-            finished: false,
-            comment: comment
-        };
+            const order: Order = {
+                id: null,
+                orderItems: orderItems,
+                dateOrdered: "",
+                dateDue: dateDue,
+                customers: customer,
+                accepted: false,
+                location: location,
+                finished: false,
+                comment: comment
+            };
 
-        const success = await ExtensionService.addOrder(order);
-        
-        setPlacingOrder(false);
+            const success = await ExtensionService.addOrder(order);
 
-        if(success){
-            setOrderSuccess(true);
-            await wait(4000)
-            clearCart();
-        } else {
-            setOrderSuccess(false);
+            setPlacingOrder(false);
+
+            if(success){
+                ExtensionService.sendConfirmationEmail(customer.email, order);
+
+                setOrderSuccess(true);
+                await wait(4000)
+                clearCart();
+            } else {
+                setOrderSuccess(false);
+            }
+        } catch(error){
+            console.error("Error in Placing Order", error);
         }
     }
 
@@ -218,8 +224,8 @@ export default function Cart(){
                             placeholder="(916) 707-7037"
                         />
                     </div>
-                    <div className="input-cont">
-                        <h6>{ isPickUp ? "Pick Up" : "Delivary" } Date</h6>
+                    <div className="input-cont delivery-date">
+                        <h6>{ isPickUp ? "Pick Up" : "Delivery" } Date</h6>
                         <input 
                             type="datetime-local"
                             min={ getTomorrowString() }
@@ -243,7 +249,7 @@ export default function Cart(){
                                 className={ isPickUp ? "active" : "" }
                                 onClick={ () => { 
                                     setIsPickUp(true); 
-                                    setLocation("CSUS Library add full address");
+                                    setLocation("CSUS Library, 6000 J Street, Sacramento, CA 95819");
                                 }}    
                             >
                                 Pick Up
@@ -266,8 +272,8 @@ export default function Cart(){
                         <h5>${ totalAmount }</h5>
                     </div>
                     <div className="payment-info-cont">
-                        <p className="payment-info">Payment done on delivary day*</p>
-                        <p className="payment-info">I accept blach, blah, blah, blah</p>
+                        <p className="payment-info">Payment done on delivery day*</p>
+                        <p className="payment-info">Zelle, Venmo, PayPal, Cashapp, and Cash are Accepted</p>
                     </div>
                     <button
                         onClick={ () => placeOrder() }

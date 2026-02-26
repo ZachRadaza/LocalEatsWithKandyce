@@ -7,9 +7,10 @@ type OrderCompProp = {
     order: OrderFull;
     acceptOrder: () => void;
     declineOrder: () => void;
+    completeOrder: () => void;
 }
 
-export default function OrderComp({ order, acceptOrder, declineOrder }: OrderCompProp){
+export default function OrderComp({ order, acceptOrder, declineOrder, completeOrder }: OrderCompProp){
     const [extended, setExtended] = useState<boolean>(false);
 
     return (
@@ -31,7 +32,7 @@ export default function OrderComp({ order, acceptOrder, declineOrder }: OrderCom
                         className="accept"
                         onClick={ (event) => {
                             event.stopPropagation();
-                            acceptOrder()
+                            acceptOrder();
                         } }
                         disabled={ order.accepted }
                     >
@@ -87,6 +88,15 @@ export default function OrderComp({ order, acceptOrder, declineOrder }: OrderCom
                                     <p>{ new Date(order.dateDue).toLocaleDateString() }</p>
                                     <p>{ order.location }</p>
                                 </div>
+                            </div>
+                            <div className="complete-cont">
+                                { order.accepted && 
+                                    <button
+                                        onClick={ () => completeOrder() }
+                                    >
+                                        Order Complete
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>

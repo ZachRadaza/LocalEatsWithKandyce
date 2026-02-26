@@ -79,27 +79,57 @@ export default function Orders(){
     }, [orders, sortType, filterType]);
 
     async function acceptOrder(orderID: string){
-        const matchingOrder = orders.find(order => order.id === orderID)
-        if(!matchingOrder)
-            return;
+        try{
+            const matchingOrder = orders.find(order => order.id === orderID)
+            if(!matchingOrder)
+                return;
 
-        setOrders(oldOrders =>
-            oldOrders.map(order =>
-                order.id === orderID
-                    ? { ...order, accepted: true }
-                    : order
+            setOrders(oldOrders =>
+                oldOrders.map(order =>
+                    order.id === orderID
+                        ? { ...order, accepted: true }
+                        : order
+                )
             )
-        )
 
-        await ExtensionService.updateOrder({ ...matchingOrder, accepted: true });
+            ExtensionService.updateOrder({ ...matchingOrder, accepted: true });
+            ExtensionService.sendAcceptEmail(matchingOrder.customers.email, matchingOrder);
+        } catch(error){
+            console.error("Error in Accepting Order: ", error);
+        }
     }
     
     async function declineOrder(orderID: string){
-        setOrders(oldOrders => 
-            oldOrders.filter(order => order.id !== orderID)
-        )
+        try{
+            const matchingOrder = orders.find(order => order.id === orderID);
 
-        await ExtensionService.deleteOrder(orderID);
+            setOrders(oldOrders => 
+                oldOrders.filter(order => order.id !== orderID)
+            );
+
+            const message = "we dont want it";
+
+            ExtensionService.deleteOrder(orderID);
+            ExtensionService.sendDeclineEmail(matchingOrder?.customers.email!, matchingOrder!, message);
+        } catch(error){
+            console.error("Error in Declining Order: ", error);
+        }
+    }
+
+    async function completeOrder(orderID: string){
+        try{
+            const matchingOrder = orders.find(order => order.id === orderID);
+            const customer = matchingOrder?.customers;
+            
+            setOrders(oldOrders => 
+                oldOrders.filter(order => order.id !== orderID)
+            );
+
+            ExtensionService.deleteOrder(orderID);
+            ExtensionService.sendCompleteEmail(customer?.email!, matchingOrder?.id!, customer?.name!);
+        } catch(error){
+            console.error("Error in Completing Order", error);
+        }
     }
 
     useEffect(() => {
@@ -233,6 +263,7 @@ export default function Orders(){
                             order={ order } 
                             acceptOrder={ () => acceptOrder(order.id!) } 
                             declineOrder={ () => declineOrder(order.id!) }
+                            completeOrder={ () => completeOrder(order.id!) }
                         />
                     ) }
                 </div>

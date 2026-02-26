@@ -26,10 +26,9 @@ export async function getAllOrderItemsFromHandler(req, res){
         const { orderid } = req.params;
 
         if(!orderid){
-            console.error('Invalid ID passed in params');
             return res.status(400).json({
                 success: false,
-                error: 'Invalid ID passed in params'
+                error: 'Order ID is required'
             });
         }
 
@@ -57,14 +56,20 @@ export async function getOrderItemHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error('Invalid ID passed in params');
             return res.status(400).json({
                 success: false,
-                error: 'Invalid ID passed in params'
+                error: 'OrderItem ID is required'
             });
         }
 
         const rawData = await orderItemService.getOrderItem(id);
+
+        if(!rawData){
+            return res.status(404).json({
+                success: false,
+                error: "OrderItem not found"
+            });
+        }
 
         const data = convertToFrontEndOI(rawData);
 
@@ -86,10 +91,9 @@ export async function addOrderItemHandler(req, res){
         const orderItem = objectizeOrderItem(req.body);
 
         if(!orderItem){
-            console.error("order item is invalid");
             return res.status(400).json({
                 success: false,
-                error: 'Invalid orderItem passed'
+                error: 'Valid OrderItem Required'
             });
         }
 
@@ -115,15 +119,28 @@ export async function updateOrderItemHandler(req, res){
         const { id } = req.params;
         const orderItem = objectizeOrderItem(req.body);
 
-        if(!orderItem || !id){
-            console.error("id or order item is invalid");
+        if(!id){
             return res.status(400).json({
                 success: false,
-                error: 'Invalid id or orderItem passed'
+                error: 'OrderItem ID is required'
+            });
+        }
+
+        if(!orderItem){
+            return res.status(400).json({
+                success: false,
+                error: 'Valid OrderItem Required'
             });
         }
 
         const rawData = await orderItemService.updateOrderItem(id, orderItem);
+
+        if(!rawData){
+            return res.status(404).json({
+                success: false,
+                error: "OrderItem not found"
+            });
+        }
 
         const data = convertToFrontEndOI(rawData);
 
@@ -145,14 +162,20 @@ export async function deleteOrderItemHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error("invalid id");
             return res.status(400).json({
                 success: false,
-                error: 'Invalid ID passed'
+                error: 'OrderItem ID is required'
             });
         }
 
-        await orderItemService.deleteOrderItem(id);
+        const data = await orderItemService.deleteOrderItem(id);
+
+        if(!data){
+            return raw.status(404).json({
+                success: false,
+                error: "OrderItem not found"
+            });
+        }
 
         res.status(200).json({
             success: true,

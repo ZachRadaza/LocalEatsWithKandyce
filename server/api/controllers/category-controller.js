@@ -22,15 +22,21 @@ export async function getCategoryHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error("ID is invalid");
             return res.status(400).json({
                 success: false,
-                error: `ID is an invalid value`
+                error: `Category ID is required`
             });
         }
 
         const data = await categoryService.getCategory(id);
         
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: "Category not found"
+            });
+        }
+
         res.status(200).json({
             success: true,
             data: data
@@ -48,17 +54,17 @@ export async function addCategoryHandler(req, res){
     try{
         const { name } = req.body;
 
-        if(!name){
-            console.error(`name is invalid`);
+        if(!name || typeof name !== "string" || !name.trim()){
             return res.status(400).json({
                 success: false,
-                error: `passed name is invalid`
+                error: "Category name is required."
             });
         }
 
-        const data = await categoryService.addCategory(name);
+        const trimmedName = name.trim();
+        const data = await categoryService.addCategory(trimmedName);
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             data: data
         });
@@ -76,15 +82,29 @@ export async function updateCategoryHandler(req, res){
         const { id } = req.params;
         const { name } = req.body;
 
-        if(!id || !name){
-            console.error('ID or name passed is invalid');
+        if(!id){
             return res.status(400).json({
                 success: false,
-                error: 'Invalid ID or Name passed'
+                error: `Category ID is required`
             });
         }
 
-        const data = await categoryService.updateCategory(id, name);
+        if(!name || typeof name !== "string" || !name.trim()){
+            return res.status(400).json({
+                success: false,
+                error: "Category name is required."
+            });
+        }
+
+        const trimmedName = name.trim();
+        const data = await categoryService.updateCategory(id, trimmedName);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: "Category not found"
+            });
+        }
 
         res.status(200).json({
             success: true,
@@ -104,18 +124,24 @@ export async function deleteCategoryHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error('Invalid ID passed');
             return res.status(400).json({
                 success: false,
-                error: 'Invalid ID passed'
+                error: `Category ID is required`
             });
         }
 
-        await categoryService.deleteCategory(id);
+        const data = await categoryService.deleteCategory(id);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: "Category not found"
+            });
+        }
 
         res.status(200).json({
             success: true,
-            data: true
+            data: data
         });
     } catch(error){
         console.error(`deleteCategoryHandler Error: `, error);

@@ -86,36 +86,44 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
     }
 
     async function nameEditBtnClick(){
-        if(canEditName){
-            setSavingCatChanges(true);
-            category.name = categoryName;
+        try{
+            if(canEditName){
+                setSavingCatChanges(true);
+                category.name = categoryName;
 
-            if(category.id?.includes('new-cat'))
-                await ExtensionService.addCategory(category);
-            else
-                await ExtensionService.updateCategory(category);
+                if(category.id?.includes('new-cat'))
+                    await ExtensionService.addCategory(category);
+                else
+                    await ExtensionService.updateCategory(category);
 
-            setSavingCatChanges(false);
+                setSavingCatChanges(false);
+            }
+
+            setCanEditName(!canEditName);
+        } catch(error){
+            console.error("Error in Adding/Editing category: ", error);
         }
-
-        setCanEditName(!canEditName);
     }
 
     async function saveChanges(){
-        setSavingItemChanges(true);
+        try{
+            setSavingItemChanges(true);
 
-        for(const item of items){
-            if(item.id?.includes("new-item"))
-                await ExtensionService.addMenuItem(item);
-            else if(item.edited)
-                await ExtensionService.updateMenuItem(item);
-            
-            if(item.deleted && !item.id?.includes('new-item'))
-                await ExtensionService.deleteMenuItem(item.id!, item.imageLink);
+            for(const item of items){
+                if(item.id?.includes("new-item"))
+                    await ExtensionService.addMenuItem(item);
+                else if(item.edited)
+                    await ExtensionService.updateMenuItem(item);
+                
+                if(item.deleted && !item.id?.includes('new-item'))
+                    await ExtensionService.deleteMenuItem(item.id!, item.imageLink);
+            }
+
+            setSavingItemChanges(false);
+            setRefesh(!refresh);
+        } catch(error){
+            console.error("Error in Saving Changes: ", error);
         }
-
-        setSavingItemChanges(false);
-        setRefesh(!refresh);
     }
 
     function createItem(){

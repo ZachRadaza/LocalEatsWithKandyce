@@ -49,12 +49,16 @@ export default function UpdateMenu(){
     }
 
     async function deleteCategory(categoryID: string){
-        if(!categoryID.includes('new-cat'))
-            await ExtensionService.deleteCategory(categoryID);
+        try{
+            if(!categoryID.includes('new-cat'))
+                await ExtensionService.deleteCategory(categoryID);
 
-        setCategories(oldCat => oldCat.filter(cat => cat.id !== categoryID));
+            setCategories(oldCat => oldCat.filter(cat => cat.id !== categoryID));
 
-        setCurrentCategory(categories[0] ?? { id:'temp', name: 'temp' });
+            setCurrentCategory(categories[0] ?? { id:'temp', name: 'temp' });
+        } catch(error){
+            console.error("Error in Deleting Category: ", error);
+        }
     }
 
     if(loading)

@@ -75,6 +75,10 @@
     padding: 0px 0.5rem 0.3rem 0.5rem;
 }
 
+.cart-cont .delivery-date input{
+    cursor: pointer;
+}
+
 .cart-cont .delivery-location{
     display: flex;
     flex-direction: column;

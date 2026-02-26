@@ -22,14 +22,20 @@ export async function getItemHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error('Invalid ID in params');
             return res.status(400).json({
                 success: false,
-                error: 'Invalid ID params'
+                error: 'Item ID is required'
             });
         }
 
         const data = await itemService.getItem(id);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: 'Item not found'
+            })
+        }
 
         res.status(200).json({
             success: true,
@@ -48,15 +54,23 @@ export async function getItemsFromCategoryHandler(req, res){
     try{
         const { categoryid } = req.params;
 
-        if(!categoryid){
-            console.error('Invalid CategoryID in params');
+        if(!categoryid || typeof categoryid !== "string" || !categoryid.trim()){
             return res.status(400).json({
                 success: false,
-                error: 'Invalid CategoryID params'
+                error: 'Category ID is required'
             });
         }
 
-        const data = await itemService.getItemsFromCategory(categoryid);
+        const trimmedCatID = categoryid.trim()
+
+        const data = await itemService.getItemsFromCategory(trimmedCatID);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: 'Item not found'
+            })
+        }
 
         res.status(200).json({
             success: true,
@@ -76,10 +90,9 @@ export async function addItemHandler(req, res){
         const newItem = objectizeItem(req.body);
 
         if(!newItem){
-            console.error('Invalid body for new Item');
             return res.status(400).json({
                 success: false,
-                error: "invalid body for adding item"
+                error: "Item is required"
             });
         }
 
@@ -115,11 +128,17 @@ export async function updateItemHandler(req, res){
         const { id } = req.params;
         const file = req.file;
 
-        if(!item || !id){
-            console.error('Invalid body or params for updating Item');
+        if(!id){
             return res.status(400).json({
                 success: false,
-                error: "invalid body or params for updating item"
+                error: 'Item ID is required'
+            });
+        }
+
+        if(!item){
+            return res.status(400).json({
+                success: false,
+                error: "Item is required"
             });
         }
 
@@ -140,6 +159,13 @@ export async function updateItemHandler(req, res){
 
         const data = await itemService.updateItem(id, item);
 
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: 'Item not found'
+            })
+        }
+
         res.status(200).json({
             success: true,
             data: data
@@ -159,10 +185,9 @@ export async function deleteItemHandler(req, res){
         const { imageLink } = req.body;
 
         if(!id){
-            console.error('Invalid id for deleting item');
             return res.status(400).json({
                 success: false,
-                error: 'invalid id for deleting item'
+                error: 'Item ID is required'
             });
         }
 
@@ -171,11 +196,18 @@ export async function deleteItemHandler(req, res){
             await itemService.deleteImagesFromBucket({ paths: path })
         }
 
-        await itemService.deleteItem(id);
+        const data = await itemService.deleteItem(id);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: 'Item not found'
+            })
+        }
 
         res.status(200).json({
             success: true,
-            data: true
+            data: data
         });
     } catch(error){
         console.error(`deleteItemHandler Error: `, error);

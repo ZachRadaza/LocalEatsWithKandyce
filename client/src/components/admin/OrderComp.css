@@ -49,6 +49,12 @@
     border: 0.1rem solid var(--color-green);
 }
 
+.order-comp-cont:has(.extended) .btns-cont .accept:hover{
+    background: var(--color-green);
+    border: 0.1rem solid var(--color-green);
+    color: var(--color-bg);
+}
+
 .order-comp-cont .btns-cont .accept:disabled{
     border: 0.1rem solid var(--color-green);
 }
@@ -71,6 +77,12 @@
 
 .order-comp-cont:not(:has(.extended)):hover .btns-cont .decline{
     border: 0.1rem solid var(--color-red);
+}
+
+.order-comp-cont:has(.extended) .btns-cont .decline:hover{
+    background: var(--color-red);
+    border: 0.1rem solid var(--color-red);
+    color: var(--color-bg);
 }
 
 .order-comp-cont:has(.accept:disabled) .decline{
@@ -150,3 +162,6 @@
     justify-content: left;
     gap: 1rem;
 }
+
+.order-comp-cont .complete-cont button{ background: var(--color-blue); }
+.order-comp-cont .complete-cont button:hover{ border: 0.1rem solid var(--color-blue); }

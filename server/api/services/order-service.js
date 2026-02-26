@@ -44,7 +44,7 @@ export async function addOrder(order){
         if(error)
             throw error;
 
-        return data;
+    return data;
 }
 
 export async function updateOrder(id, order){
@@ -65,7 +65,9 @@ export async function removeOrder(id){
     const { data, error } = await supabase
         .from("orders")
         .delete()
-        .eq("id", id);
+        .eq("id", id)
+        .select(orderItem)
+        .single();
 
     if(error)
         throw error;

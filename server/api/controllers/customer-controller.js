@@ -22,14 +22,20 @@ export async function getCustomerHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.log("Invalid Id passed in params");
             return res.status(400).json({
                 success: false,
-                error: "Invalid Id passed in params"
+                error: "Invalid ID is required"
             });
         }
 
         const data = await customerService.getCustomer(id);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: 'Customer not found'
+            });
+        }
 
         res.status(200).json({
             success: true,
@@ -48,17 +54,30 @@ export async function addCustomerHandler(req, res){
     try{
         const { name, email, phoneNumber } = req.body;
 
-        if(!name || !email || !phoneNumber){
-            console.log("Invalid body for customer");
+        if(
+            !name || !email || !phoneNumber ||
+            typeof name !== "string" ||
+            typeof email !== "string" ||
+            typeof phoneNumber !== "string" ||
+            !name.trim() ||
+            !email.trim() ||
+            !phoneNumber.trim()
+        ){
             return res.status(400).json({
                 success: false,
-                error: "Invalid Body"
+                error: "Name, email, and phone number are required."
             });
         }
 
-        const data = await customerService.addCustomer({ name, email, phoneNumber });
+        const trimmedData = {
+            name: name.trim(),
+            email: email.trim().toLowerCase(),
+            phoneNumber: phoneNumber.trim()
+        };
 
-        res.status(200).json({
+        const data = await customerService.addCustomer(trimmedData);
+
+        res.status(201).json({
             success: true,
             data: data
         });
@@ -76,21 +95,47 @@ export async function updateCustomerHandler(req, res){
         const { id } = req.params;
         const { name, email, phoneNumber } = req.body;
 
-        if(!name || !email || !phoneNumber || !id){
-            console.log("Invalid id or body for customer");
+        if(!id){
             return res.status(400).json({
                 success: false,
-                error: "Invalid Body or Params"
+                error: "Invalid ID is required"
             });
         }
 
-        const data = await customerService.updateCustomer(id, { name, email, phoneNumber });
+        if(
+            !name || !email || !phoneNumber ||
+            typeof name !== "string" ||
+            typeof email !== "string" ||
+            typeof phoneNumber !== "string" ||
+            !name.trim() ||
+            !email.trim() ||
+            !phoneNumber.trim()
+        ){
+            return res.status(400).json({
+                success: false,
+                error: "Name, email, and phone number are required."
+            });
+        }
+
+        const trimmedData = {
+            name: name.trim(),
+            email: email.trim().toLowerCase(),
+            phoneNumber: phoneNumber.trim()
+        };
+
+        const data = await customerService.updateCustomer(id, trimmedData);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: 'Customer not found'
+            });
+        }
 
         res.status(200).json({
             success: true,
             data: data
         });
-
     } catch(error){
         console.error(`updateCustomerHandler Error: `, error);
         res.status(500).json({
@@ -105,18 +150,24 @@ export async function deleteCustomerHandler(req, res){
         const { id } = req.params;
 
         if(!id){
-            console.error("invalid id on deleting customer handler");
             return res.status(400).json({
                 success: false,
-                error: 'Invalid Id in params'
+                error: 'Customer ID is required'
             });
         }
 
-        await customerService.deleteCustomer(id);
+        const data = await customerService.deleteCustomer(id);
+
+        if(!data){
+            return res.status(404).json({
+                success: false,
+                error: "Customer not found"
+            });
+        }
 
         res.status(200).json({
             success: true,
-            data: true
+            data: data
         });
     } catch(error){
         console.error(`deleteCustomerHandler Error: `, error);
