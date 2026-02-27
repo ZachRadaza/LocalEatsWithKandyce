@@ -156,18 +156,11 @@ export async function deleteCustomerHandler(req, res){
             });
         }
 
-        const data = await customerService.deleteCustomer(id);
-
-        if(!data){
-            return res.status(404).json({
-                success: false,
-                error: "Customer not found"
-            });
-        }
+        await customerService.deleteCustomer(id);
 
         res.status(200).json({
             success: true,
-            data: data
+            data: true
         });
     } catch(error){
         console.error(`deleteCustomerHandler Error: `, error);

@@ -1,10 +1,10 @@
 import type React from "react";
 import type { Order, Customer, MenuItem, OrderMenuItem } from "../../schemas/schemas";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import OrderItemComp from "../../components/non-admin/OrderItemComp";
+import Popup from "../../components/popups/Popup";
 import { useMemo, useState } from "react";
 import { ExtensionService } from "../../utils/ExtensionService";
-import { wait } from "../../utils/RandomFunctions";
 import "./Cart.css";
 
 type CartContext = {
@@ -19,8 +19,12 @@ export default function Cart(){
     const [placingOrder, setPlacingOrder] = useState<boolean>(false);
     const [isPickUp, setIsPickUp] = useState<boolean>(false);
     const [orderSuccess, setOrderSuccess] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [errorTitle, setErrorTitle] = useState<string>("");
 
-    const navigate = useNavigate();
+    const [successPopup, setSuccessPopup] = useState<boolean>(false);
+    const [errorPopup, setErrorPopup] = useState<boolean>(false);
+
     const [location, setLocation] = useState<string>("");
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -93,11 +97,20 @@ export default function Cart(){
 
     async function placeOrder(){
         try{
-            if(!orderItems.length)
+            if(!orderItems.length){
+                setErrorTitle("No Items in Cart");
+                setErrorMessage("Please have items in cart before ordering.");
+                setErrorPopup(true);
                 return;
+            }
 
-            if(!validateInputs())
+            if(!validateInputs()){
+                setErrorTitle("Incomplete Order Information");
+                setErrorMessage("Please fill out all required information before ordering.");
+                setErrorPopup(true);
+
                 return;
+            }
 
             setPlacingOrder(true);
 
@@ -120,21 +133,18 @@ export default function Cart(){
                 comment: comment
             };
 
-            const success = await ExtensionService.addOrder(order);
+            await ExtensionService.addOrder(order);
+            ExtensionService.sendConfirmationEmail(customer.email, order);
 
             setPlacingOrder(false);
+            setSuccessPopup(true);
+            setOrderSuccess(true);
 
-            if(success){
-                ExtensionService.sendConfirmationEmail(customer.email, order);
-
-                setOrderSuccess(true);
-                await wait(4000)
-                clearCart();
-            } else {
-                setOrderSuccess(false);
-            }
+            clearCart();
         } catch(error){
             console.error("Error in Placing Order", error);
+            setErrorMessage("Error has Occured in placing order. Please contact Kandyce");
+            setErrorPopup(true);
         }
     }
 
@@ -158,12 +168,26 @@ export default function Cart(){
 
             return newMenu;
         });
-
-        navigate('/');
     }
 
     return (
         <div className="cart-cont">
+            <div className="popups">
+                <Popup
+                    title={ "Order Successfully Placed!" }
+                    message={ "Order has successfully be placed. Kandyce will reach out to you when she is ready" }
+                    positiveMessage={ true }
+                    isOpened={ successPopup }
+                    closePopup={ () =>  setSuccessPopup(false) }
+                />
+                <Popup
+                    title={ errorTitle }
+                    message={ errorMessage }
+                    positiveMessage={ false }
+                    isOpened={ errorPopup }
+                    closePopup={ () => setErrorPopup(false) }
+                />
+            </div>
             <div className="item-display">
                 <h1 className="my-order">My Order</h1>
                 <div className="orders">

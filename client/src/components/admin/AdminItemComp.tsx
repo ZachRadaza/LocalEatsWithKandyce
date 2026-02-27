@@ -10,6 +10,30 @@ type AdminItemCompProp = {
 export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
     const [canEdit, setCanEdit] = useState<boolean>(false);
     const [deleted, setDeleted] = useState<boolean>(false);
+    const [unfilledName, setUnfilledName] = useState<boolean>(false);
+    const [unfilledPrice, setUnfilledPrice] = useState<boolean>(false);
+    const [unfilledDesc, setUnfilledDesc] = useState<boolean>(false);
+
+    function verifyFilled(){
+        return (
+            !item.name || !item.description ||
+            !item.name.trim() ||
+            !item.description.trim() ||
+            !item.price
+        )
+    }
+
+    function markUnfilled(){
+        !item.name || !item.name.trim()
+            ? setUnfilledName(true)
+            : setUnfilledName(false);
+
+        !item.description || !item.description.trim()
+            ? setUnfilledDesc(true)
+            : setUnfilledDesc(false);
+
+        !item.price ? setUnfilledPrice(true) : setUnfilledPrice(false);
+    }
 
     return (
         <div className={ !deleted ? "admin-item-comp-cont" : "admin-item-comp-cont deleted" }>
@@ -20,7 +44,15 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                         <button
                             className="edit-btn"
                             onClick={ () => {
-                                setCanEdit(!canEdit);
+                                if(canEdit){
+                                    !verifyFilled()
+                                        ? setCanEdit(!canEdit)
+                                        : null;
+
+                                    markUnfilled()
+                                } else
+                                    setCanEdit(!canEdit);
+
                                 item.edited = true;
                             }}
                         >
@@ -40,7 +72,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                 <div className="top-cont">
                     <div className="headers">
                         <input
-                            className="name"
+                            className={ !unfilledName ? "name" : "name unfilled" }
                             value={ item.name }
                             type="text"
                             disabled={ !canEdit }
@@ -50,7 +82,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                         <div className="price-cont">
                             <p>$</p>
                             <input
-                                className="price"
+                                className={ !unfilledPrice ? "price" : "price unfilled" }
                                 value={ item.price }
                                 type="number"
                                 disabled={ !canEdit }
@@ -89,7 +121,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                         />
                     </div>
                     <textarea 
-                        className="description"
+                        className={ !unfilledDesc ? "description" : "description unfilled" }
                         value={ item.description }
                         disabled={ !canEdit }
                         onChange={ event => onPatch({ description: event.target.value }) }

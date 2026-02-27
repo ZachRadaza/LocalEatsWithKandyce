@@ -168,14 +168,7 @@ export async function deleteOrderItemHandler(req, res){
             });
         }
 
-        const data = await orderItemService.deleteOrderItem(id);
-
-        if(!data){
-            return raw.status(404).json({
-                success: false,
-                error: "OrderItem not found"
-            });
-        }
+        await orderItemService.deleteOrderItem(id);
 
         res.status(200).json({
             success: true,

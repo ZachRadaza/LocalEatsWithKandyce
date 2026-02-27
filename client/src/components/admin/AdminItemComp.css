@@ -83,6 +83,10 @@
     font-weight: 600;
 }
 
+.admin-item-comp-cont .name.unfilled, .admin-item-comp-cont .price.unfilled{
+    border-bottom: 0.1rem solid var(--color-red);
+}
+
 .admin-item-comp-cont .price-cont{
     display: flex;
     flex-direction: row;
@@ -148,6 +152,10 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.5rem;
+}
+
+.admin-item-comp-cont .description.unfilled{
+    border: 0.1rem solid var(--color-red);
 }
 
 .admin-item-comp-cont .description:disabled{ border: 0.1rem solid var(--color-bg); }

@@ -196,18 +196,11 @@ export async function deleteItemHandler(req, res){
             await itemService.deleteImagesFromBucket({ paths: path })
         }
 
-        const data = await itemService.deleteItem(id);
-
-        if(!data){
-            return res.status(404).json({
-                success: false,
-                error: 'Item not found'
-            })
-        }
+        await itemService.deleteItem(id);
 
         res.status(200).json({
             success: true,
-            data: data
+            data: true
         });
     } catch(error){
         console.error(`deleteItemHandler Error: `, error);

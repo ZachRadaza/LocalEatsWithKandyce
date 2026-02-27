@@ -1,7 +1,7 @@
 import type { OrderFull } from "../../schemas/schemas";
 import { useState } from "react";
-import "./OrderComp.css";
 import OrderItemComp from "../non-admin/OrderItemComp";
+import "./OrderComp.css";
 
 type OrderCompProp = {
     order: OrderFull;
@@ -44,7 +44,6 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
                             event.stopPropagation();
                             declineOrder();
                         }}
-                        
                     >
                         Decline
                     </button>

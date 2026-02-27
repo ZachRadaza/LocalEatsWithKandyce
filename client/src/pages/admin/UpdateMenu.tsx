@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import type { Category } from "../../schemas/schemas";
 import { ExtensionService } from "../../utils/ExtensionService";
 import AdminCategoryComp from "../../components/admin/AdminCategoryComp";
+import OptionsPopup from "../../components/popups/OptionsPopup";
+import Popup from "../../components/popups/Popup";
 import "./UpdateMenu.css";
 
 export default function UpdateMenu(){
@@ -9,6 +11,9 @@ export default function UpdateMenu(){
     const [currentCategory, setCurrentCategory] = useState<Category>({ id: 'temp', name: "temp" });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const [openedCategoryPopup, setOpenedCategoryPopup] = useState<boolean>(false);
+    const [openedErrorPopup, setOpenedErrorPopup] = useState<boolean>(false);
     
     useEffect(() => {
         let cancelled = false;
@@ -58,25 +63,50 @@ export default function UpdateMenu(){
             setCurrentCategory(categories[0] ?? { id:'temp', name: 'temp' });
         } catch(error){
             console.error("Error in Deleting Category: ", error);
+            setOpenedErrorPopup(true);
         }
     }
 
     if(loading)
         return (
             <div className="loading-page">
-
+                <h5>Local Eats With Kandyce</h5>
+                <p>Loading Menu...</p>
             </div>
         );
 
     if(error)
         return (
             <div className="error-page">
-                <h1>Error: { error }</h1>
+                <h5>Local Eats With Kandyce</h5>
+                <p>Sorry for the inconvience</p>
+                <p>Error: { error } </p>
             </div>
         );
 
     return (
         <div className="admin-menu-cont">
+            <div className="popups">
+                <OptionsPopup
+                    title={ "Delete Category" }
+                    message={ "Are you sure you want to delete the Category? Deleting the Category will delete all the Items inside it" }
+                    isOpened={ openedCategoryPopup }
+                    option1Title={ "Cancel" }
+                    option2Title={ "Delete Category" }
+                    option1Func={ () => setOpenedCategoryPopup(false) }
+                    option2Func={ () => { 
+                        deleteCategory(currentCategory.id!);  
+                        setOpenedCategoryPopup(false);
+                    } }
+                />
+                <Popup
+                    title={ "Error in Deleting Category" }
+                    message={ "An error has occured in deleting the Category. Please contact Zach for help" }
+                    isOpened={ openedErrorPopup }
+                    positiveMessage={ false }
+                    closePopup={() => setOpenedErrorPopup(false) }
+                />
+            </div>
             <nav className="categories">
                 { categories.map(category => {
                     return (
@@ -100,7 +130,7 @@ export default function UpdateMenu(){
                 <AdminCategoryComp 
                     key={'current-category'} 
                     category={ currentCategory! }
-                    deleteCategory={ () => deleteCategory(currentCategory.id!) }
+                    deleteCategory={ () => setOpenedCategoryPopup(true) }
                 />
             </div>
         </div>

@@ -183,14 +183,7 @@ export async function deleteOrderHandler(req, res){
             });
         }
 
-        const customer = await customerService.deleteCustomer(order.customers.id);
-
-        if(!customer){
-            return res.status(404).json({
-                success: false,
-                error: "Customer not found"
-            });
-        }
+        await customerService.deleteCustomer(order.customers.id);
 
         res.status(200).json({
             success: true,

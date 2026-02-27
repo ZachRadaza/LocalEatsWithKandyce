@@ -130,18 +130,11 @@ export async function deleteCategoryHandler(req, res){
             });
         }
 
-        const data = await categoryService.deleteCategory(id);
-
-        if(!data){
-            return res.status(404).json({
-                success: false,
-                error: "Category not found"
-            });
-        }
+        await categoryService.deleteCategory(id);
 
         res.status(200).json({
             success: true,
-            data: data
+            data: true
         });
     } catch(error){
         console.error(`deleteCategoryHandler Error: `, error);

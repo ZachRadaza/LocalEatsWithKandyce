@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
 import type { OrderFull, Filter, Sort } from "../../schemas/schemas";
 import { ExtensionService } from "../../utils/ExtensionService";
-import "./Orders.css";
 import OrderComp from "../../components/admin/OrderComp";
+import DeclinePopup from "../../components/popups/DeclinePopup";
+import Popup from "../../components/popups/Popup";
+import "./Orders.css";
 
 export default function Orders(){
     const [orders, setOrders] = useState<OrderFull[]>([]);
@@ -10,6 +12,12 @@ export default function Orders(){
     const [filterType, setFilterType] = useState<Filter>("All");
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const [openedDecline, setOpenedDecline] = useState<boolean>(false);
+    const [orderIDDecline, setOrderIDDecline] = useState<string>("");
+    const [openedPopup, setOpenedPopup] = useState<boolean>(false);
+    const [messagePopup, setMessagePopup] = useState<string>("");
+    const [titlePopup, setTitlePopup] = useState<string>("");
 
     const totalOrdersAccepted = useMemo(() => {
         const ordersAccepted = orders.filter(order => order.accepted);
@@ -96,10 +104,11 @@ export default function Orders(){
             ExtensionService.sendAcceptEmail(matchingOrder.customers.email, matchingOrder);
         } catch(error){
             console.error("Error in Accepting Order: ", error);
+            openPopupMessage("Accepting Order");
         }
     }
     
-    async function declineOrder(orderID: string){
+    async function declineOrder(orderID: string, message: string){
         try{
             const matchingOrder = orders.find(order => order.id === orderID);
 
@@ -107,12 +116,11 @@ export default function Orders(){
                 oldOrders.filter(order => order.id !== orderID)
             );
 
-            const message = "we dont want it";
-
             ExtensionService.deleteOrder(orderID);
             ExtensionService.sendDeclineEmail(matchingOrder?.customers.email!, matchingOrder!, message);
         } catch(error){
             console.error("Error in Declining Order: ", error);
+            openPopupMessage("Declining Order");
         }
     }
 
@@ -129,7 +137,15 @@ export default function Orders(){
             ExtensionService.sendCompleteEmail(customer?.email!, matchingOrder?.id!, customer?.name!);
         } catch(error){
             console.error("Error in Completing Order", error);
+            openPopupMessage("Completing Order");
         }
+    }
+
+    function openPopupMessage(type: string){
+        setTitlePopup(`Error in ${type}`);
+        setMessagePopup(`Error has occured in ${type.toLowerCase()}. Please contact the GOAT Zach for issues.`);
+
+        setOpenedPopup(true);
     }
 
     useEffect(() => {
@@ -172,7 +188,7 @@ export default function Orders(){
     if(loading)
         return (
             <div className="loading-page">
-                <p>Local Eats With Kandyce</p>
+                <h5>Local Eats With Kandyce</h5>
                 <p>Loading Menu...</p>
             </div>
         );
@@ -180,7 +196,7 @@ export default function Orders(){
     if(error)
         return (
             <div className="error-page">
-                <p>Local Eats With Kandyce</p>
+                <h5>Local Eats With Kandyce</h5>
                 <p>Sorry for the inconvience</p>
                 <p>Error: { error } </p>
             </div>
@@ -188,6 +204,24 @@ export default function Orders(){
 
     return (
         <div className="orders-page-cont">
+            <div className="popups">
+                <DeclinePopup 
+                    isOpened={ openedDecline }
+                    showPopup={ (proceed, message) => { 
+                        setOpenedDecline(false);
+                        if(proceed){
+                            declineOrder(orderIDDecline, message);
+                        }
+                    } }
+                />
+                <Popup
+                    isOpened={ openedPopup }
+                    title={ titlePopup }
+                    message={ messagePopup }
+                    positiveMessage={ false }
+                    closePopup={ () => setOpenedPopup(false) }
+                />
+            </div>
             <div className="dashboard">
                 <div className="total-num-orders">
                     <h2 className="total-num-orders-num">{ orders.length }</h2>
@@ -262,7 +296,10 @@ export default function Orders(){
                             key={ order.id } 
                             order={ order } 
                             acceptOrder={ () => acceptOrder(order.id!) } 
-                            declineOrder={ () => declineOrder(order.id!) }
+                            declineOrder={ () => {
+                                setOpenedDecline(true);
+                                setOrderIDDecline(order.id!);
+                            } }
                             completeOrder={ () => completeOrder(order.id!) }
                         />
                     ) }

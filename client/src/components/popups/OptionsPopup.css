@@ -1,0 +1,65 @@
+.whole-screen{
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.whole-screen.closed{
+    display: none;
+}
+
+.options-popup-cont{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: fit-content;
+    max-width: 400px;
+    justify-content: center;
+    background: var(--color-bg);
+    border: 0.1rem solid var(--color-text);
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.options-popup-cont .message-cont{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+}
+
+.options-popup-cont .btns-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 0.2rem;
+}
+
+.options-popup-cont .btns-cont button{ width: 100%; }
+
+.options-popup-cont .option-one{
+    background: var(--color-red);
+}
+
+.options-popup-cont .option-one:hover{
+    color: var(--color-bg);
+    border: 0.1rem solid var(--color-red);
+}
+
+.options-popup-cont .option-two{
+    background: var(--color-green);
+}
+
+.options-popup-cont .option-two:hover{
+    color: var(--color-bg);
+    border: 0.1rem solid var(--color-green);
+}
