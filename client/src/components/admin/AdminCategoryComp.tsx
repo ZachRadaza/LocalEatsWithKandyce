@@ -29,7 +29,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
 
     function createItem(){
         const newItem: AdminItem = {
-            id: `new-item-${items.length + 1}`,
+            id: `new-item-${crypto.randomUUID()}`,
             name: "",
             description: "",
             imageLink: "",
@@ -40,7 +40,8 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             categoryID: category.id,
             edited: false,
             deleted: false,
-            file: null
+            file: null,
+            custom: false,
         };
 
         setItems(oldItems => [...oldItems, newItem]);

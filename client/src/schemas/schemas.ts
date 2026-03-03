@@ -1,9 +1,9 @@
-export interface Category{
+export type Category = {
     id: string | null;
     name: string;
 }
 
-export interface Item{
+export type Item = {
     id: string | null;
     name: string;
     description: string;
@@ -13,6 +13,7 @@ export interface Item{
     category: Category | null;
     categoryID: string | null;
     price: number | "";
+    custom: boolean;
 }
 
 export type MenuItem = Item & {
@@ -25,14 +26,14 @@ export type AdminItem = Item & {
     file: File | null;
 }
 
-export interface Customer{
+export type Customer = {
     id: string | null;
     name: string;
     phone: string;
     email: string;
 }
 
-export interface OrderItem{
+export type OrderItem = {
     id: string | null;
     itemID: string;
     orderID: string | null;
@@ -46,9 +47,10 @@ export type OrderMenuItem = OrderItem & {
     categoryID: string;
 }
 
-export interface Order{
+export type Order = {
     id: string | null;
     orderItems: OrderMenuItem[];
+    customItems: MenuItem[];
     dateOrdered: Date | string;
     dateDue: Date | string;
     customers: Customer;

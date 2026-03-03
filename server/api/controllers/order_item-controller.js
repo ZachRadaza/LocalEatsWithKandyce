@@ -195,7 +195,7 @@ export function objectizeOrderItem(rawBody){
         !orderID ||
         !itemID ||
         !quantity ||
-        !price
+        price < 0
     )
         return false;
 
@@ -208,14 +208,18 @@ export function objectizeOrderItem(rawBody){
 }
 
 export function convertToFrontEndOI(orderItem){
+    const item = orderItem.item;
     return {
         id: orderItem.id,
         orderID: orderItem.order_id,
         quantity: orderItem.quantity,
         price: orderItem.price,
         createdAt: orderItem.created_at,
-        name: orderItem.item.name,
-        imageLink: orderItem.item.image_link,
-        categoryID: orderItem.item.category.id
+        name: item.name,
+        description: item.description,
+        imageLink: item.image_link,
+        vegan: item.vegan,
+        categoryID: item.category.id,
+        custom: item.custom
     }
 }

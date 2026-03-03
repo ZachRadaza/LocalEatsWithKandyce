@@ -45,7 +45,7 @@ export default function Orders(){
 
     const numItems = useMemo(() => {
         return orders.reduce((sumItems, o) => {
-            return sumItems + o.orderItems.length
+            return sumItems + o.orderItems.length + o.customItems.length;
         }, 0);
     }, [orders]);
 

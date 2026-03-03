@@ -58,8 +58,21 @@
 }
 
 .menu-cont #custom-item .category-items{
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     width: 100%;
+    gap: 1rem;
+    padding: 1rem;
 }
 
+.menu-cont #custom-item .category-items > :only-child { grid-column: 1 / -1; }
+
+.menu-cont #custom-item .add-custom{ 
+    background: var(--color-blue); 
+    font-size: 2rem;
+}
+
+.menu-cont #custom-item .add-custom:hover{ 
+    color: var(--color-bg); 
+    border: 0.1rem solid var(--color-blue); 
+}

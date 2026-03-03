@@ -85,6 +85,23 @@ export async function getItemsFromCategoryHandler(req, res){
     }
 }
 
+export async function getAllItemsCustomHandler(req, res){
+    try{
+        const data = await itemService.getAllItemsCustom();
+
+        res.status(200).json({
+            success: true,
+            data: data
+        });
+    } catch(error){
+        console.error(`getAllItemsCustomHandler Error: `, error);
+        res.status(500).json({
+            success: false,
+            error: error
+        });
+    }
+}
+
 export async function addItemHandler(req, res){
     try{
         const newItem = objectizeItem(req.body);
@@ -219,13 +236,14 @@ export function objectizeItem(rawBody){
         price,
         contains,
         vegan,
-        categoryID
+        categoryID,
+        custom
     } = rawBody;
 
     if(
         !name ||
         !description ||
-        !price ||
+        price < 0 ||
         !contains ||
         !categoryID
     )
@@ -236,9 +254,10 @@ export function objectizeItem(rawBody){
         description: description,
         image_link: imageLink ?? "",
         price: price,
-        contains: JSON.parse(contains),
+        contains: contains.length > 0 ? JSON.parse(contains) : [],
         vegan: vegan === "true",
-        category_id: categoryID
+        category_id: categoryID,
+        custom: custom ?? false
     };
 }
 

@@ -5,16 +5,26 @@ import OrderItemComp from "../../components/non-admin/OrderItemComp";
 import Popup from "../../components/popups/Popup";
 import { useMemo, useState } from "react";
 import { ExtensionService } from "../../utils/ExtensionService";
+import CustomItemComp from "../../components/non-admin/CustomItemComp";
 import "./Cart.css";
 
 type CartContext = {
     orderItems: OrderMenuItem[];
     setOrderItems: React.Dispatch<React.SetStateAction<OrderMenuItem[]>>;
     setMenu: React.Dispatch<React.SetStateAction<Map<string, MenuItem[]>>>;
+    customItems: MenuItem[];
+    setCustomItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+    patchCustomItem: (customItemID: string, patch: Partial<MenuItem>) => void;
+    deleteCustomItem: (customItemID: string) => void;
 };
 
 export default function Cart(){
-    const { orderItems, setOrderItems, setMenu } = useOutletContext<CartContext>()
+    const { 
+        orderItems, setOrderItems, 
+        setMenu, 
+        customItems, setCustomItems, 
+        patchCustomItem, deleteCustomItem
+    } = useOutletContext<CartContext>()
 
     const [placingOrder, setPlacingOrder] = useState<boolean>(false);
     const [isPickUp, setIsPickUp] = useState<boolean>(false);
@@ -42,7 +52,7 @@ export default function Cart(){
     }, [orderItems]);
 
     const validInput = (value: string) => {
-        return value ? "input-cont" : "input-cont invalid";
+        return value ? "input-pair" : "input-pair invalid";
     };
 
     const formatPhone = (value: string) => {
@@ -97,7 +107,7 @@ export default function Cart(){
 
     async function placeOrder(){
         try{
-            if(!orderItems.length){
+            if(!(orderItems.length + customItems.length)){
                 setErrorTitle("No Items in Cart");
                 setErrorMessage("Please have items in cart before ordering.");
                 setErrorPopup(true);
@@ -124,6 +134,7 @@ export default function Cart(){
             const order: Order = {
                 id: null,
                 orderItems: orderItems,
+                customItems: customItems,
                 dateOrdered: "",
                 dateDue: dateDue,
                 customers: customer,
@@ -154,6 +165,7 @@ export default function Cart(){
 
     function clearCart(){
         setOrderItems([]);
+        setCustomItems([]);
         setMenu(oldMenu => {
             const newMenu = new Map(
                 [...oldMenu].map(([category, items]) => {
@@ -191,7 +203,7 @@ export default function Cart(){
             <div className="item-display">
                 <h1 className="my-order">My Order</h1>
                 <div className="orders">
-                    { totalAmount > 0 ? ( 
+                    { (totalAmount > 0 || customItems.length !== 0) ? ( 
                         <>
                             { orderItems.map(oi => (
                                 <OrderItemComp 
@@ -201,7 +213,15 @@ export default function Cart(){
                                     enableBtns={ true }
                                 />
                             )) }
-                            <div className="input-cont">
+                            { customItems.map(ci => (
+                                <CustomItemComp
+                                    key={ ci.id }
+                                    customItem={ ci }
+                                    onPatch={ (patch) => patchCustomItem(ci.id!, patch) }
+                                    deleteCustomItem={ () => deleteCustomItem(ci.id!) }
+                                />
+                            )) }
+                            <div className="input-pair">
                                 <h6>Additional Information</h6>
                                 <textarea 
                                     value={ comment }
@@ -248,7 +268,7 @@ export default function Cart(){
                             placeholder="(916) 707-7037"
                         />
                     </div>
-                    <div className="input-cont delivery-date">
+                    <div className="input-pair delivery-date">
                         <h6>{ isPickUp ? "Pick Up" : "Delivery" } Date</h6>
                         <input 
                             type="datetime-local"

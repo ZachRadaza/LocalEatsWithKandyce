@@ -82,6 +82,25 @@ button:hover{
     text-align: center;
 }
 
+.input-pair{
+    display: column;
+    border: 0.1rem solid var(--color-text);
+    width: 100%;
+}
+
+.input-pair.invalid{ border: 0.1rem solid var(--color-red);}
+.input-pair h6{ margin: 0.3rem 0.5rem 0px 0.5rem; }
+
+.input-pair input, .input-pair textarea{
+    all: unset;
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    color: var(--color-text);
+    font-weight: 500;
+    width: 95%;
+    padding: 0px 0.5rem 0.3rem 0.5rem;
+}
+
 @media (prefers-color-scheme: light) {
     :root {
         color: #213547;

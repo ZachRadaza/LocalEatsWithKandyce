@@ -20,4 +20,6 @@ itemRouter.delete("/:id", itemHandler.deleteItemHandler);
 
 itemRouter.get("/from/:categoryid", itemHandler.getItemsFromCategoryHandler);
 
+itemRouter.get("/custom/", itemHandler.getAllItemsCustomHandler);
+
 export default itemRouter;

@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { isPrime } from "../../utils/RandomFunctions";
-import type { Category } from "../../schemas/schemas";
-import type { MenuItem } from "../../pages/non-admin/Menu";
+import type { Category, MenuItem } from "../../schemas/schemas";
 import ItemComp from "./ItemComp";
 import "./CategoryComp.css";
 

@@ -1,8 +1,9 @@
 import type { Category, MenuItem } from "../../schemas/schemas";
-import { useState } from "react";
+import React, { useState } from "react";
 import CategoryComp from "../../components/non-admin/CategoryComp";
 import { scrollToID } from "../../utils/RandomFunctions";
 import { useOutletContext } from "react-router-dom";
+import CustomItemComp from "../../components/non-admin/CustomItemComp";
 import "./Menu.css";
 
 type MenuContext = {
@@ -10,10 +11,20 @@ type MenuContext = {
     categories: Set<Category>;
     menu: Map<string, MenuItem[]>;
     setMenu: React.Dispatch<React.SetStateAction<Map<string, MenuItem[]>>>;
+    customItems: MenuItem[];
+    setCustomItems: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+    patchCustomItem: (customItemID: string, patch: Partial<MenuItem>) => void;
+    deleteCustomItem: (customItemID: string) => void
 }
 
 export default function Menu(){
-    const { addOrderItem, categories, menu, setMenu } = useOutletContext<MenuContext>();
+    const { 
+        addOrderItem, 
+        categories, 
+        menu, setMenu, 
+        customItems, setCustomItems, 
+        patchCustomItem, deleteCustomItem
+    } = useOutletContext<MenuContext>();
 
     const [activeNavId, setActiveNavId] = useState<string | null>([...categories][0].id ?? null);
 
@@ -44,6 +55,26 @@ export default function Menu(){
         setActiveNavId(clickedId);
 
         scrollToID(clickedId)
+    }
+
+    function addCustomItem(){
+        const newCustomItem: MenuItem = {
+            id: `custom-item-${crypto.randomUUID()}`,
+            name: "",
+            description: "",
+            imageLink: "",
+            contains: [],
+            vegan: false,
+            price: 0,
+            category: null,
+            categoryID: [...categories][0].id,
+            custom: true,
+            quantity: 1
+        };
+
+        setCustomItems(oldItems => {
+            return [...oldItems, newCustomItem];
+        });
     }
 
     return (
@@ -88,7 +119,20 @@ export default function Menu(){
                         <h5>M</h5>
                     </div>
                     <div className="category-items">
-                        
+                        { customItems.map(item => 
+                            <CustomItemComp
+                                key={ item.id }
+                                customItem={ item }
+                                onPatch={ (patch) => patchCustomItem(item.id!, patch) }
+                                deleteCustomItem={ () => deleteCustomItem(item.id!) }
+                            />
+                        ) }
+                        <button
+                            className="add-custom"
+                            onClick={ () => addCustomItem() }
+                        >
+                            Add Custom Item
+                        </button>
                     </div>
                 </div>
             </div>

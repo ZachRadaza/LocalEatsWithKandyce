@@ -1,0 +1,44 @@
+.custom-item-cont{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    border: 0.1rem solid var(--color-text);
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.custom-item-cont .others-cont{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-item-cont .others-cont .vegan-cont{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.custom-item-cont .others-cont .vegan-cont input{
+    all: unset;
+    cursor: pointer;
+    border: 0.1rem solid var(--color-text);
+    height: 1rem;
+    width: 1rem;
+}
+
+.custom-item-cont .others-cont .vegan-cont input:checked{ background: var(--color-green); }
+
+.custom-item-cont .quantity-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.custom-item-cont .quantity-cont button{ line-height: 0.8; }
+
+.custom-item-cont .delete-btn{ background: var(--color-red); }
+.custom-item-cont .delete-btn:hover{ border: 0.1rem solid var(--color-red); }

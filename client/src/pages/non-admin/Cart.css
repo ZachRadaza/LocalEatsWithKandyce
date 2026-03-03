@@ -56,25 +56,6 @@
     align-items: center;
 }
 
-.cart-cont .input-cont{
-    display: column;
-    border: 0.1rem solid var(--color-text);
-    width: 100%;
-}
-
-.cart-cont .input-cont.invalid{ border: 0.1rem solid var(--color-red);}
-.cart-cont .input-cont h6{ margin: 0.3rem 0.5rem 0px 0.5rem; }
-
-.cart-cont .input-cont input, .cart-cont .input-cont textarea{
-    all: unset;
-    font-family: var(--font-body);
-    font-size: 1.1rem;
-    color: var(--color-text);
-    font-weight: 500;
-    width: 95%;
-    padding: 0px 0.5rem 0.3rem 0.5rem;
-}
-
 .cart-cont .delivery-date input{
     cursor: pointer;
 }

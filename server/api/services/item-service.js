@@ -10,13 +10,15 @@ export const itemSelect = `
     vegan,
     category (*),
     created_at,
-    updated_at
+    updated_at,
+    custom
 `;
 
 export async function getAllItems(){
     const { data, error } = await supabase
         .from("item")
-        .select(fullObject);
+        .select(fullObject)
+        .eq("custom", false);
 
     if(error)
         throw error;
@@ -33,6 +35,7 @@ export async function getItem(id){
     const { data, error } = await supabase
         .from("item")
         .select(itemSelect)
+        .eq("custom", false)
         .eq("id", id)
         .single();
 
@@ -52,7 +55,41 @@ export async function getItemsFromCategory(categoryID){
     const { data, error } = await supabase
         .from("item")
         .select(itemSelect)
+        .eq("custom", false)
         .eq("category_id", categoryID);
+
+    if(error)
+        throw error;
+
+    const items = data.map(({ image_link, ...rest }) => ({
+        ...rest,
+        imageLink: image_link
+    }));
+
+    return items;
+}
+
+export async function getAllItemsCustom(){
+    const { data, error } = await supabase
+        .from("item")
+        .select(fullObject)
+        .eq("custom", true);
+
+    if(error)
+        throw error;
+
+    const items = data.map(({ image_link, ...rest }) => ({
+        ...rest,
+        imageLink: image_link
+    }));
+
+    return items;
+}
+
+export async function getAllItemsWithCustom(){
+    const { data, error } = await supabase
+        .from("item")
+        .select(fullObject)
 
     if(error)
         throw error;
@@ -88,6 +125,7 @@ export async function updateItem(id, item){
     const { data, error } = await supabase
         .from("item")
         .update(item)
+        .eq("custom", false)
         .eq("id", id)
         .select(itemSelect)
         .single();

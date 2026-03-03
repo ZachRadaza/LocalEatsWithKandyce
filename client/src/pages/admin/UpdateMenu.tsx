@@ -46,7 +46,7 @@ export default function UpdateMenu(){
 
     function addCategoryClicked(){
         const catNum = categories.length + 1;
-        const newCategory: Category = { id: `new-cat-${catNum}`, name: `New Category ${catNum}`};
+        const newCategory: Category = { id: `new-cat-${crypto.randomUUID()}`, name: `New Category ${catNum}`};
 
         setCategories([...categories, newCategory]);
 

@@ -60,6 +60,15 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
                                 enableBtns={ false }
                             />
                         ) }
+                        { order.customItems.map(customItems =>
+                            <div 
+                                key={ customItems.id }
+                                className="custom-order"
+                            >
+                                <h5>{ customItems.name } <span>Custom Order</span></h5>
+                                <p>{ customItems.description }. { customItems.vegan ? "Vegan Please." : "" }</p>
+                            </div>
+                        )}
                         <div className="total">
                             <h6>Total</h6>
                             <p>${ order.price }</p>

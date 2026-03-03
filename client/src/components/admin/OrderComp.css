@@ -120,6 +120,19 @@
     margin: 1rem 0px;
 }
 
+.order-comp-cont .custom-order{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 0.1rem solid var(--color-text);
+}
+
+.order-comp-cont .custom-order h5 span{
+    font-family: var(--font-body);
+    opacity: 0.7;
+    font-size: 0.8rem;
+}
+
 .order-comp-cont .total{
     display: flex;
     flex-direction: row;

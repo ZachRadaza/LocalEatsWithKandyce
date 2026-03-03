@@ -6,6 +6,7 @@ import "./Layout.css";
 
 export default function RootLayout() {
     const [orderItems, setOrderItems] = useState<OrderMenuItem[]>([]);
+    const [customItems, setCustomItems] = useState<MenuItem[]>([]);
     const [categories, setCategories] = useState<Set<Category>>(new Set);
     const [menu, setMenu] = useState<Map<string, MenuItem[]>>(new Map());
     const [loading, setLoading] = useState(true);
@@ -15,10 +16,16 @@ export default function RootLayout() {
     const navigate = useNavigate();
 
     const totalNumber = useMemo(() => {
-        return orderItems.reduce((sum, oi) => {
+        const menuAmount = orderItems.reduce((sum, oi) => {
             return sum + oi.quantity;
         }, 0);
-    }, [orderItems]);
+
+        const customAmount = customItems.reduce((sum, ci) => {
+            return sum + ci.quantity;
+        }, 0)
+
+        return menuAmount + customAmount;
+    }, [orderItems, customItems]);
 
     const addOrderItem = (item: MenuItem) => {
         setOrderItems(oldOI => {
@@ -53,6 +60,22 @@ export default function RootLayout() {
             }
 
             return cleaned;
+        });
+    }
+
+    const patchCustomItem = (customItemID: string, patch: Partial<MenuItem>) => {
+        setCustomItems(oldItems => {
+            return oldItems.map(item => {
+                return item.id === customItemID
+                    ? { ...item, ...patch }
+                    : item;
+            });
+        });
+    }
+
+    function deleteCustomItem(customItemID: string){
+        setCustomItems(oldItems => {
+            return oldItems.filter(item => item.id !== customItemID);
         });
     }
 
@@ -170,8 +193,8 @@ export default function RootLayout() {
             <main>
                 <Outlet 
                     context={{ 
-                        addOrderItem, menu, setMenu, categories,
-                        orderItems, setOrderItems 
+                        addOrderItem, menu, setMenu, categories, customItems, patchCustomItem, setCustomItems,
+                        orderItems, setOrderItems, deleteCustomItem
                     }}
                 />
             </main>

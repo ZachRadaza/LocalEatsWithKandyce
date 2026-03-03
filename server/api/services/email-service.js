@@ -212,16 +212,26 @@ function calcTotal(orderItems) {
     }, 0);
 }
 
-function buildItemsTable(orderItems) {
-    const items = orderItems ?? [];
-
-    const rows = items.map((oi) => {
+function buildItemsTable(orderItems, customItems) {
+    const rowsOrder = orderItems.map((oi) => {
         const lineTotal = Number(oi.price) * Number(oi.quantity);
         return `
             <tr>
                 <td style="padding: 8px 0;">${oi.name}</td>
                 <td style="padding: 8px 0; text-align: center;">${oi.quantity}</td>
                 <td style="padding: 8px 0; text-align: right;">$${money(oi.price)}</td>
+                <td style="padding: 8px 0; text-align: right;"><strong>$${money(lineTotal)}</strong></td>
+            </tr>
+        `;
+    }).join("");
+
+    const rowsCustom = customItems.map((ci) => {
+        const lineTotal = Number(ci.price) * Number(ci.quantity);
+        return `
+            <tr>
+                <td style="padding: 8px 0;">${ci.name}</td>
+                <td style="padding: 8px 0; text-align: center;">${ci.quantity}</td>
+                <td style="padding: 8px 0; text-align: right;">$${money(ci.price)}</td>
                 <td style="padding: 8px 0; text-align: right;"><strong>$${money(lineTotal)}</strong></td>
             </tr>
         `;
@@ -238,7 +248,8 @@ function buildItemsTable(orderItems) {
                 </tr>
             </thead>
             <tbody>
-                ${rows || `<tr><td colspan="4" style="padding: 10px 0;">(No items found)</td></tr>`}
+                ${rowsOrder || `<tr><td colspan="4" style="padding: 10px 0;">(No items found)</td></tr>`}
+                ${rowsCustom || `<tr><td colspan="4" style="padding: 10px 0;">(No items found)</td></tr>`}
             </tbody>
         </table>
     `;
@@ -246,6 +257,7 @@ function buildItemsTable(orderItems) {
 
 function buildOrderBlock(order, options = {}) {
     const orderItems = order?.orderItems ?? [];
+    const customItems = order?.customItems ?? [];
     const customer = order?.customers ?? {};
     const comment = (order?.comment ?? "").trim();
     const location = order?.location ?? "";
@@ -296,7 +308,7 @@ function buildOrderBlock(order, options = {}) {
                 <div style="border: 1px solid #e5e5e5; border-radius: 10px; padding: 16px; margin: 0 0 16px;">
                     <h2 style="margin: 0 0 12px; font-size: 18px;">Items</h2>
 
-                    ${buildItemsTable(orderItems)}
+                    ${buildItemsTable(orderItems, customItems)}
 
                     <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
                         <div style="min-width: 220px;">

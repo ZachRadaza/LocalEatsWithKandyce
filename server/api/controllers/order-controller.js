@@ -2,8 +2,10 @@ import * as orderService from "../services/order-service.js";
 import * as orderItemService from "../services/order_item-service.js";
 import * as customerService from "../services/customer-service.js";
 import * as emailService from "../services/email-service.js";
+import * as itemService from "../services/item-service.js";
 import { objectizeOrderItem } from "./order_item-controller.js";
 import { convertToFrontEndOI } from "./order_item-controller.js";
+import { objectizeItem } from "./item-controller.js";
 
 export async function getAllOrdersHandler(req, res){
     try{
@@ -12,12 +14,16 @@ export async function getAllOrdersHandler(req, res){
         const orders = await Promise.all(
             orderData.map(async (order) => {
                 const orderItemsRaw = await orderItemService.getOrderItemsFrom(order.id);
-                const orderItems = orderItemsRaw.map(oi => 
+                const orderItemsAll = orderItemsRaw.map(oi => 
                     convertToFrontEndOI(oi)
                 )
+
+                const { orderItems, customItems } = segregateOrderItems(orderItemsAll);
+
                 return {
                     ...order,
-                    orderItems
+                    orderItems,
+                    customItems
                 };
             })
         );
@@ -61,11 +67,13 @@ export async function getOrderHandler(req, res){
 
         const orderItemsRaw = await orderItemService.getOrderItemsFrom(id);
 
-        const orderItems = orderItemsRaw.map(oi => 
+        const orderItemsAll = orderItemsRaw.map(oi => 
             convertToFrontEndOI(oi)
         )
 
-        const order = { ...orderData, orderItems };
+        const { orderItems, customItems } = segregateOrderItems(orderItemsAll);
+
+        const order = { ...orderData, orderItems, customItems };
         const data = convertToFrontEnd(order);
 
         res.status(200).json({
@@ -83,7 +91,7 @@ export async function getOrderHandler(req, res){
 
 export async function addOrderHandler(req, res){
     try{
-        const { customer, orderItems, order } = objectizeOrder(req.body);
+        const { customer, orderItems, customItems, order } = objectizeOrder(req.body);
 
         if(!customer || !orderItems || !order){
             return res.status(400).json({
@@ -97,8 +105,25 @@ export async function addOrderHandler(req, res){
         
         const dataRaw = await orderService.addOrder(order);
 
-        for(const item of orderItems){
+        const postCustom = await Promise.all(
+            customItems.map(async (item) => {
+                const fullItem = objectizeItem(item);
+                const addedItem = await itemService.addItem(fullItem);
+
+                return {
+                    orderID: "",
+                    itemID: addedItem.id,
+                    quantity: item.quantity,
+                    price: 0
+                };
+            })
+        );
+
+        const fullOrderItems = [...orderItems, ...postCustom];
+
+        for(const item of fullOrderItems){
             item.orderID = dataRaw.id; 
+
             const orderItem = objectizeOrderItem(item);
 
             await orderItemService.addOrderItem(orderItem);
@@ -174,6 +199,8 @@ export async function deleteOrderHandler(req, res){
             });
         }
 
+        const orderItemsAll = await orderItemService.getOrderItemsFrom(id);
+
         const order = await orderService.removeOrder(id);
 
         if(!order){
@@ -184,6 +211,12 @@ export async function deleteOrderHandler(req, res){
         }
 
         await customerService.deleteCustomer(order.customers.id);
+
+        for(const orderItem of orderItemsAll){
+            const item = orderItem.item;
+            if(item.custom)
+                await itemService.deleteItem(item.id);
+        }
 
         res.status(200).json({
             success: true,
@@ -201,6 +234,7 @@ export async function deleteOrderHandler(req, res){
 function objectizeOrder(rawBody){
     const {
         orderItems,
+        customItems,
         customers,
         dateDue,
         location,
@@ -226,6 +260,7 @@ function objectizeOrder(rawBody){
 
     return {
         orderItems: orderItems,
+        customItems: customItems,
         customer: {
             name: customers.name,
             email: customers.email,
@@ -248,4 +283,18 @@ function convertToFrontEnd(order){
         dateDue: order.date_due,
         dateOrdered: order.date_ordered
     };
+}
+
+function segregateOrderItems(orderItemsAll){
+    const orderItems = [];
+    const customItems = [];
+
+    for(const item of orderItemsAll){
+        if(!item.custom)
+            orderItems.push(item);
+        else
+            customItems.push(item);
+    }
+
+    return { orderItems, customItems };
 }
