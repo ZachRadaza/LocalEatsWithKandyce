@@ -9,6 +9,7 @@ import Orders from './pages/admin/Orders';
 import UpdateMenu from './pages/admin/UpdateMenu';
 import NotFound from './pages/non-admin/NotFound';
 import Documentation from './pages/admin/Documentation';
+import Login from './pages/admin/Login';
 import './App.css';
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
                 <Route path="update-menu" element={ <UpdateMenu /> } />
                 <Route path="documentation" element={ <Documentation /> } />
             </Route>
+
+            <Route path="login" element={ <Login /> } />
 
             <Route path="*" element={ <NotFound />} />
         </Routes>

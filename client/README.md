@@ -1,73 +1,134 @@
-# React + TypeScript + Vite
+# Local Eats With Kandyce - Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend application for the Kandyce Local Eats platform. My first React app.
 
-Currently, two official plugins are available:
+Built with **React + Typescript + Vite**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Project Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+.
+├── index.html                  
+├── package.json
+├── README.md
+├── src
+│   ├── App.tsx                 # Route Definitions
+│   ├── assets                  # Static Assets
+│   ├── components              # Reusable Components
+│   │   ├── admin
+│   │   ├── non-admin
+│   │   └── popups
+│   ├── layouts                 # Route layout wrappers
+│   │   ├── AdminLayout.tsx
+│   │   └── RootLayout.tsx
+│   ├── main.tsx                # React entry point
+│   ├── pages                   # Route pages
+│   │   ├── admin
+│   │   └── non-admin
+│   ├── schemas                 # Schemas used
+│   │   └── schemas.ts
+│   ├── utils                   # Helper functions & API utilities
+│   │   ├── ExtensionService.ts
+│   │   └── RandomFunctions.ts
+│   └── vite.config.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tech Stack
+- React
+- TypeScript
+- Vite
+- React Router
+- Fetch API
+- Custom CSS
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Archetechture
+
+The application is structured by responsibility and user role (admin vs non-admin).
+
+---
+
+### Entry Points
+- `main.tsx` - React application bootstrap.
+- `App.tsx` - Defines application routes and route hierarchy.
+
+---
+
+### Layout (`src/layouts`)
+
+Shared structural wrappers used with React Router `<Outlet />`.
+- `RootLayout` – Customer-facing layout (navigation, global structure)
+- `AdminLayout` – Admin dashboard layout
+- `Layout.css` – Shared layout styling
+
+Layouts separate UI chrome from page logic.
+
+---
+
+## Pages (`src/pages`)
+
+Organized by user type:
+```bash
+pages/
+├── admin
+└── non-admin
 ```
+- `admin/` - Orders, Update Menu
+- `non-admin` - Home, Menu, Cart, etc.
+
+Each folder represents route-level components.
+
+---
+
+### Components (`src/components`)
+
+Reusable UI pieces grouped by purpose:
+```bash
+components/
+├── admin
+├── non-admin
+└── popups
+```
+- `admin/` – Order management components, menu editing UI
+- `non-admin/` – Menu items, cart components, display components
+- `popups/` – Modal dialogs and overlays
+
+This keeps UI modular and separated by feature context.
+
+---
+
+### Schemas (`src/schemas`)
+- Centralized TypeScript type definitions (schemas.ts)
+- Shared interfaces for:
+  - Orders
+  - Menu Items
+  - Categories
+  - Customers
+Ensures strong type safety across pages and services.
+
+---
+
+### Utilities (`src/utils`)
+
+- ExtensionService.ts
+  - Handles API communication with the backend.
+- RandomFunctions.ts
+  - Shared helper utilities.
+Separates business logic from UI components.
+
+---
+
+## Architectural Principles
+
+- Separation of admin and customer logic
+- Layout-based route structure
+- Type-safe API interaction
+- Reusable UI components
+- Service layer abstraction for backend calls
+
+---

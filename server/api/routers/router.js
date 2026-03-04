@@ -5,6 +5,7 @@ import categoryRouter from "./category-router.js";
 import orderItemRouter from "./order_item-router.js";
 import orderRouter from "./order-router.js";
 import emailRouter from "./email-router.js";
+import adminRouter from "./admin-router.js";
 
 const router = Router();
 
@@ -21,5 +22,6 @@ router.use("/orderitem", orderItemRouter);
 router.use("/customer", customerRouter);
 router.use("/order", orderRouter);
 router.use("/email", emailRouter);
+router.use("/admin", adminRouter);
 
 export default router;

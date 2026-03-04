@@ -1,0 +1,20 @@
+.documentation-cont{
+    display: flex;
+    justify-content: center;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+.documentation-cont h1,
+.documentation-cont h2,
+.documentation-cont h3,
+.documentation-cont h4,
+.documentation-cont h5,
+.documentation-cont h6,
+.documentation-cont p{
+    max-width: 90ch;
+    padding: 0.4rem;
+}
+
+.documentation-cont section{ border-bottom: 0.1rem solid var(--color-text-lighter); }
+.documentation-cont section > div{ padding: 0.5rem; }

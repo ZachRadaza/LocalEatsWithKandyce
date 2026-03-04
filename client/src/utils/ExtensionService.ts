@@ -7,6 +7,7 @@ const apiItem = `${apiUrl}/item`;
 const apiOrder = `${apiUrl}/order`;
 const apiOrderItem = `${apiUrl}/orderitem`;
 const apiEmail = `${apiUrl}/email`;
+const apiAdmin = `${apiUrl}/admin`;
 
 export const ExtensionService = {
     
@@ -16,7 +17,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiCategory}/`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -34,7 +36,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiCategory}/${id}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
             });
 
             const body = await res.json();
@@ -52,7 +55,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiItem}/`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -70,7 +74,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiItem}/from/${categoryID}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -88,7 +93,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiItem}/${id}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -106,7 +112,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrder}/`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -124,7 +131,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrder}/${id}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -142,7 +150,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrderItem}/`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -160,7 +169,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrderItem}/from/${orderID}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -178,7 +188,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrderItem}/${id}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -196,7 +207,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiCustomer}/`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -214,7 +226,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiCustomer}/${id}`, {
                 method: 'GET',
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -235,6 +248,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiCategory}/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(category)
             });
 
@@ -266,7 +280,8 @@ export const ExtensionService = {
 
             const res = await fetch(`${apiItem}/`, {
                 method: "POST",
-                body: form
+                body: form,
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -285,6 +300,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiCustomer}/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(customer)
             });
 
@@ -304,6 +320,7 @@ export const ExtensionService = {
         const res = await fetch(`${apiOrderItem}/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(orderItem)
         });
 
@@ -323,6 +340,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiOrder}/`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(order)
             });
 
@@ -344,6 +362,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiCategory}/${category.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(category)
             });
 
@@ -375,7 +394,8 @@ export const ExtensionService = {
 
             const res = await fetch(`${apiItem}/${item.id}`, {
                 method: "PUT",
-                body: form
+                body: form,
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -394,6 +414,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiOrder}/${order.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(order)
             });
 
@@ -413,6 +434,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiOrderItem}/${orderItem.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(orderItem)
             });
 
@@ -432,6 +454,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiCustomer}/${customer.id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify(customer)
             });
 
@@ -452,7 +475,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiCategory}/${id}`, {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -471,6 +495,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiItem}/${id}`, {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ imageLink })
             });
 
@@ -489,7 +514,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrder}/${id}`, {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -507,7 +533,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiOrderItem}/${id}`, {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -525,7 +552,8 @@ export const ExtensionService = {
         try{
             const res = await fetch(`${apiCustomer}/${id}`, {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json" }
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
             });
 
             const body = await res.json();
@@ -544,6 +572,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiEmail}/confirmation`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ sendTo, order })
             });
 
@@ -561,6 +590,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiEmail}/accept`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ sendTo, order })
             });
 
@@ -578,6 +608,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiEmail}/decline`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ sendTo, order, message })
             });
 
@@ -595,6 +626,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiEmail}/reminder`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ sendTo, order })
             });
 
@@ -612,6 +644,7 @@ export const ExtensionService = {
             const res = await fetch(`${apiEmail}/complete`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
+                credentials: "include",
                 body: JSON.stringify({ sendTo, orderID, customerName })
             });
 
@@ -620,6 +653,52 @@ export const ExtensionService = {
             return body;
         } catch(error){
             console.error("sendCompleteEmail Error: ", error);
+            return null;
+        }
+    },
+
+    async login(password: string): Promise<boolean | null>{
+        try{
+            const res = await fetch(`${apiAdmin}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ password }),
+            });
+
+            if(!res.ok)
+                return false;
+
+            return true;
+        } catch(error){
+            console.error("login Error: ", error);
+            return null;
+        }
+    },
+
+    async logout(){
+        try{
+            const res = await fetch(`${apiAdmin}/logout`, {
+                method: "POST",
+                credentials: "include",
+            });
+
+            return res.ok;
+        } catch(error){
+            console.error("logout Error: ", error);
+            return null;
+        }
+    },
+
+    async isLoggedIn(){
+        try{
+            const res = await fetch(`${apiAdmin}/me`, {
+                credentials: "include",
+            });
+
+            return res.ok;
+        } catch(error){
+            console.error("isLoggedIn Error: ", error);
             return null;
         }
     }

@@ -255,7 +255,7 @@ export function objectizeItem(rawBody){
         image_link: imageLink ?? "",
         price: price,
         contains: contains.length > 0 ? JSON.parse(contains) : [],
-        vegan: vegan === "true",
+        vegan: vegan,
         category_id: categoryID,
         custom: custom ?? false
     };

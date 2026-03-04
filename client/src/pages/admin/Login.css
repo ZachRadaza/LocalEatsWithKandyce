@@ -1,0 +1,40 @@
+.login-cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100vw;
+    gap: 1rem;
+}
+
+.login-cont .login-box{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    padding: 1rem;
+    border: 0.1rem solid var(--color-text);
+    justify-content: center;
+    gap: 1rem;
+}
+
+.login-cont .login-title, .login-cont .message{ text-align: center; }
+.login-cont .input-pair.invalid-pass{ border: 0.1rem solid var(--color-red); }
+.login-cont .message{ color: var(--color-green); }
+.login-cont .message.invalid-pass{ color: var(--color-red); }
+
+.login-cont .submit{ background: var(--color-green); }
+
+.login-cont .submit:hover{ 
+    background: var(--color-text);
+    border: 0.1rem solid var(--color-text); 
+    color: var(--color-green);
+}
+
+.login-cont .back-to-home{ background: var(--color-yellow); }
+
+.login-cont .back-to-home:hover{ 
+    background: var(--color-text); 
+    border: 0.1rem solid var(--color-text);
+    color: var(--color-yellow);
+}
