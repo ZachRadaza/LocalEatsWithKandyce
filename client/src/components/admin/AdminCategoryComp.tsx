@@ -35,6 +35,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             imageLink: "",
             contains: [],
             vegan: false,
+            halal: false,
             price: 0,
             category: category,
             categoryID: category.id,
@@ -202,7 +203,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
                 />
                 <button
                     onClick={ () => { nameEditBtnClick() } }
-                    className={ canEditName ? "edit-btn editing" : "edit-btn" }
+                    className={ canEditName ? "edit-btn yellow editing" : "edit-btn yellow" }
                 >
                     { canEditName 
                         ? ( savingCatChanges ? "Saving..." : "Save" ) 
@@ -219,20 +220,20 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             </div>
             <div className="btns-cont">
                 <button
-                    className="add-item-btn"
+                    className="add-item-btn blue"
                     onClick={ () => { createItem() } }
                 >
                     Add Item
                 </button>
                 <button
-                    className="save-btn"
+                    className="save-btn green"
                     onClick={ () => { saveChanges() }}
                 >
                     { savingItemChanges ? "Saving Changes..." : "Save Changes" }
                 </button>
                 <button
                     onClick={ deleteCategory }
-                    className="delete-btn"
+                    className="delete-btn red"
                 >
                     Delete Category
                 </button>

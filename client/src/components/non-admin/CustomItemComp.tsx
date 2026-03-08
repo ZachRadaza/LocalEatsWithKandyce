@@ -35,11 +35,19 @@ export default function CustomItemComp({ customItem, onPatch, deleteCustomItem }
                 </textarea>
             </div>
             <div className="others-cont">
-                <div className="vegan-cont">
+                <div className="checkbox-cont">
                     <h6>Vegan</h6>
                     <input 
                         checked={ customItem.vegan }
                         onChange={ (event) => onPatch({ ...customItem, vegan: event.target.checked })}
+                        type="checkbox"
+                    />
+                </div>
+                <div className="checkbox-cont">
+                    <h6>Halal</h6>
+                    <input 
+                        checked={ customItem.halal }
+                        onChange={ (event) => onPatch({ ...customItem, halal: event.target.checked })}
                         type="checkbox"
                     />
                 </div>
@@ -63,7 +71,7 @@ export default function CustomItemComp({ customItem, onPatch, deleteCustomItem }
                     </button>
                 </div>
                 <button 
-                    className="delete-btn"
+                    className="delete-btn red"
                     onClick={ () => deleteCustomItem() }
                 >
                     Delete

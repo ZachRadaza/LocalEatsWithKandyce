@@ -156,28 +156,23 @@ export default function RootLayout() {
     return (
         <div className="root-cont layout">
             <header>
-                <div className="logos-cont header-part">
+                <nav className="left-cont header-part">
                     <div className="logos-cont">
                         <p>logo</p>
                         <h6 className="logo-title">Local Eats with Kandyce</h6>
                     </div>
-                </div>
-                <nav className="header-part">
                     <NavLink to="" end className={ navClass }>
                         Home
-                    </NavLink>
-                    <NavLink to="about" className={ navClass }>
-                        About
                     </NavLink>
                     <NavLink to="menu" className={ navClass }>
                         Menu
                     </NavLink>
                 </nav>
                 <div className="right-cont header-part">
-                    <button id="order-now" className="btn-1" onClick={ () => navigate("menu") }>
+                    <button id="order-now" className="btn-1 red" onClick={ () => navigate("menu") }>
                         Order Now
                     </button>
-                    <button id="shopping-cart" className="btn-2" onClick={ () => navigate("cart") }>
+                    <button id="shopping-cart" className="btn-2 green" onClick={ () => navigate("cart") }>
                         <p className="order-amount">{ totalNumber }</p>
                         <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
                             <path d="M845.4 383H758c-16.6 0-30-13.4-30-30s13.4-30 30-30h87.4c16.6 0 30 13.4 30 30s-13.5 30-30 30zM662.3 383H263.1c-16.6 0-30-13.4-30-30s13.4-30 30-30h399.2c16.6 0 30 13.4 30 30s-13.5 30-30 30z" className="svg-cart-mid" />

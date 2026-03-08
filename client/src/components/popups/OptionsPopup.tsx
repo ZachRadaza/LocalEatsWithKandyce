@@ -20,13 +20,13 @@ export default function OptionsPopup({ title, message, isOpened, option1Title, o
                 </div>
                 <div className="btns-cont">
                     <button
-                        className="option-one"
+                        className="option-one red"
                         onClick={ () => option1Func() }
                     >
                         { option1Title }
                     </button>
                     <button
-                        className="option-two"
+                        className="option-two green"
                         onClick={ () => option2Func() }
                     >
                         { option2Title }

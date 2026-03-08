@@ -25,7 +25,7 @@ Full-stack food ordering platform with a customer-facing site and an admin dashb
 - Fetch API
 - Custom UI Styling
 
-### Backend (`server`)
+### Backend (`/server`)
 - Node.js
 - Express
 - Supabase (Database + Storage)

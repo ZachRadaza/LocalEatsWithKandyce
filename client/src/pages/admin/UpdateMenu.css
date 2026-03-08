@@ -9,6 +9,7 @@
     flex-direction: row;
     width: 100%;
     height: fit-content;
+    background: var(--color-bg);
 }
 
 .admin-menu-cont .categories button{
@@ -23,20 +24,26 @@
     text-align: center;
     padding: 0.5rem;
     border: 0.1rem solid var(--color-text);
+    background: var(--color-text);
     transition: all 100ms ease;
 }
 
-.admin-menu-cont .categories .new-category-btn{
+.admin-menu-cont .categories button:hover, .admin-menu-cont .categories button.current{
+    background: var(--color-bg);
+    color: var(--color-text);
+    border-color: var(--color-bg);
+}
+
+.admin-menu-cont .categories button.new-category-btn{
     background: var(--color-green);
+    border-color: var(--color-green);
+    color: var(--color-text);
 }
-
-.admin-menu-cont .categories button:hover{
-    background: var(--color-blue);
-}
-
-.admin-menu-cont .categories button.current{
-    background: var(--color-text);
-    color: var(--color-bg);
+.admin-menu-cont .categories button.new-category-btn:hover{ color: var(--color-bg); }
+.admin-menu-cont .categories button.new-category-btn:active{
+    background: var(--color-bg);
+    border-color: var(--color-green);
+    color: var(--color-green);
 }
 
 .admin-menu-cont .items-cont{

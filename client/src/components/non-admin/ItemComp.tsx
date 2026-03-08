@@ -19,7 +19,8 @@ export default function ItemComp({ item, onPatch }: ItemCompProp){
                 <div className={ activeOverlay ? "overlay active" : "overlay"}>
                     <p className="desc">{ item.description }</p>
                     <div className="non-desc">
-                        <p><span>Vegan:</span> { item.vegan ? "Yes" : "No"}</p>
+                        <p><span>Vegan:</span> { item.vegan ? "Yes" : "No" }</p>
+                        <p><span>Halal:</span> { item.halal ? "Yes" : "No" }</p>
                         <p><span>Contains:</span> { item.contains.map((ing, i) => {
                             let list = "";
                             list += ing;

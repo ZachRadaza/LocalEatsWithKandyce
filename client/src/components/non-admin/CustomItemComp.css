@@ -14,14 +14,14 @@
     align-items: center;
 }
 
-.custom-item-cont .others-cont .vegan-cont{
+.custom-item-cont .others-cont .checkbox-cont{
     display: flex;
     flex-direction: row;
     gap: 1rem;
     align-items: center;
 }
 
-.custom-item-cont .others-cont .vegan-cont input{
+.custom-item-cont .others-cont .checkbox-cont input{
     all: unset;
     cursor: pointer;
     border: 0.1rem solid var(--color-text);
@@ -29,7 +29,7 @@
     width: 1rem;
 }
 
-.custom-item-cont .others-cont .vegan-cont input:checked{ background: var(--color-green); }
+.custom-item-cont .others-cont .checkbox-cont input:checked{ background: var(--color-green); }
 
 .custom-item-cont .quantity-cont{
     display: flex;
@@ -39,6 +39,3 @@
 }
 
 .custom-item-cont .quantity-cont button{ line-height: 0.8; }
-
-.custom-item-cont .delete-btn{ background: var(--color-red); }
-.custom-item-cont .delete-btn:hover{ border: 0.1rem solid var(--color-red); }

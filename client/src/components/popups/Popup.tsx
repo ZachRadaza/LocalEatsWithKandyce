@@ -17,6 +17,7 @@ export default function Popup({ title, message, positiveMessage, isOpened, close
                     <p>{ message }</p>
                 </div>
                 <button
+                    className="red"
                     onClick={ () => closePopup() }
                 >
                     Close

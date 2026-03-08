@@ -8,6 +8,7 @@ export const itemSelect = `
     price,
     contains,
     vegan,
+    halal,
     category (*),
     created_at,
     updated_at,

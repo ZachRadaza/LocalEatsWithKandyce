@@ -236,6 +236,7 @@ export function objectizeItem(rawBody){
         price,
         contains,
         vegan,
+        halal,
         categoryID,
         custom
     } = rawBody;
@@ -256,6 +257,7 @@ export function objectizeItem(rawBody){
         price: price,
         contains: contains.length > 0 ? JSON.parse(contains) : [],
         vegan: vegan,
+        halal: halal,
         category_id: categoryID,
         custom: custom ?? false
     };

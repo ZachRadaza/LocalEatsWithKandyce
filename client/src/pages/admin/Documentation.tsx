@@ -31,12 +31,6 @@ export default function Documentation(){
                         </p>
                     </div>
                     <div>
-                        <h6>About Page (TODO)</h6>
-                        <p>
-                            The about page provides furhter in-depth information regarding the menu, business, and Kandyce.
-                        </p>
-                    </div>
-                    <div>
                         <h6>Menu Page</h6>
                         <p>
                             The menu page provides customers the ability to browse and add to cart all menu items, alongside the ability to create custom items available for order.

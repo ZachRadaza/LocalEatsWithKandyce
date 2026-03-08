@@ -45,21 +45,3 @@
 }
 
 .options-popup-cont .btns-cont button{ width: 100%; }
-
-.options-popup-cont .option-one{
-    background: var(--color-red);
-}
-
-.options-popup-cont .option-one:hover{
-    color: var(--color-bg);
-    border: 0.1rem solid var(--color-red);
-}
-
-.options-popup-cont .option-two{
-    background: var(--color-green);
-}
-
-.options-popup-cont .option-two:hover{
-    color: var(--color-bg);
-    border: 0.1rem solid var(--color-green);
-}

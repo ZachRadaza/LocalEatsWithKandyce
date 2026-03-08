@@ -32,14 +32,6 @@
     border: 0.1rem solid var(--color-red);
 }
 
-.popup-cont button{
-    background: var(--color-red);
-}
-
-.popup-cont button:hover{
-    border: 0.1rem solid var(--color-red);
-}
-
 .popup-cont .message-cont{
     display: flex;
     flex-direction: column;

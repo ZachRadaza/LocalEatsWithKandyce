@@ -10,6 +10,7 @@ export type Item = {
     imageLink: string;
     contains: string[];
     vegan: boolean;
+    halal: boolean;
     category: Category | null;
     categoryID: string | null;
     price: number | "";

@@ -28,13 +28,11 @@ export default function AdminLayout() {
     return (
         <div className="admin-cont layout">
             <header>
-                <div className="logos-cont header-part">
+                <nav className="header-part">
                     <div className="logos-cont">
                         <p>logo</p>
                         <h6 className="logo-title">Local Eats with Kandyce</h6>
                     </div>
-                </div>
-                <nav className="header-part">
                     <NavLink to="" end className={ navClass }>
                         Orders
                     </NavLink>
@@ -48,13 +46,13 @@ export default function AdminLayout() {
                 <div className="right-cont header-part">
                     <button 
                         id="documentation" 
-                        className="btn-1" 
+                        className="btn-1 red" 
                         onClick={ () => navigate('documentation') }
                     >
                         Documentation
                     </button>
                     <button 
-                        className="btn-2"
+                        className="btn-2 green"
                         onClick={ () => logoutClicked() }
                     >
                         Logout

@@ -1,10 +1,10 @@
 import type { Category, MenuItem } from "../../schemas/schemas";
 import React, { useState } from "react";
-import CategoryComp from "../../components/non-admin/CategoryComp";
 import { scrollToID } from "../../utils/RandomFunctions";
 import { useOutletContext } from "react-router-dom";
 import CustomItemComp from "../../components/non-admin/CustomItemComp";
 import "./Menu.css";
+import ItemComp from "../../components/non-admin/ItemComp";
 
 type MenuContext = {
     addOrderItem: (item: MenuItem) => void;
@@ -65,6 +65,7 @@ export default function Menu(){
             imageLink: "",
             contains: [],
             vegan: false,
+            halal: false,
             price: 0,
             category: null,
             categoryID: [...categories][0].id,
@@ -96,13 +97,24 @@ export default function Menu(){
                     const category = [...categories].find(cat => cat.id === categoryID)
 
                     return (
-                        <CategoryComp 
-                            key={ `div-${ categoryID }` } 
-                            category={ category! } 
-                            items={ items } 
-                            isLeft={ isLeft }
-                            onPatchItem={ patchMenuItem }
-                        />
+                        <div className="category" id={ category!.id! }>
+                            <div className={ isLeft ? "category-name left" : "category-name right" }>
+                                { [...category!.name].map((c, i) => (
+                                    <h5 key={ `${category!.id}-${i}${c}` }>{c}</h5>
+                                )) }
+                            </div>
+                            <div className="category-items">
+                                { items.map(item => 
+                                    (
+                                        <ItemComp
+                                            key={ item.id }
+                                            item={ item }
+                                            onPatch={ (patch) => patchMenuItem(categoryID, item.id!, patch) }
+                                        />
+                                    )
+                                )}
+                            </div>
+                        </div>
                     );
                 }) }
                 <div 
@@ -128,7 +140,7 @@ export default function Menu(){
                             />
                         ) }
                         <button
-                            className="add-custom"
+                            className="add-custom blue"
                             onClick={ () => addCustomItem() }
                         >
                             Add Custom Item

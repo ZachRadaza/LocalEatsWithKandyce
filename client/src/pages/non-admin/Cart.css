@@ -73,10 +73,16 @@
     width: 100%;
 }
 
-.cart-cont .delivery-btns button{ width: 100%; }
-.cart-cont .delivery-btns button.active{
-    background: var(--color-blue);
+.cart-cont .delivery-btns button{ 
+    border-color: var(--color-blue);
+    background: var(--color-blue); 
+    color: var(--color-bg);
+    width: 100%; 
 }
+.cart-cont .delivery-btns button:hover{ color: var(--color-text); }
+
+.cart-cont .delivery-btns button.active{ background: var(--color-bg); color: var(--color-blue); }
+.cart-cont .delivery-btns button.active:hover{ color: var(--color-text); }
 
 .cart-cont .checkout-cont{
     display: flex;
@@ -104,4 +110,8 @@
     font-family: var(--font-heading);
     font-size: 1.5rem;
     padding: 0.5rem;
+}
+
+.cart-cont #place-order-btn{
+    border-color: var(--color-green);
 }

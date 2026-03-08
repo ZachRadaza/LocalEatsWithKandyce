@@ -29,7 +29,7 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
                 <h6>Deliver on { new Date(order.dateDue).toLocaleDateString() }</h6>
                 <div className="btns-cont">
                     <button
-                        className="accept"
+                        className="accept green"
                         onClick={ (event) => {
                             event.stopPropagation();
                             acceptOrder();
@@ -39,7 +39,7 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
                         { order.accepted ? "Accepted" : "Accept" }
                     </button>
                     <button
-                        className="decline"
+                        className="decline red"
                         onClick={(event) => {
                             event.stopPropagation();
                             declineOrder();
@@ -100,6 +100,7 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
                             <div className="complete-cont">
                                 { order.accepted && 
                                     <button
+                                        className="yellow"
                                         onClick={ () => completeOrder() }
                                     >
                                         Order Complete

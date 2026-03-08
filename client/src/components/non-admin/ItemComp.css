@@ -9,10 +9,14 @@
     position: relative;
 }
 
+.item-comp:hover{ border-color: var(--color-blue); }
+.item-comp:hover .bot-cont{ border-top-color: var(--color-blue); }
+
 .item-comp .lay-cont{
     position: relative;
     display: grid;
     height: 100%;
+    width: 100%;
     z-index: 0;
     overflow: hidden;
     cursor: pointer;
@@ -20,9 +24,10 @@
 
 .item-comp img{
     grid-area: 1 / 1;
-    height: auto;
+    height: 100%;
     width: 100%;
     z-index: 0;
+    object-fit: cover;
 }
 
 .item-comp .overlay{
@@ -68,12 +73,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
-    background: var(--color-text);
+    background: var(--color-bg);
+    border-top: 0.1rem solid var(--color-text);
     height: fit-content;
     z-index: 10;
 }
 
-.item-comp .bot-cont .text{ color: var(--color-bg); }
+.item-comp .bot-cont .text{ color: var(--color-text); }
 .item-comp .bot-cont .text.name{ font-weight: 600; font-size: 1.2rem; }
 
 .item-comp .right-end{
@@ -93,13 +99,13 @@
     width: max-content;
 }
 
-.item-comp .quantity-cont p{ color: var(--color-bg); }
+.item-comp .quantity-cont p{ color: var(--color-text); }
 
 .item-comp .quantity-cont button{
     all: unset;
-    background: var(--color-text);
-    color: var(--color-bg);
-    border: 0.05rem solid var(--color-bg);
+    background: var(--color-bg);
+    color: var(--color-text);
+    border: 0.05rem solid var(--color-text);
     align-items: center;
     justify-content: center;
     font-family: var(--font-body);

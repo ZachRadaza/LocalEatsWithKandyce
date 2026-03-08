@@ -10,6 +10,9 @@
     flex-direction: row;
     width: 100%;
     overflow: hidden;
+    background: var(--color-text);
+    gap: 0.1rem;
+    border-bottom: 0.2rem solid var(--color-text);
 }
 
 .menu-cont nav button{
@@ -17,10 +20,6 @@
     cursor: pointer;
     color: var(--color-text);
     background: var(--color-bg);
-
-    border-style: solid;
-    border-color: var(--color-text);
-    border-width: 0.1rem 0.05rem;
 
     padding: 0.5rem 3rem;
     font-family: var(--font-body);
@@ -57,6 +56,37 @@
     overflow-y: scroll;
 }
 
+.menu-cont .category{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    border: 0.1rem solid var(--color-text);
+}
+
+.menu-cont .category:has(.left){ flex-direction: row; }
+.menu-cont .category:has(.right){ flex-direction: row-reverse; }
+
+.menu-cont .category .category-name{
+    background: var(--color-text);
+    color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 1rem;
+    z-index: 1;
+}
+
+.menu-cont .category .category-name h5{ color: var(--color-bg); }
+
+.menu-cont .category .category-items{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: 100%;
+    gap: 0.5rem;
+    padding: 1rem;
+}
+
 .menu-cont #custom-item .category-items{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -67,12 +97,4 @@
 
 .menu-cont #custom-item .category-items > :only-child { grid-column: 1 / -1; }
 
-.menu-cont #custom-item .add-custom{ 
-    background: var(--color-blue); 
-    font-size: 2rem;
-}
-
-.menu-cont #custom-item .add-custom:hover{ 
-    color: var(--color-bg); 
-    border: 0.1rem solid var(--color-blue); 
-}
+.menu-cont #custom-item .add-custom{ font-size: 2rem; }

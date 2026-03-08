@@ -43,7 +43,7 @@ export default function Login(){
                 </div>
                 <p className={ validPass ? "message" : "message invalid-pass"}>{ message }</p>
                 <button
-                    className="submit"
+                    className="submit green"
                     onClick={ () => attemptPassword() }
                 >
                     { submitted }
@@ -51,7 +51,7 @@ export default function Login(){
             </div>
             <button
                 onClick={ () => navigate("/") }
-                className="back-to-home"
+                className="back-to-home yellow"
             >
                 Back to Home
             </button>

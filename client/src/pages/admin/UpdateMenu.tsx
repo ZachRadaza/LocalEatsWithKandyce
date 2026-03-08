@@ -121,7 +121,7 @@ export default function UpdateMenu(){
                 }) }
                 <button 
                     onClick={ () => addCategoryClicked() }
-                    className="new-category-btn"    
+                    className="new-category-btn green"    
                 >
                     Add Category
                 </button>

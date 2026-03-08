@@ -7,11 +7,8 @@
     transition: all 200ms ease;
 }
 
-.order-comp-cont:not(:has(.extended)):hover{ background: var(--color-text); }
-.order-comp-cont:not(:has(.extended)):hover *{ color: var(--color-bg); }
-
-.order-comp-cont:has(.extended):hover{ border: 0.1rem solid var(--color-blue); }
-.order-comp-cont:has(.extended):hover .customer-name{ color: var(--color-blue); }
+.order-comp-cont:hover{ border-color: var(--color-blue); }
+.order-comp-cont:hover .customer-name{ color: var(--color-blue); }
 
 .order-comp-cont .header{
     display: flex;
@@ -35,54 +32,9 @@
     gap: 0.5rem;
 }
 
-.order-comp-cont .btns-cont .accept{ 
+.order-comp-cont .btns-cont .accept:disabled, .order-comp-cont .btns-cont .accept:disabled:hover{
     background: var(--color-green); 
-    color: var(--color-text); 
-}
-
-.order-comp-cont .btns-cont .accept:hover{ 
-    background: var(--color-text); 
-    color: var(--color-green);
-}
-
-.order-comp-cont:not(:has(.extended)):hover .btns-cont .accept{
-    border: 0.1rem solid var(--color-green);
-}
-
-.order-comp-cont:has(.extended) .btns-cont .accept:hover{
-    background: var(--color-green);
-    border: 0.1rem solid var(--color-green);
-    color: var(--color-bg);
-}
-
-.order-comp-cont .btns-cont .accept:disabled{
-    border: 0.1rem solid var(--color-green);
-}
-
-.order-comp-cont .btns-cont .accept:disabled:hover{
-    background: var(--color-green); 
-    color: var(--color-text); 
-}
-
-.order-comp-cont .btns-cont .decline{ 
-    background: var(--color-red); 
-    color: var(--color-text); 
-}
-
-.order-comp-cont .btns-cont .decline:hover{ 
-    background: var(--color-text); 
-    color: var(--color-red); 
-    border: 0.1rem solid var(--color-red); 
-}
-
-.order-comp-cont:not(:has(.extended)):hover .btns-cont .decline{
-    border: 0.1rem solid var(--color-red);
-}
-
-.order-comp-cont:has(.extended) .btns-cont .decline:hover{
-    background: var(--color-red);
-    border: 0.1rem solid var(--color-red);
-    color: var(--color-bg);
+    color: var(--color-bg); 
 }
 
 .order-comp-cont:has(.accept:disabled) .decline{
@@ -176,5 +128,8 @@
     gap: 1rem;
 }
 
-.order-comp-cont .complete-cont button{ background: var(--color-blue); }
-.order-comp-cont .complete-cont button:hover{ border: 0.1rem solid var(--color-blue); }
+.order-comp-cont .complete-cont button{ background: var(--color-blue); border-color: var(--color-blue); }
+.order-comp-cont .complete-cont button:hover{ 
+    background: var(--color-bg);
+    color: var(--color-blue);
+}

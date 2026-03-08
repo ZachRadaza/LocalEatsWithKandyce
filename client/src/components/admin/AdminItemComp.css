@@ -50,14 +50,7 @@
     flex: 0;
 }
 
-.admin-item-comp-cont .btns-cont button{ flex: 0;}
-
-.admin-item-comp-cont .edit-btn{ background: var(--color-blue); }
-.admin-item-comp-cont:has(.editable) .edit-btn{ background: var(--color-green); }
-
-.admin-item-comp-cont .delete-btn{ background: var(--color-red); }
-.admin-item-comp-cont .delete-btn.deleted{ background: var(--color-text); color: var(--color-red); }
-.admin-item-comp-cont .delete-btn.deleted:hover{ color: var(--color-bg); }
+.admin-item-comp-cont .btns-cont button{ flex: 0; }
 
 .admin-item-comp-cont .top-cont{
     display: flex;
@@ -152,6 +145,7 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.5rem;
+    color: var(--color-text);
 }
 
 .admin-item-comp-cont .description.unfilled{
@@ -177,7 +171,7 @@
     gap: 0.5rem;
 }
 
-.admin-item-comp-cont .vegan{ 
+.admin-item-comp-cont .checkbox-cont{ 
     display: grid; 
     height: 1.2rem;
     place-items: center;
@@ -189,9 +183,9 @@
     grid-area: 1 / 1;
     flex-direction: row;
 }
-.admin-item-comp-cont .value.visible, .admin-item-comp-cont .vegan-checkbox.visible{ display: flex; }
+.admin-item-comp-cont .value.visible, .admin-item-comp-cont .checkbox.visible{ display: flex; }
 
-.admin-item-comp-cont .vegan-checkbox{
+.admin-item-comp-cont .checkbox{
     all: unset;
     cursor: pointer;
     grid-area: 1 / 1;
@@ -203,5 +197,5 @@
     transition: all 100ms ease;
 }
 
-.admin-item-comp-cont .vegan-checkbox:hover{ background: var(--color-yellow); }
-.admin-item-comp-cont .vegan-checkbox:checked{ background: var(--color-green); }
+.admin-item-comp-cont .checkbox:hover{ background: var(--color-yellow); }
+.admin-item-comp-cont .checkbox:checked{ background: var(--color-green); }

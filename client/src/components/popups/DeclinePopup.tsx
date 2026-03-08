@@ -24,13 +24,13 @@ export default function DeclinePopup({ isOpened, showPopup }: DeclinePopupProp){
                 </div>
                 <div className="btns-cont">
                     <button
-                        className="cancel"
+                        className="cancel red"
                         onClick={ () => showPopup(false, message) }
                     >
                         Cancel
                     </button>
                     <button
-                        className="submit"
+                        className="submit green"
                         onClick={ () => showPopup(true, message) }
                     >
                         Submit

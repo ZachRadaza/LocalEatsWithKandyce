@@ -223,32 +223,32 @@ export default function Orders(){
                 />
             </div>
             <div className="dashboard">
-                <div className="total-num-orders">
+                <div className="total-num-orders blue">
                     <h2 className="total-num-orders-num">{ orders.length }</h2>
                     <p>Orders</p>
                 </div>
-                <div className="total-accepted-orders">
+                <div className="total-accepted-orders red">
                     <h1>{ totalOrdersAccepted }</h1>
                     <p>Accepted Orders</p>
                 </div>
-                <div className="total-num-items">
+                <div className="total-num-items green">
                     <h1>{ numItems }</h1>
                     <p>Items to Make</p>
                 </div>
-                <div className="total-money">
+                <div className="total-money blue">
                     <h1>${ totalMoney }</h1>
                     <p>Potential Money</p>
                 </div>
 
-                <div className="total-unaccepted-orders">
+                <div className="total-unaccepted-orders green">
                     <h1>{ orders.length - totalOrdersAccepted }</h1>
                     <p>Unaccepted Orders</p>
                 </div>
-                <div className="soonest-date">
+                <div className="soonest-date yellow">
                     <h2>{ soonestOrder ?? ""}</h2>
                     <p>Soonest Order</p>
                 </div>
-                <div className="total-num-libraries">
+                <div className="total-num-libraries red">
                     <h1>{ orders.length - numDelivaries }</h1>
                     <p>Library Drop-Offs</p>
                 </div>

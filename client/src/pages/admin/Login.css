@@ -22,19 +22,3 @@
 .login-cont .input-pair.invalid-pass{ border: 0.1rem solid var(--color-red); }
 .login-cont .message{ color: var(--color-green); }
 .login-cont .message.invalid-pass{ color: var(--color-red); }
-
-.login-cont .submit{ background: var(--color-green); }
-
-.login-cont .submit:hover{ 
-    background: var(--color-text);
-    border: 0.1rem solid var(--color-text); 
-    color: var(--color-green);
-}
-
-.login-cont .back-to-home{ background: var(--color-yellow); }
-
-.login-cont .back-to-home:hover{ 
-    background: var(--color-text); 
-    border: 0.1rem solid var(--color-text);
-    color: var(--color-yellow);
-}

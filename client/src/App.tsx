@@ -3,7 +3,6 @@ import RootLayout from './layouts/RootLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/non-admin/Home';
 import Menu from './pages/non-admin/Menu';
-import About from './pages/non-admin/About';
 import Cart from './pages/non-admin/Cart';
 import Orders from './pages/admin/Orders';
 import UpdateMenu from './pages/admin/UpdateMenu';
@@ -17,7 +16,6 @@ function App() {
         <Routes>
             <Route element={ <RootLayout /> }>
                 <Route path="/" element={ <Home />} />
-                <Route path="/about" element={ <About /> } />
                 <Route path="/menu" element={ <Menu /> } />
                 <Route path="/cart" element={ <Cart/> } />
             </Route>

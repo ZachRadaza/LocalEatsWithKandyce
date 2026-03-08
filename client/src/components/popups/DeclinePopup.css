@@ -57,21 +57,3 @@
 }
 
 .decline-popup-cont .btns-cont button{ width: 100%; }
-
-.decline-popup-cont .cancel{
-    background: var(--color-red);
-}
-
-.decline-popup-cont .cancel:hover{
-    color: var(--color-bg);
-    border: 0.1rem solid var(--color-red);
-}
-
-.decline-popup-cont .submit{
-    background: var(--color-green);
-}
-
-.decline-popup-cont .submit:hover{
-    color: var(--color-bg);
-    border: 0.1rem solid var(--color-green);
-}

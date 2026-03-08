@@ -42,7 +42,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                     <p className="id">{`ID: ${item.id}`}</p>
                     <div className="btns-cont">
                         <button
-                            className="edit-btn"
+                            className={ !canEdit ? "edit-btn blue" : "edit-btn green" }
                             onClick={ () => {
                                 if(canEdit){
                                     !verifyFilled()
@@ -59,7 +59,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                             { canEdit ? "Save" : "Edit" }
                         </button>
                         <button
-                            className={ !deleted ? "delete-btn" : "delete-btn deleted" }
+                            className={ !deleted ? "delete-btn red" : "delete-btn red deleted" }
                             onClick={ () => {
                                 setDeleted(!deleted);
                                 item.deleted = !item.deleted;
@@ -134,7 +134,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                 <div className="bottom-cont">
                     <div className="value-cont">
                         <h6>Vegan: </h6>
-                        <div className="vegan">
+                        <div className="checkbox-cont">
                             <p 
                                 className={ canEdit ? "value" : "value visible" }
                             >
@@ -144,7 +144,23 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                                 type="checkbox"
                                 checked={ item.vegan }
                                 onChange={ event => onPatch({ vegan: event.target.checked }) }
-                                className={ canEdit ? "vegan-checkbox visible" : "vegan-checkbox" }
+                                className={ canEdit ? "checkbox visible" : "checkbox" }
+                            />
+                        </div>
+                    </div>
+                    <div className="value-cont">
+                        <h6>Halal: </h6>
+                        <div className="checkbox-cont">
+                            <p 
+                                className={ canEdit ? "value" : "value visible" }
+                            >
+                                { item.halal ? "Yes" : "No" }
+                            </p>
+                            <input 
+                                type="checkbox"
+                                checked={ item.halal }
+                                onChange={ event => onPatch({ halal: event.target.checked }) }
+                                className={ canEdit ? "checkbox visible" : "checkbox" }
                             />
                         </div>
                     </div>
