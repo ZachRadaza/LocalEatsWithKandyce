@@ -6,6 +6,7 @@
     min-width: 0;
     height: 100%;
     border: 0.1rem solid var(--color-text);
+    background: var(--color-bg);
 }
 
 .admin-item-comp-cont.deleted{ opacity: 0.5; }
@@ -22,8 +23,9 @@
     color: var(--color-text);
     border-bottom: 0.1rem solid var(--color-text);
     padding: 0.2rem 0.5rem;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: italic;
     width: 100%;
 }
 
@@ -71,8 +73,7 @@
 }
 
 .admin-item-comp-cont .name{
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
 }
 
@@ -142,8 +143,9 @@
     all: unset;
     border: 0.1rem solid var(--color-text);
     font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-style: italic;
     padding: 0.5rem;
     color: var(--color-text);
 }
@@ -172,24 +174,16 @@
 }
 
 .admin-item-comp-cont .checkbox-cont{ 
-    display: grid; 
+    display: flex; 
     height: 1.2rem;
     place-items: center;
+    flex-direction: row;
     align-items: center;
 }
-
-.admin-item-comp-cont .value{
-    display: none;
-    grid-area: 1 / 1;
-    flex-direction: row;
-}
-.admin-item-comp-cont .value.visible, .admin-item-comp-cont .checkbox.visible{ display: flex; }
 
 .admin-item-comp-cont .checkbox{
     all: unset;
     cursor: pointer;
-    grid-area: 1 / 1;
-    display: none;
     border: 0.1rem solid var(--color-text);
     height: 1rem;
     width: 1rem;

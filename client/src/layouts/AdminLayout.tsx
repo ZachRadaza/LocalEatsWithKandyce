@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { ExtensionService } from "../utils/ExtensionService";
+import Footer from "../components/non-admin/Footer";
 import "./Layout.css";
 
 export default function AdminLayout() {
@@ -30,7 +31,7 @@ export default function AdminLayout() {
             <header>
                 <nav className="header-part">
                     <div className="logos-cont">
-                        <p>logo</p>
+                        <img src="/favicon.jpg" className="logo" />
                         <h6 className="logo-title">Local Eats with Kandyce</h6>
                     </div>
                     <NavLink to="" end className={ navClass }>
@@ -62,6 +63,7 @@ export default function AdminLayout() {
             <main>
                 <Outlet />
             </main>
+            <Footer />
         </div>
     );
 }

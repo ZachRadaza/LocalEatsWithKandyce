@@ -78,6 +78,7 @@
     background: var(--color-blue); 
     color: var(--color-bg);
     width: 100%; 
+    font-family: var(--font-heading);
 }
 .cart-cont .delivery-btns button:hover{ color: var(--color-text); }
 

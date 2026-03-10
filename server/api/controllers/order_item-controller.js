@@ -219,6 +219,7 @@ export function convertToFrontEndOI(orderItem){
         description: item.description,
         imageLink: item.image_link,
         vegan: item.vegan,
+        halal: item.halal,
         categoryID: item.category.id,
         custom: item.custom
     }

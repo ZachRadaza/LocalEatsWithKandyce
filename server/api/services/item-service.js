@@ -126,7 +126,6 @@ export async function updateItem(id, item){
     const { data, error } = await supabase
         .from("item")
         .update(item)
-        .eq("custom", false)
         .eq("id", id)
         .select(itemSelect)
         .single();

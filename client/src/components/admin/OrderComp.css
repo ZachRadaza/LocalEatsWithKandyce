@@ -79,10 +79,30 @@
     border: 0.1rem solid var(--color-text);
 }
 
-.order-comp-cont .custom-order h5 span{
+.order-comp-cont .custom-order .custom-top-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.order-comp-cont .custom-top-cont h5 span{
     font-family: var(--font-body);
     opacity: 0.7;
     font-size: 0.8rem;
+}
+
+.order-comp-cont .custom-top-cont .icons-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.order-comp-cont .custom-top-cont .icons-cont svg{
+    width: 2rem;
+    height: auto;
+    fill: var(--color-green);
+    color: var(--color-green);
 }
 
 .order-comp-cont .total{
@@ -121,11 +141,17 @@
 }
 
 .order-comp-cont .order-info{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    place-items: stretch;
     justify-content: left;
-    gap: 1rem;
+    gap: 1.5rem;
+}
+
+.order-comp-cont .order-info >div{ 
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .order-comp-cont .complete-cont button{ background: var(--color-blue); border-color: var(--color-blue); }

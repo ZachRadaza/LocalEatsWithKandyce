@@ -1,7 +1,8 @@
-import { Outlet, NavLink, useNavigate} from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { useState, useMemo, useEffect } from "react";
 import type { Category, MenuItem, OrderMenuItem } from "../schemas/schemas";
 import { ExtensionService } from "../utils/ExtensionService";
+import Footer from "../components/non-admin/Footer";
 import "./Layout.css";
 
 export default function RootLayout() {
@@ -158,7 +159,7 @@ export default function RootLayout() {
             <header>
                 <nav className="left-cont header-part">
                     <div className="logos-cont">
-                        <p>logo</p>
+                        <img src="/favicon.jpg" className="logo" />
                         <h6 className="logo-title">Local Eats with Kandyce</h6>
                     </div>
                     <NavLink to="" end className={ navClass }>
@@ -169,7 +170,14 @@ export default function RootLayout() {
                     </NavLink>
                 </nav>
                 <div className="right-cont header-part">
-                    <button id="order-now" className="btn-1 red" onClick={ () => navigate("menu") }>
+                    <button 
+                        id="order-now"
+                        className="btn-1 red" 
+                        onClick={ () => totalNumber === 0 
+                            ? navigate("menu") 
+                            : navigate("cart") 
+                        }
+                    >
                         Order Now
                     </button>
                     <button id="shopping-cart" className="btn-2 green" onClick={ () => navigate("cart") }>
@@ -193,6 +201,7 @@ export default function RootLayout() {
                     }}
                 />
             </main>
+            <Footer />
         </div>
     );
 }

@@ -274,6 +274,7 @@ export const ExtensionService = {
             form.append("price", String(item.price));
             form.append("imageLink", item.imageLink);
             form.append("vegan", String(item.vegan));
+            form.append("halal", String(item.halal));
 
             if(item.file)
                 form.append("file", item.file);
@@ -388,6 +389,7 @@ export const ExtensionService = {
             form.append("price", String(item.price));
             form.append("imageLink", item.imageLink);
             form.append("vegan", String(item.vegan));
+            form.append("halal", String(item.halal));
 
             if(item.file)
                 form.append("file", item.file);

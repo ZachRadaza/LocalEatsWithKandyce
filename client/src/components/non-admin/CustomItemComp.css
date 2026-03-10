@@ -5,6 +5,7 @@
     border: 0.1rem solid var(--color-text);
     padding: 1rem;
     gap: 1rem;
+    background: var(--color-bg);
 }
 
 .custom-item-cont .others-cont{
@@ -29,6 +30,7 @@
     width: 1rem;
 }
 
+.custom-item-cont .others-cont .checkbox-cont input:hover{ background: var(--color-yellow); }
 .custom-item-cont .others-cont .checkbox-cont input:checked{ background: var(--color-green); }
 
 .custom-item-cont .quantity-cont{

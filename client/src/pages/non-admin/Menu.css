@@ -3,6 +3,7 @@
     height: fit-content;
     display: flex;
     flex-direction: column;
+    border: 0.1rem solid var(--color-text);
 }
 
 .menu-cont nav{
@@ -22,7 +23,9 @@
     background: var(--color-bg);
 
     padding: 0.5rem 3rem;
+    font-size: 1.2rem;
     font-family: var(--font-body);
+    font-style: italic;
     text-transform: uppercase;
     text-align: center;
     font-weight: 700;
@@ -51,16 +54,16 @@
 .menu-cont .menu{
     display: flex;
     flex-direction: column;
-    height: 83vh;
     overflow-x: hidden;
     overflow-y: scroll;
+    scrollbar-width: 0px;
 }
 
 .menu-cont .category{
     display: flex;
     width: 100%;
     height: fit-content;
-    border: 0.1rem solid var(--color-text);
+    border-bottom: 0.1rem solid var(--color-text);
 }
 
 .menu-cont .category:has(.left){ flex-direction: row; }
@@ -81,9 +84,9 @@
 
 .menu-cont .category .category-items{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     width: 100%;
-    gap: 0.5rem;
+    gap: 1rem;
     padding: 1rem;
 }
 

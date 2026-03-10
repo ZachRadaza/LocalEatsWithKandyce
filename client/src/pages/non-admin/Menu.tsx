@@ -97,7 +97,7 @@ export default function Menu(){
                     const category = [...categories].find(cat => cat.id === categoryID)
 
                     return (
-                        <div className="category" id={ category!.id! }>
+                        <div className="category" id={ category!.id! } key={ category!.id! }>
                             <div className={ isLeft ? "category-name left" : "category-name right" }>
                                 { [...category!.name].map((c, i) => (
                                     <h5 key={ `${category!.id}-${i}${c}` }>{c}</h5>

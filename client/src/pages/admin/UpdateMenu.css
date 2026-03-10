@@ -2,6 +2,7 @@
     display: grid;
     grid-template-rows: auto auto;
     place-items: center;
+    border: 0.1rem solid var(--color-text);
 }
 
 .admin-menu-cont .categories{
@@ -18,6 +19,8 @@
     height: 100%;
     width: 100%;
     font-family: var(--font-body);
+    font-style: italic;
+    text-transform: uppercase;
     font-size: 1.25rem;
     letter-spacing: 0.1em;
     font-weight: 600;

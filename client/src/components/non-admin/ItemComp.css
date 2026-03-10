@@ -49,21 +49,20 @@
     transform: translateY(0%);
 }
 
-.item-comp .overlay .desc{
-    font-size: 1.1rem;
-    padding: 0.5rem;
-}
+.item-comp .overlay .desc{ padding: 0.5rem; }
 
 .item-comp .overlay .non-desc{
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     padding: 0.5rem;
-    font-size: 1.1rem;
 }
+
+.item-comp .overlay .non-desc p{ font-size: 1rem; }
 
 .item-comp .overlay .non-desc span{
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 .item-comp .bot-cont{
@@ -79,8 +78,22 @@
     z-index: 10;
 }
 
-.item-comp .bot-cont .text{ color: var(--color-text); }
-.item-comp .bot-cont .text.name{ font-weight: 600; font-size: 1.2rem; }
+.item-comp .left-end{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.item-comp .left-end .text{ color: var(--color-text); }
+.item-comp .left-end .text.name{ font-weight: 600; font-size: 1.2rem; }
+
+.item-comp .left-end svg{
+    fill: var(--color-green);
+    color: var(--color-green);
+    width: 1.3rem;
+    height: auto;
+}
 
 .item-comp .right-end{
     display: flex;
@@ -102,21 +115,8 @@
 .item-comp .quantity-cont p{ color: var(--color-text); }
 
 .item-comp .quantity-cont button{
-    all: unset;
-    background: var(--color-bg);
-    color: var(--color-text);
-    border: 0.05rem solid var(--color-text);
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-body);
-    line-height: 0.8;
-    padding: 0.4rem;
-    width: fit-content;
-    transition: background 100ms ease, border 100ms ease;
-    cursor: pointer;
+    line-height: 0.7;
+    font-size: 1.2rem;
 }
 
 .item-comp .quantity-cont button:active{ transform: scale(0.95); }
-
-.item-comp .quantity-cont button.add-btn:hover{ background: var(--color-green); border: 0.05rem solid var(--color-green); }
-.item-comp .quantity-cont button.remove-btn:hover{ background: var(--color-red); border: 0.05rem solid var(--color-red); }

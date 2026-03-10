@@ -1,0 +1,71 @@
+footer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    border-top: 0.1rem solid var(--color-text);
+    background: var(--color-bg);
+    padding: 1rem;
+
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            rgba(255,255,255,0.02),
+            rgba(255,255,255,0.02) 1px,
+            transparent 1px,
+            transparent 6px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            rgba(255,255,255,0.02),
+            rgba(255,255,255,0.02) 1px,
+            transparent 1px,
+            transparent 6px
+        );
+}
+
+footer >div{
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    height: 100%;
+    gap: 2rem;
+}
+
+footer .group-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+footer .group-info .icon-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+footer .group-info .icon-cont svg{
+    width: 1.5rem;
+    height: auto;
+    fill: var(--color-green);
+    color: var(--color-green);
+}
+
+footer .insta-cont{
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+footer .instagram{
+    width: 150px;
+    height: auto;
+    fill: var(--color-yellow);
+}
+
+footer .instagram:hover{ fill: var(--color-green); }
+
+footer Link p, footer a p, footer a{ color: var(--color-yellow); }
+
+footer Link p:hover, footer a p:hover, footer a:hover{ color: var(--color-green); }

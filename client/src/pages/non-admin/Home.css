@@ -1,0 +1,33 @@
+.home-cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.home-cont .hero{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 100%;
+    gap: 1rem;
+    padding: 1rem;
+    place-items: stretch;
+}
+
+.home-cont .hero img{
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border: 0.1rem solid var(--color-text);
+}
+
+.home-cont .hero .welcome{
+    grid-column: 1 / -1;
+    text-align: right;
+    width: 100%;
+    max-width: 100%;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 2rem;
+}

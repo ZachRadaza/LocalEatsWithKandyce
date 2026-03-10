@@ -1,18 +1,22 @@
-.root-cont, .admin-cont{
-    width: 100%;
-}
+.root-cont, .admin-cont{ width: 100%; }
 
-.root-cont main, .admin-cont main{
-    margin: 1rem;
-    border: 0.1rem solid var(--color-text);
-}
+.root-cont main, .admin-cont main{ margin: 1rem; }
 
 .layout header{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem;
+    padding: 1rem;
+    position: sticky;
+    top: 0px;
+    border-bottom: 0.1rem solid var(--color-text);
+    z-index: 1000;
+    background-color: var(--color-bg);
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0),
+        radial-gradient(circle at 12px 12px, rgba(255,255,255,0.02) 1px, transparent 0);
+    background-size: 24px 24px;
 }
 
 .layout header .header-part{
@@ -23,7 +27,6 @@
 }
 
 .layout nav{ 
-    background: var(--color-text);
     gap: 0.1rem;
     grid-template-columns: repeat(4, auto);
 }
@@ -31,9 +34,15 @@
 .layout .logos-cont{
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 1rem;
     padding: 1rem 2rem;
-    background: var(--color-bg);
+}
+
+.layout .logos-cont .logo{ 
+    width: 2rem; 
+    height: auto; 
+    border-radius: 999px;
 }
 
 .layout .logos-cont h6{ color: var(--color-yellow); }
@@ -41,20 +50,19 @@
 .layout .nav-link{
     all: unset;
     cursor: pointer;
-    background: var(--color-bg);
+    background: transparent;
     color: var(--color-text);
     font-family: var(--font-heading);
+    font-size: 1.5rem;
     text-transform: capitalize;
     padding: 1.1rem 2rem;
     text-align: center;
     font-weight: 600;
+    border-left: 0.1rem solid var(--color-text);
     transition: 100ms ease all;
 }
 
-.layout .nav-link:hover, .layout .nav-link.active{
-    background: var(--color-bg);
-    color: var(--color-blue);
-}
+.layout .nav-link:hover, .layout .nav-link.active{ color: var(--color-blue); }
 
 .layout .header-part.right-cont{
     grid-template-columns: auto auto;

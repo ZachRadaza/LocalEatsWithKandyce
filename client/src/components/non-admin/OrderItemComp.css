@@ -4,6 +4,7 @@
     justify-content: space-between;
     border: 0.1rem solid var(--color-text);
     padding: 0.5rem;
+    background: var(--color-bg);
 }
 
 .order-menu-item .info-cont{
