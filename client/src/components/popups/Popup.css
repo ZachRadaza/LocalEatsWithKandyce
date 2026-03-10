@@ -46,3 +46,11 @@
 .popup-cont.danger h5{
     color: var(--color-red);
 }
+
+@media(max-width: 480px){
+    .popup-cont{ max-width: 300px; }
+}
+
+@media(max-width: 380px){
+    .popup-cont{ max-width: 250px; }
+}

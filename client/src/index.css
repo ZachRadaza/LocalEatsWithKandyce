@@ -162,9 +162,13 @@ button.yellow:active{
     padding: 0.2rem 0.7rem 0.5rem 0.7rem;
 }
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #ffffff;
-    }
+@media(max-width: 768px){
+    h1{ font-size: 5rem; }
+    h2{ font-size: 4rem; }
+    h3{ font-size: 3rem; }
+    h4{ font-size: 2.3rem; }
+    h5{ font-size: 1.8rem; }
+    h6{ font-size: 1.2rem; }
+    
+    button{ font-size: 1.2rem; }
 }

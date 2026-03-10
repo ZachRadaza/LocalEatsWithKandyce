@@ -85,6 +85,11 @@
     gap: 0.3rem;
 }
 
+.item-comp .left-end >div{ 
+    display: flex; 
+    flex-direction: row;
+}
+
 .item-comp .left-end .text{ color: var(--color-text); }
 .item-comp .left-end .text.name{ font-weight: 600; font-size: 1.2rem; }
 
@@ -115,8 +120,48 @@
 .item-comp .quantity-cont p{ color: var(--color-text); }
 
 .item-comp .quantity-cont button{
-    line-height: 0.7;
+    line-height: 0.5;
     font-size: 1.2rem;
+    border-radius: 999px;
+    padding: 0.5rem;
 }
 
 .item-comp .quantity-cont button:active{ transform: scale(0.95); }
+
+@media(max-width: 1024px){
+    .item-comp .bot-cont{
+        flex-direction: column;
+        align-items: start;
+        gap: 0.3rem;
+        padding: 0.5rem 1rem;
+    }
+
+    .item-comp .right-end{
+        justify-content: space-between;
+        width: 100%;
+        gap: 0.2rem;
+    }
+}
+
+@media(max-width: 768px){
+    .item-comp img{ aspect-ratio: 1 / 1; }
+
+    .item-comp .overlay .desc{ font-size: 1rem; }
+    .item-comp .overlay .non-desc p{ font-size: 0.8rem; }
+
+    .item-comp .text{ font-size: 1rem; }
+
+    .item-comp .quantity-cont button{ font-size: 1rem; }
+}
+
+@media(max-width: 480px){
+    .item-comp .quantity-cont{ 
+        gap: 0.5rem; 
+        grid-template-columns: auto auto auto;
+    }
+
+    .item-comp .left-end{
+        flex-direction: column;
+        align-items: start;
+    }
+}

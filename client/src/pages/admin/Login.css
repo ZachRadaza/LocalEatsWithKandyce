@@ -22,3 +22,15 @@
 .login-cont .input-pair.invalid-pass{ border: 0.1rem solid var(--color-red); }
 .login-cont .message{ color: var(--color-green); }
 .login-cont .message.invalid-pass{ color: var(--color-red); }
+
+@media(max-width: 480px){
+    .login-cont .login-box{
+        max-width: 300px;
+    }
+}
+
+@media(max-width: 380px){
+    .login-cont .login-box{
+        max-width: 250px;
+    }
+}

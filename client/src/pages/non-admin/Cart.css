@@ -116,3 +116,23 @@
 .cart-cont #place-order-btn{
     border-color: var(--color-green);
 }
+
+@media(max-width: 1024px){
+    .cart-cont{
+        flex-direction: column;
+    }
+
+    .cart-cont .info-display{
+        width: auto;
+    }
+}
+
+@media(max-width: 640px){
+    .cart-cont .customer-info-cont, .cart-cont .checkout-cont{
+        min-width: 100%;
+    }
+
+    .cart-cont .customer-info{
+        text-align: center;
+    }
+}

@@ -20,13 +20,15 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
             <div className="header">
                 <div className="title pair">
                     <h5 className="customer-name">{ order.customers.name ?? "Customer" }</h5>
-                    <p>ID: { order.id }</p>
+                    <p className="order-id">ID: { order.id }</p>
                 </div>
-                <div className="logistics pair">
-                    <h6>${ order.price }</h6>
-                    <p>{ order.orderItems.length } items</p>
+                <div className="header-middle">
+                    <div className="logistics pair">
+                        <h6>${ order.price }</h6>
+                        <p>{ order.orderItems.length } items</p>
+                    </div>
+                    <h6>Deliver on { new Date(order.dateDue).toLocaleDateString() }</h6>
                 </div>
-                <h6>Deliver on { new Date(order.dateDue).toLocaleDateString() }</h6>
                 <div className="btns-cont">
                     <button
                         className="accept green"

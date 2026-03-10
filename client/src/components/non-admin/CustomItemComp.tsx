@@ -35,47 +35,51 @@ export default function CustomItemComp({ customItem, onPatch, deleteCustomItem }
                 </textarea>
             </div>
             <div className="others-cont">
-                <div className="checkbox-cont">
-                    <h6>Vegan</h6>
-                    <input 
-                        checked={ customItem.vegan }
-                        onChange={ (event) => onPatch({ ...customItem, vegan: event.target.checked })}
-                        type="checkbox"
-                    />
+                <div>
+                    <div className="checkbox-cont">
+                        <h6>Vegan</h6>
+                        <input 
+                            checked={ customItem.vegan }
+                            onChange={ (event) => onPatch({ ...customItem, vegan: event.target.checked })}
+                            type="checkbox"
+                        />
+                    </div>
+                    <div className="checkbox-cont">
+                        <h6>Halal</h6>
+                        <input 
+                            checked={ customItem.halal }
+                            onChange={ (event) => onPatch({ ...customItem, halal: event.target.checked })}
+                            type="checkbox"
+                        />
+                    </div>
                 </div>
-                <div className="checkbox-cont">
-                    <h6>Halal</h6>
-                    <input 
-                        checked={ customItem.halal }
-                        onChange={ (event) => onPatch({ ...customItem, halal: event.target.checked })}
-                        type="checkbox"
-                    />
-                </div>
-                <div className="quantity-cont">
-                    <button
-                        onClick={ () => { 
-                            const quantity = Math.max(customItem.quantity - 1, 0);
+                <div>
+                    <div className="quantity-cont">
+                        <button
+                            onClick={ () => { 
+                                const quantity = Math.max(customItem.quantity - 1, 0);
 
-                            quantity 
-                                ? onPatch({ ...customItem, quantity: quantity }) 
-                                : deleteCustomItem();
-                        }}
+                                quantity 
+                                    ? onPatch({ ...customItem, quantity: quantity }) 
+                                    : deleteCustomItem();
+                            }}
+                        >
+                            -
+                        </button>
+                        <p>{ customItem.quantity }</p>
+                        <button
+                            onClick={ () => onPatch({ ...customItem, quantity: customItem.quantity + 1 })}
+                        >
+                            +
+                        </button>
+                    </div>
+                    <button 
+                        className="delete-btn red"
+                        onClick={ () => deleteCustomItem() }
                     >
-                        -
-                    </button>
-                    <p>{ customItem.quantity }</p>
-                    <button
-                        onClick={ () => onPatch({ ...customItem, quantity: customItem.quantity + 1 })}
-                    >
-                        +
+                        Delete
                     </button>
                 </div>
-                <button 
-                    className="delete-btn red"
-                    onClick={ () => deleteCustomItem() }
-                >
-                    Delete
-                </button>
             </div>
         </div>
     );

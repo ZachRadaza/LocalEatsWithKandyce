@@ -14,7 +14,7 @@ export default function Footer(){
                         <Link to="/cart"><p>Cart</p></Link>
                     </div>
                 </div>
-                <div>
+                <div className="info">
                     <p className="self-promo">Website by <a href="https://zach-radaza.com" target="_blank">Zach Radaza</a></p>
                     <p>For <Link to="/admin">Kandyce</Link></p>
                 </div>
@@ -22,7 +22,7 @@ export default function Footer(){
             <div>
                 <div className="group-info">
                     <h6>Contact Information</h6>
-                    <div>
+                    <div className="info">
                         <p>Sacramento, Ca</p>
                         <a href="tel:+5594703149"><p>(559) 470-3149</p></a>
                         <a href="mailto:localeatskandyce@gmail.com"><p>localeatskandyce@gmail.com</p></a>

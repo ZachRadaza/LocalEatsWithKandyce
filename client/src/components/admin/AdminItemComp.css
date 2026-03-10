@@ -148,6 +148,7 @@
     font-style: italic;
     padding: 0.5rem;
     color: var(--color-text);
+    flex: 1;
 }
 
 .admin-item-comp-cont .description.unfilled{
@@ -193,3 +194,13 @@
 
 .admin-item-comp-cont .checkbox:hover{ background: var(--color-yellow); }
 .admin-item-comp-cont .checkbox:checked{ background: var(--color-green); }
+
+@media(max-width: 1024px){
+    .admin-item-comp-cont .edit-btns-cont .id{ font-size: 0.7rem; }
+    
+    .admin-item-comp-cont input{ font-size: 1rem; }
+
+    .admin-item-comp-cont .name{ font-size: 1.1rem; }
+
+    .admin-item-comp-cont .description{ font-size: 1rem; }
+}

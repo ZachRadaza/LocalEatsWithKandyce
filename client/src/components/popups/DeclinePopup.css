@@ -57,3 +57,12 @@
 }
 
 .decline-popup-cont .btns-cont button{ width: 100%; }
+
+
+@media(max-width: 480px){
+    .decline-popup-cont{ max-width: 300px; }
+}
+
+@media(max-width: 380px){
+    .decline-popup-cont{ max-width: 250px; }
+}

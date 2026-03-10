@@ -15,6 +15,14 @@
     align-items: center;
 }
 
+.custom-item-cont .others-cont >div{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .custom-item-cont .others-cont .checkbox-cont{
     display: flex;
     flex-direction: row;
@@ -40,4 +48,16 @@
     gap: 0.5rem;
 }
 
-.custom-item-cont .quantity-cont button{ line-height: 0.8; }
+.custom-item-cont .quantity-cont button{
+    line-height: 0.5;
+    font-size: 1.2rem;
+    border-radius: 999px;
+    padding: 0.5rem;
+}
+
+@media(max-width: 524px){
+    .custom-item-cont .others-cont{
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

@@ -23,6 +23,17 @@
     flex-direction: column;
 }
 
+.order-comp-cont .header-middle{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 40%;
+    margin: 0px 1rem;
+}
+
+.order-comp-cont .header-middle h6, .order-comp-cont .header-middle p{ text-align: center; }
+
 .order-comp-cont .logistics{ align-items: center; }
 
 .order-comp-cont .btns-cont{
@@ -158,4 +169,45 @@
 .order-comp-cont .complete-cont button:hover{ 
     background: var(--color-bg);
     color: var(--color-blue);
+}
+
+@media(max-width: 1024px){
+    .order-comp-cont .header-middle{
+        width: auto;
+        flex-direction: column;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+
+    .order-comp-cont .btns-cont{ flex-direction: column; }
+
+    .order-comp-cont .extension >div{
+        width: auto;
+        padding: 1rem
+    }
+}
+
+@media(max-width: 768px){
+    .order-comp-cont .extension >div{
+        flex-direction: column;
+        gap: 0px;
+    }
+
+    .order-comp-cont .information-cont{
+        display: flex;
+        align-items: end;
+        width: auto;
+        height: fit-content;
+        margin: 0px
+    }
+
+    .order-comp-cont .order-info >div p{ font-size: 1rem; line-height: 1.3; }
+
+    .order-comp-cont .complete-cont{ align-self: center; padding: 0.5rem }
+}
+
+@media(max-width: 480px){
+    .order-comp-cont .pair p{ font-size: 0.8rem; }
+    .order-comp-cont .header-middle h6{ font-size: 1rem; }
+    .order-comp-cont .order-id{ display: none; }
 }

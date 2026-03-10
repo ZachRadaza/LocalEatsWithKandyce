@@ -13,6 +13,7 @@ Built with **React + Typescript + Vite**
 ├── index.html                  
 ├── package.json
 ├── README.md
+|── vite.config.ts
 ├── src
 │   ├── App.tsx                 # Route Definitions
 │   ├── assets                  # Static Assets
@@ -31,8 +32,8 @@ Built with **React + Typescript + Vite**
 │   │   └── schemas.ts
 │   ├── utils                   # Helper functions & API utilities
 │   │   ├── ExtensionService.ts
-│   │   └── RandomFunctions.ts
-│   └── vite.config.ts
+│   └---└── RandomFunctions.ts
+
 ```
 
 ---

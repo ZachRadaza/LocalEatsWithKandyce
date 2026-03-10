@@ -38,11 +38,19 @@
 }
 
 .order-menu-item .btns-cont button{
-    padding: 0.2rem 0.4rem;
-    line-height: 0.8;
+    line-height: 0.5;
+    font-size: 1.2rem;
+    border-radius: 999px;
+    padding: 0.5rem;
 }
 
 .order-menu-item .price-cont .price{
     font-size: 1.2rem;
     font-weight: 600;
+}
+
+@media(max-width: 380px){
+    .order-menu-item{
+        flex-direction: column;
+    }
 }

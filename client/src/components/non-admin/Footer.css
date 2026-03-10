@@ -69,3 +69,36 @@ footer .instagram:hover{ fill: var(--color-green); }
 footer Link p, footer a p, footer a{ color: var(--color-yellow); }
 
 footer Link p:hover, footer a p:hover, footer a:hover{ color: var(--color-green); }
+
+@media(max-width: 768px){
+    footer{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    footer .insta-cont{
+        grid-column: span 2;
+    }
+}
+
+@media(max-width: 480px){
+    footer{ 
+        grid-template-columns: 1fr; 
+    }
+
+    footer .group-info{
+        align-items: center;
+    }
+
+    footer .insta-cont{ 
+        grid-column: span 1;
+        justify-self: center;
+    }
+
+    footer .info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
