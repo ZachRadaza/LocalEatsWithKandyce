@@ -17,6 +17,7 @@
 .home-cont .hero img{
     width: 100%;
     height: 100%;
+    padding: 0.2rem;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border: 0.1rem solid var(--color-text);
@@ -30,4 +31,97 @@
     font-weight: 700;
     text-transform: uppercase;
     font-size: 2rem;
+}
+
+.home-cont .about{
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    padding: 1rem;
+    display: none;
+}
+
+.home-cont .about .about-image{
+    position: relative;
+    left: -30%;
+    width: 130%;
+    height: auto;
+    --stroke: 3px;
+    filter:
+        drop-shadow(var(--stroke) 0 0 var(--color-text))
+        drop-shadow(calc(-1 * var(--stroke)) 0 0 var(--color-text))
+        drop-shadow(0 var(--stroke) 0 var(--color-text))
+        drop-shadow(0 calc(-1 * var(--stroke)) 0 var(--color-text))
+        drop-shadow(var(--stroke) var(--stroke) 0 var(--color-text))
+        drop-shadow(calc(-1 * var(--stroke)) calc(-1 * var(--stroke)) 0 var(--color-text))
+        drop-shadow(var(--stroke) calc(-1 * var(--stroke)) 0 var(--color-text))
+        drop-shadow(calc(-1 * var(--stroke)) var(--stroke) 0 var(--color-text));
+}
+
+.home-cont .about .about-info{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-cont .preview{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.home-cont .preview .preview-title{
+    text-align: center;
+}
+
+.home-cont .preview .categories{
+    columns: 3;
+    column-gap: 1rem;
+    padding: 1rem;
+}
+
+.home-cont .preview .categories >div{
+    padding: 0.5rem 0px;
+}
+
+.home-cont .preview .category{
+    break-inside: avoid;
+    display: grid;
+    border: 0.1rem solid var(--color-text);
+    padding: 0.2rem;
+    transition: transform 200ms ease;
+}
+
+.home-cont .preview .category:hover, 
+.home-cont .preview .category:active{ 
+    transform: scale(0.98); 
+}
+
+.home-cont .preview .category .category-image{
+    grid-area: 1 / 1;
+    width: 100%;
+    height: auto;
+}
+
+.home-cont .preview .category .category-title{
+    grid-area: 1 / 1;
+    background: var(--color-text);
+    color: var(--color-bg);
+    border: 0.2rem solid var(--color-bg);
+    width: fit-content;
+    height: fit-content;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem;
+    margin: 0.5rem;
+}
+
+@media(max-width: 640px){
+    .home-cont .preview .categories{ columns: 2; }
+}
+
+@media(max-width: 480px){
+    .home-cont .preview .category .category-title{ font-size: 1rem; }
 }

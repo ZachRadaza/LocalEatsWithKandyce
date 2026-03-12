@@ -94,7 +94,12 @@ export default function RootLayout() {
                 if(cancelled) 
                     return;
 
-                const allCategories = [...categoriesData, { id: "custom-item", name: "Custom" }];
+                const allCategories = [...categoriesData, { 
+                    id: "custom-item", 
+                    name: "Custom", 
+                    description: "Create custom orders to your liking" 
+                }];
+
                 setCategories(new Set(allCategories));
 
                 const realCategories = categoriesData;

@@ -24,10 +24,10 @@ export async function getCategory(id){
     return data;
 }
 
-export async function addCategory(name){
+export async function addCategory(name, description){
     const { data, error } = await supabase
         .from("category")
-        .insert([{ name } ])
+        .insert([{ name, description }])
         .select()
         .single();
 
@@ -37,11 +37,13 @@ export async function addCategory(name){
     return data;
 }
 
-export async function updateCategory(id, newName){
+export async function updateCategory(id, newName, newDescription){
     const { data, error } = await supabase
         .from("category")
-        .update({ name: newName })
-        .eq("id", id)
+        .update({ 
+            name: newName,
+            description: newDescription
+        }).eq("id", id)
         .select()
         .single();
 

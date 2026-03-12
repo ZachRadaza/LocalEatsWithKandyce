@@ -28,7 +28,7 @@ export async function adminLogin(req, res) {
         const ok = await bcrypt.compare(password, hash);
 
         if(!ok)
-            return res.status(400).json({ 
+            return res.status(401).json({ 
                 success: false, 
                 error: "Invalid password" 
             });

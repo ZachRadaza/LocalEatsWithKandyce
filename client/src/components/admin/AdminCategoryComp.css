@@ -14,23 +14,45 @@
     transition: all 100ms ease;
 }
 
-.admin-category-comp-cont .admin-category-cont:has(.name-input.editing){
-    border-bottom-color: var(--color-green);
+.admin-category-comp-cont .admin-category-cont .admin-category-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
 }
 
-.admin-category-comp-cont .admin-category-cont .name-input{
+.admin-category-comp-cont .admin-category-cont:has(.name-input.editing){
+    border-color: var(--color-green);
+}
+
+.admin-category-comp-cont .admin-category-cont .name-input,
+.admin-category-comp-cont .admin-category-cont .desc-input{
     all: unset;
     cursor: auto;
     box-sizing: border-box;
     background: transparent;
     color: var(--color-yellow);
-    font-family: var(--font-heading);
-    font-size: 6rem;
-    padding: 1rem 2rem;
     width: 100%;
 }
 
-.admin-category-comp-cont .admin-category-cont .name-input.editing{ cursor: text; color: var(--color-yellow); }
+.admin-category-comp-cont .admin-category-cont .name-input{ 
+    font-size: 6rem; 
+    font-family: var(--font-heading);
+}
+
+.admin-category-comp-cont .admin-category-cont .desc-input{ 
+    font-size: 1.2rem; 
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.admin-category-comp-cont .admin-category-cont .name-input.editing,
+.admin-category-comp-cont .admin-category-cont .desc-input.editing{ 
+    cursor: text; 
+    color: var(--color-green); 
+}
 
 .admin-category-comp-cont .admin-category-cont .name-btns-cont button{ height: 100%; }
 
@@ -39,8 +61,6 @@
     font-family: var(--font-heading);
     margin: 0.5rem;
 }
-
-.admin-category-comp-cont .admin-category-cont button.edit-btn:active{ color: var(--color-yellow); }
 
 .admin-category-comp-cont .admin-item-cont{
     display: grid;
@@ -76,6 +96,10 @@
 @media(max-width: 768px){
     .admin-category-comp-cont .admin-category-cont .name-input{
         font-size: 3rem;
+    }
+
+    .admin-category-comp-cont .admin-category-cont .desc-input{
+        font-size: 1rem;
     }
 }
 

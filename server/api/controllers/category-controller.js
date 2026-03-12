@@ -52,17 +52,24 @@ export async function getCategoryHandler(req, res){
 
 export async function addCategoryHandler(req, res){
     try{
-        const { name } = req.body;
+        const { name, description } = req.body;
 
-        if(!name || typeof name !== "string" || !name.trim()){
+        if(
+            !name || !description ||
+            typeof name !== "string" ||
+            typeof description !== "string" ||
+            !name.trim() ||
+            !description.trim()
+        ){
             return res.status(400).json({
                 success: false,
-                error: "Category name is required."
+                error: "Category name and description is required."
             });
         }
 
         const trimmedName = name.trim();
-        const data = await categoryService.addCategory(trimmedName);
+        const trimmedDesc = description.trim();
+        const data = await categoryService.addCategory(trimmedName, trimmedDesc);
 
         res.status(201).json({
             success: true,
@@ -80,7 +87,7 @@ export async function addCategoryHandler(req, res){
 export async function updateCategoryHandler(req, res){
     try{
         const { id } = req.params;
-        const { name } = req.body;
+        const { name, description } = req.body;
 
         if(!id){
             return res.status(400).json({
@@ -89,15 +96,22 @@ export async function updateCategoryHandler(req, res){
             });
         }
 
-        if(!name || typeof name !== "string" || !name.trim()){
+        if(
+            !name || !description ||
+            typeof name !== "string" ||
+            typeof description !== "string" ||
+            !name.trim() ||
+            !description.trim()
+        ){
             return res.status(400).json({
                 success: false,
-                error: "Category name is required."
+                error: "Category name and description is required."
             });
         }
 
         const trimmedName = name.trim();
-        const data = await categoryService.updateCategory(id, trimmedName);
+        const trimmedDesc = description.trim();
+        const data = await categoryService.updateCategory(id, trimmedName, trimmedDesc);
 
         if(!data){
             return res.status(404).json({

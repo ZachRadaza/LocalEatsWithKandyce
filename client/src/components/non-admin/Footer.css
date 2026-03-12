@@ -2,7 +2,7 @@ footer{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
-    border-top: 0.1rem solid var(--color-text);
+    border-top: 0.2rem solid var(--color-text);
     background: var(--color-bg);
     padding: 1rem;
 

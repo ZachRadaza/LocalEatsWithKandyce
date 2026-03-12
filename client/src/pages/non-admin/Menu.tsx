@@ -1,7 +1,7 @@
 import type { Category, MenuItem } from "../../schemas/schemas";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { scrollToID } from "../../utils/RandomFunctions";
-import { useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import CustomItemComp from "../../components/non-admin/CustomItemComp";
 import "./Menu.css";
 import ItemComp from "../../components/non-admin/ItemComp";
@@ -27,6 +27,7 @@ export default function Menu(){
     } = useOutletContext<MenuContext>();
 
     const [activeNavId, setActiveNavId] = useState<string | null>([...categories][0].id ?? null);
+    const location = useLocation();
 
     const patchMenuItem = (categoryID: string, itemID: string, patch: Partial<MenuItem>) => {
         const items = menu.get(categoryID) ?? [];
@@ -78,6 +79,18 @@ export default function Menu(){
         });
     }
 
+    useEffect(() => {
+        if(!location.hash)
+            return;
+
+        const id = location.hash.replace("#", "");
+        const element = document.getElementById(id);
+
+        if(element){
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [location]);
+
     return (
         <div className="menu-cont">
             <nav>
@@ -103,16 +116,19 @@ export default function Menu(){
                                     <h5 key={ `${category!.id}-${i}${c}` }>{c}</h5>
                                 )) }
                             </div>
-                            <div className="category-items">
-                                { items.map(item => 
-                                    (
-                                        <ItemComp
-                                            key={ item.id }
-                                            item={ item }
-                                            onPatch={ (patch) => patchMenuItem(categoryID, item.id!, patch) }
-                                        />
-                                    )
-                                )}
+                            <div className="category-items-cont">
+                                <p className="category-description">{ category?.description }</p>
+                                <div className="category-items">
+                                    { items.map(item => 
+                                        (
+                                            <ItemComp
+                                                key={ item.id }
+                                                item={ item }
+                                                onPatch={ (patch) => patchMenuItem(categoryID, item.id!, patch) }
+                                            />
+                                        )
+                                    )}
+                                </div>
                             </div>
                         </div>
                     );

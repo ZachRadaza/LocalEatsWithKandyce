@@ -8,7 +8,7 @@ import "./UpdateMenu.css";
 
 export default function UpdateMenu(){
     const [categories, setCategories] = useState<Category[]>([]);
-    const [currentCategory, setCurrentCategory] = useState<Category>({ id: 'temp', name: "temp" });
+    const [currentCategory, setCurrentCategory] = useState<Category>({ id: 'temp', name: "temp", description: "Category description" });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -46,7 +46,11 @@ export default function UpdateMenu(){
 
     function addCategoryClicked(){
         const catNum = categories.length + 1;
-        const newCategory: Category = { id: `new-cat-${crypto.randomUUID()}`, name: `New Category ${catNum}`};
+        const newCategory: Category = { 
+            id: `new-cat-${crypto.randomUUID()}`, 
+            name: `New Category ${catNum}`,
+            description: `Descrition for New Category`
+        };
 
         setCategories([...categories, newCategory]);
 

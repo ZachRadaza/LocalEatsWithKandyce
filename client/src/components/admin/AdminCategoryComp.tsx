@@ -13,6 +13,7 @@ type AdminCategoryCompProp = {
 export default function AdminCategoryComp({ category, deleteCategory }: AdminCategoryCompProp){
     const [items, setItems] = useState<AdminItem[]>([]);
     const [categoryName, setCategoryName] = useState<string>("");
+    const [categoryDesc, setCategoryDesc] = useState<string>("");
     const [canEditName, setCanEditName] = useState<boolean>(false);
     const [refresh, setRefesh] = useState<boolean>(false);
     const [savingItemChanges, setSavingItemChanges] = useState<boolean>(false);
@@ -90,6 +91,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             if(canEditName){
                 setSavingCatChanges(true);
                 category.name = categoryName;
+                category.description = categoryDesc;
 
                 if(category.id?.includes('new-cat'))
                     await ExtensionService.addCategory(category);
@@ -110,6 +112,7 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
         let cancelled = false;
 
         setCategoryName(category.name);
+        setCategoryDesc(category.description);
 
         if(category.id === 'temp')
             return;
@@ -193,17 +196,25 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
                 />
             </div>
             <div className="admin-category-cont">
-                <input 
-                    type="text"
-                    value={ categoryName }
-                    disabled={ !canEditName }
-                    onChange={ (event) => { setCategoryName(event.target.value) } }
-                    className={ canEditName ? "name-input editing" : "name-input" }
-                    ref={ nameInputRef }
-                />
+                <div className="admin-category-inputs">
+                    <input 
+                        type="text"
+                        value={ categoryName }
+                        disabled={ !canEditName }
+                        onChange={ (event) => setCategoryName(event.target.value) }
+                        className={ canEditName ? "name-input editing" : "name-input" }
+                        ref={ nameInputRef }
+                    />
+                    <textarea
+                        value={ categoryDesc }
+                        disabled={ !canEditName }
+                        onChange={ (event) => setCategoryDesc(event.target.value) }
+                        className={ canEditName ? "desc-input editing" : "desc-input" }
+                    ></textarea>
+                </div>
                 <button
-                    onClick={ () => { nameEditBtnClick() } }
-                    className={ canEditName ? "edit-btn yellow editing" : "edit-btn yellow" }
+                    onClick={ () => nameEditBtnClick() }
+                    className={ !canEditName ? "edit-btn yellow" : "edit-btn green" }
                 >
                     { canEditName 
                         ? ( savingCatChanges ? "Saving..." : "Save" ) 

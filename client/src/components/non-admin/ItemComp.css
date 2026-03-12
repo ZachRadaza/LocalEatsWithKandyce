@@ -7,16 +7,17 @@
     height: auto;
     width: 95%;
     position: relative;
+    transition: transform 200ms ease;
 }
 
-.item-comp:hover{ border-color: var(--color-blue); }
-.item-comp:hover .bot-cont{ border-top-color: var(--color-blue); }
+.item-comp:hover, .item-comp:active{ 
+    transform: scale(0.98);
+}
 
 .item-comp .lay-cont{
     position: relative;
     display: grid;
-    height: 100%;
-    width: 100%;
+    border: 0.2rem solid var(--color-bg);
     z-index: 0;
     overflow: hidden;
     cursor: pointer;

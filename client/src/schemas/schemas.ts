@@ -1,6 +1,11 @@
 export type Category = {
     id: string | null;
     name: string;
+    description: string;
+}
+
+export type CategoryImage = Category & {
+    imageLink: string;
 }
 
 export type Item = {
