@@ -54,13 +54,15 @@ export async function adminLogin(req, res) {
 }
 
 export function adminLogout(req, res) {
-    res.clearCookie(
-        COOKIE_NAME, 
-        { path: "/" }
-    );
+    res.clearCookie(COOKIE_NAME, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        path: "/",
+    });
 
     return res.status(200).json({ 
-        success: true,
+        success: true 
     });
 }
 
