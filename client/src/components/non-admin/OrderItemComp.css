@@ -28,6 +28,13 @@
     gap: 0.5rem;
 }
 
+.order-menu-item .name-cont{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .order-menu-item .name{ font-size: 1.3rem; }
 
 .order-menu-item .btns-cont{

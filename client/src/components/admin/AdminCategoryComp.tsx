@@ -35,8 +35,6 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             description: "",
             imageLink: "",
             contains: [],
-            vegan: false,
-            halal: false,
             price: 0,
             category: category,
             categoryID: category.id,
@@ -44,6 +42,13 @@ export default function AdminCategoryComp({ category, deleteCategory }: AdminCat
             deleted: false,
             file: null,
             custom: false,
+            vegan: false,
+            vegetarian: false,
+            halal: false,
+            glutenFree: false,
+            dairyFree: false,
+            ketoFriendly: false,
+            spicy: false
         };
 
         setItems(oldItems => [...oldItems, newItem]);

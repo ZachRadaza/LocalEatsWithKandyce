@@ -1,6 +1,7 @@
 import type { Category, Customer, Item, Order, OrderItem, AdminItem } from "../schemas/schemas";
 
-const apiUrl = "https://local-eats-with-kandyce.fly.dev/api";
+// const apiUrl = "https://local-eats-with-kandyce.fly.dev/api";
+const apiUrl = "http://localhost:3001/api";
 const apiCustomer = `${apiUrl}/customer`;
 const apiCategory = `${apiUrl}/category`;
 const apiItem = `${apiUrl}/item`;
@@ -275,6 +276,11 @@ export const ExtensionService = {
             form.append("imageLink", item.imageLink);
             form.append("vegan", String(item.vegan));
             form.append("halal", String(item.halal));
+            form.append("vegetarian", String(item.vegetarian));
+            form.append("ketoFriendly", String(item.ketoFriendly));
+            form.append("glutenFree", String(item.glutenFree));
+            form.append("dairyFree", String(item.dairyFree));
+            form.append("spicy", String(item.spicy));
 
             if(item.file)
                 form.append("file", item.file);
@@ -390,6 +396,11 @@ export const ExtensionService = {
             form.append("imageLink", item.imageLink);
             form.append("vegan", String(item.vegan));
             form.append("halal", String(item.halal));
+            form.append("vegetarian", String(item.vegetarian));
+            form.append("ketoFriendly", String(item.ketoFriendly));
+            form.append("glutenFree", String(item.glutenFree));
+            form.append("dairyFree", String(item.dairyFree));
+            form.append("spicy", String(item.spicy));
 
             if(item.file)
                 form.append("file", item.file);

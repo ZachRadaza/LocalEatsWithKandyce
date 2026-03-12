@@ -1,4 +1,5 @@
 import type { OrderMenuItem } from "../../schemas/schemas";
+import IndicatorComp from "./IndicatorComp";
 import "./OrderItemComp.css";
 
 type OrderMenuItemProp = {
@@ -16,7 +17,10 @@ export default function OrderItemComp({ orderItem, patchOrderItem, enableBtns }:
                     src={ orderItem.imageLink }
                 />
                 <div className="text-cont">
-                    <h5 className="name">{ orderItem.name }</h5>
+                    <div className="name-cont">
+                        <h5 className="name">{ orderItem.name }</h5>
+                        <IndicatorComp item={ orderItem } />
+                    </div>
                     { enableBtns ? (
                         <div className="btns-cont">
                             <button

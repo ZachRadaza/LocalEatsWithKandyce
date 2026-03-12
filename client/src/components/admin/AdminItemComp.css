@@ -14,8 +14,11 @@
 .admin-item-comp-cont >div{
     display: flex;
     flex-direction: column;
-    margin: 1rem;
+    margin: 0px 1rem;
 }
+
+.admin-item-comp-cont .top-part-item{ margin-top: 1rem; }
+.admin-item-comp-cont .bot-part-item{ margin-bottom: 1rem; }
 
 .admin-item-comp-cont input{
     all: unset;
@@ -172,6 +175,13 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+}
+
+.admin-item-comp-cont .checkboxes{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    width: 100%;
 }
 
 .admin-item-comp-cont .checkbox-cont{ 

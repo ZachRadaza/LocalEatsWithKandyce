@@ -15,12 +15,18 @@
     align-items: center;
 }
 
-.custom-item-cont .others-cont >div{
+.custom-item-cont .others-cont .item-controls{
     display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-around;
+    flex-direction: column;
+    gap: 1rem;
     align-items: center;
+    justify-content: center;
+}
+
+.custom-item-cont .others-cont .checkboxes{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
 }
 
 .custom-item-cont .others-cont .checkbox-cont{
@@ -55,9 +61,27 @@
     padding: 0.5rem;
 }
 
+@media(max-width: 1280px){
+    .custom-item-cont .others-cont .checkboxes{ grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(max-width: 1024px){
+    .custom-item-cont .others-cont .checkboxes{ grid-template-columns: repeat(3, 1fr); }
+}
+
+@media(max-width: 768px){
+    .custom-item-cont .others-cont .checkboxes{ grid-template-columns: repeat(2, 1fr); }
+}
+
 @media(max-width: 524px){
     .custom-item-cont .others-cont{
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .custom-item-cont .others-cont .item-controls{ 
+        flex-direction: row; 
+        justify-content: space-around;
+        width: 100%;
     }
 }

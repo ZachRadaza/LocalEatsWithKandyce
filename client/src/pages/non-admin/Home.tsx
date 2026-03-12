@@ -62,7 +62,7 @@ export default function Home(){
                 <h4 className="preview-title">Explore the Menu</h4>
                 <div className="categories">
                     { categoryPairs.map(category => (
-                        <div>
+                        <div key={ `${category.id}-cont`}>
                             <div
                                 key={ category.id }
                                 onClick={ () => navigate(`/menu#${category.id}`) }

@@ -2,6 +2,8 @@
 
 Full-stack food ordering platform with a customer-facing site and an admin dashboard to modify what is in the customer-facing site.
 
+[Link to site](https://localeatswithkandyce.pages.dev)
+
 ---
 
 ## Project Structure

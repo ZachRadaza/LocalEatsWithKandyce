@@ -37,7 +37,7 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
 
     return (
         <div className={ !deleted ? "admin-item-comp-cont" : "admin-item-comp-cont deleted" }>
-            <div>
+            <div className="top-part-item">
                 <div className="edit-btns-cont">
                     <p className="id">{`ID: ${item.id}`}</p>
                     <div className="btns-cont">
@@ -130,42 +130,124 @@ export default function AdminItemComp({ item, onPatch }: AdminItemCompProp){
                     ></textarea>
                 </div>
             </div>
-            <div>
+            <div className="bot-part-item">
                 <div className="bottom-cont">
-                    <div className="value-cont">
-                        <h6>Vegan: </h6>
-                        <div className="checkbox-cont">
-                            { !canEdit
-                                ? <p className="value">
-                                    { item.vegan ? "Yes" : "No" }
-                                </p>
-                                : <input 
-                                    type="checkbox"
-                                    checked={ item.vegan }
-                                    onChange={ event => onPatch({ vegan: event.target.checked }) }
-                                    className="checkbox"
-                                />
-                            }
+                    <div className="checkboxes">
+                        <div className="value-cont">
+                            <p>Vegan: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.vegan ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.vegan }
+                                        onChange={ event => onPatch({ vegan: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
+                        </div>
+                        <div className="value-cont">
+                            <p>Vegetarian: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.vegetarian ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.vegetarian }
+                                        onChange={ event => onPatch({ vegetarian: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
+                        </div>
+                        <div className="value-cont">
+                            <p>Halal: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.halal ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.halal }
+                                        onChange={ event => onPatch({ halal: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
+                        </div>
+                        <div className="value-cont">
+                            <p>Gluten-free: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.glutenFree ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.glutenFree }
+                                        onChange={ event => onPatch({ glutenFree: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
+                        </div>
+                        <div className="value-cont">
+                            <p>Dairy-free: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.dairyFree ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.dairyFree }
+                                        onChange={ event => onPatch({ dairyFree: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
+                        </div>
+                        <div className="value-cont">
+                            <p>Keto-friendly: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.ketoFriendly ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.ketoFriendly }
+                                        onChange={ event => onPatch({ ketoFriendly: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
+                        </div>
+                        <div className="value-cont">
+                            <p>Spicy: </p>
+                            <div className="checkbox-cont">
+                                { !canEdit
+                                    ? <p className="value">
+                                        { item.spicy ? "Yes" : "No" }
+                                    </p>
+                                    : <input 
+                                        type="checkbox"
+                                        checked={ item.spicy }
+                                        onChange={ event => onPatch({ spicy: event.target.checked }) }
+                                        className="checkbox"
+                                    />
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="value-cont">
-                        <h6>Halal: </h6>
-                        <div className="checkbox-cont">
-                            { !canEdit
-                                ? <p className="value">
-                                    { item.halal ? "Yes" : "No" }
-                                </p>
-                                : <input 
-                                    type="checkbox"
-                                    checked={ item.halal }
-                                    onChange={ event => onPatch({ halal: event.target.checked }) }
-                                    className="checkbox"
-                                />
-                            }
-                        </div>
-                    </div>
-                    <div className="value-cont">
-                        <h6>Contains: </h6>
+                        <p>Contains: </p>
                         <input 
                             type="text"
                             value={ item.contains }

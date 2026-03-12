@@ -7,12 +7,17 @@ export const itemSelect = `
     image_link,
     price,
     contains,
-    vegan,
-    halal,
     category (*),
     created_at,
     updated_at,
-    custom
+    custom,
+    vegan,
+    halal,
+    vegetarian,
+    keto_friendly,
+    gluten_free,
+    dairy_free,
+    spicy
 `;
 
 export async function getAllItems(){
@@ -24,10 +29,7 @@ export async function getAllItems(){
     if(error)
         throw error;
 
-    const items = data.map(({ image_link, ...rest }) => ({
-        ...rest,
-        imageLink: image_link
-    }));
+    const items = toFrontEndAllItems(data);
 
     return items;
 }
@@ -43,11 +45,7 @@ export async function getItem(id){
     if(error)
         throw error;
 
-    const itemRet = {
-        ...data,
-        imageLink: data.image_link,
-        image_link: undefined
-    };
+    const itemRet = toFrontEndItem(data);
 
     return itemRet;
 }
@@ -62,10 +60,7 @@ export async function getItemsFromCategory(categoryID){
     if(error)
         throw error;
 
-    const items = data.map(({ image_link, ...rest }) => ({
-        ...rest,
-        imageLink: image_link
-    }));
+    const items = toFrontEndAllItems(data);
 
     return items;
 }
@@ -79,10 +74,7 @@ export async function getAllItemsCustom(){
     if(error)
         throw error;
 
-    const items = data.map(({ image_link, ...rest }) => ({
-        ...rest,
-        imageLink: image_link
-    }));
+    const items = toFrontEndAllItems(data);
 
     return items;
 }
@@ -95,10 +87,7 @@ export async function getAllItemsWithCustom(){
     if(error)
         throw error;
 
-    const items = data.map(({ image_link, ...rest }) => ({
-        ...rest,
-        imageLink: image_link
-    }));
+    const items = toFrontEndAllItems(data);
 
     return items;
 }
@@ -113,11 +102,7 @@ export async function addItem(item){
     if(error)
         throw error;
 
-    const itemRet = {
-        ...data,
-        imageLink: data.image_link,
-        image_link: undefined
-    };
+    const itemRet = toFrontEndItem(data);
 
     return itemRet;
 }
@@ -133,11 +118,7 @@ export async function updateItem(id, item){
     if(error)
         throw error;
 
-    const itemRet = {
-        ...data,
-        imageLink: data.image_link,
-        image_link: undefined
-    };
+    const itemRet = toFrontEndItem(data);
 
     return itemRet;
 }
@@ -154,6 +135,34 @@ export async function deleteItem(id){
     return data;
 }
 
+
+function toFrontEndAllItems(data){
+    const items = data.map(({ image_link, keto_friendly, gluten_free, dairy_free, ...rest }) => ({
+        ...rest,
+        imageLink: image_link,
+        glutenFree: gluten_free,
+        dairyFree: dairy_free,
+        ketoFriendly: keto_friendly
+    }));
+
+    return items;
+}
+
+function toFrontEndItem(data){
+    const itemRet = {
+        ...data,
+        imageLink: data.image_link,
+        image_link: undefined,
+        dairyFree: data.dairy_free,
+        dairy_free: undefined,
+        glutenFree: data.gluten_free,
+        gluten_free: undefined,
+        ketoFriendly: data.keto_friendly,
+        keto_friendly: undefined
+    };
+
+    return itemRet;
+}
 
 // Image Upload to Bucket
 

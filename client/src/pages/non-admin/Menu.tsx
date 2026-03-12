@@ -65,13 +65,18 @@ export default function Menu(){
             description: "",
             imageLink: "",
             contains: [],
-            vegan: false,
-            halal: false,
             price: 0,
             category: null,
             categoryID: [...categories][0].id,
             custom: true,
-            quantity: 1
+            quantity: 1,
+            vegan: false,
+            halal: false,
+            ketoFriendly: false,
+            vegetarian: false,
+            glutenFree: false,
+            dairyFree: false,
+            spicy: false
         };
 
         setCustomItems(oldItems => {

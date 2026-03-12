@@ -14,12 +14,18 @@ export type Item = {
     description: string;
     imageLink: string;
     contains: string[];
-    vegan: boolean;
-    halal: boolean;
     category: Category | null;
     categoryID: string | null;
     price: number | "";
     custom: boolean;
+
+    vegan: boolean;
+    halal: boolean;
+    vegetarian: boolean;
+    glutenFree: boolean;
+    dairyFree: boolean;
+    ketoFriendly: boolean;
+    spicy: boolean;
 }
 
 export type MenuItem = Item & {
@@ -45,6 +51,14 @@ export type OrderItem = {
     orderID: string | null;
     quantity: number;
     price: number;
+
+    vegan: boolean;
+    halal: boolean;
+    vegetarian: boolean;
+    glutenFree: boolean;
+    dairyFree: boolean;
+    ketoFriendly: boolean;
+    spicy: boolean;
 }
 
 export type OrderMenuItem = OrderItem & {

@@ -56,7 +56,14 @@ export default function RootLayout() {
                     quantity: 1,
                     name: item.name,
                     imageLink: item.imageLink,
-                    categoryID: item.categoryID!
+                    categoryID: item.categoryID!,
+                    vegan: item.vegan,
+                    halal: item.halal,
+                    vegetarian: item.vegetarian,
+                    glutenFree: item.glutenFree,
+                    dairyFree: item.dairyFree,
+                    ketoFriendly: item.ketoFriendly,
+                    spicy: item.spicy
                 });
             }
 

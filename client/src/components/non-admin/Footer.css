@@ -52,41 +52,48 @@ footer .group-info .icon-cont svg{
     color: var(--color-green);
 }
 
+footer .group-info .info{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
 footer .insta-cont{
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
     gap: 0.5rem;
 }
 
 footer .instagram{
-    width: 150px;
+    width: 2rem;
+    margin: 0px;
     height: auto;
-    fill: var(--color-yellow);
+    fill: var(--color-green);
 }
-
-footer .instagram:hover{ fill: var(--color-green); }
 
 footer Link p, footer a p, footer a{ color: var(--color-yellow); }
 
 footer Link p:hover, footer a p:hover, footer a:hover{ color: var(--color-green); }
 
 @media(max-width: 768px){
-    footer{
-        grid-template-columns: repeat(2, 1fr);
-    }
+    footer{ grid-template-columns: repeat(2, 1fr); }
 
-    footer .insta-cont{
-        grid-column: span 2;
-    }
+    footer .insta-cont{ grid-column: span 2; }
+
+    footer .diet-indicator{ justify-self: left; }
 }
 
 @media(max-width: 480px){
-    footer{ 
-        grid-template-columns: 1fr; 
-    }
+    footer{ grid-template-columns: 1fr;  }
 
-    footer .group-info{
-        align-items: center;
+    footer .diet-indicator{ justify-self: center; }
+
+    footer .group-info{ align-items: center; }
+
+    footer .diet-indicator .group-info >div{
+        justify-items: left;
     }
 
     footer .insta-cont{ 

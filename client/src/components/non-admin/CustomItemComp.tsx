@@ -25,7 +25,7 @@ export default function CustomItemComp({ customItem, onPatch, deleteCustomItem }
                 />
             </div>
             <div className={ validInput(customItem.description) }>
-                <h6>Desciption</h6>
+                <h6>Description</h6>
                 <textarea
                     value={ customItem.description }
                     onChange={ (event) => onPatch({ ...customItem, description: event.target.value })}
@@ -35,25 +35,65 @@ export default function CustomItemComp({ customItem, onPatch, deleteCustomItem }
                 </textarea>
             </div>
             <div className="others-cont">
-                <div>
+                <div className="checkboxes">
                     <div className="checkbox-cont">
-                        <h6>Vegan</h6>
                         <input 
                             checked={ customItem.vegan }
                             onChange={ (event) => onPatch({ ...customItem, vegan: event.target.checked })}
                             type="checkbox"
                         />
+                        <p>Vegan</p>
                     </div>
                     <div className="checkbox-cont">
-                        <h6>Halal</h6>
+                        <input 
+                            checked={ customItem.vegetarian }
+                            onChange={ (event) => onPatch({ ...customItem, vegetarian: event.target.checked })}
+                            type="checkbox"
+                        />
+                        <p>Vegetarian</p>
+                    </div>
+                    <div className="checkbox-cont">
                         <input 
                             checked={ customItem.halal }
                             onChange={ (event) => onPatch({ ...customItem, halal: event.target.checked })}
                             type="checkbox"
                         />
+                        <p>Halal</p>
+                    </div>
+                    <div className="checkbox-cont">
+                        <input 
+                            checked={ customItem.glutenFree }
+                            onChange={ (event) => onPatch({ ...customItem, glutenFree: event.target.checked })}
+                            type="checkbox"
+                        />
+                        <p>Gluten-free</p>
+                    </div>
+                    <div className="checkbox-cont">
+                        <input 
+                            checked={ customItem.dairyFree }
+                            onChange={ (event) => onPatch({ ...customItem, dairyFree: event.target.checked })}
+                            type="checkbox"
+                        />
+                        <p>Dairy-free</p>
+                    </div>
+                    <div className="checkbox-cont">
+                        <input 
+                            checked={ customItem.ketoFriendly }
+                            onChange={ (event) => onPatch({ ...customItem, ketoFriendly: event.target.checked })}
+                            type="checkbox"
+                        />
+                        <p>Keto-friendly</p>
+                    </div>
+                    <div className="checkbox-cont">
+                        <input 
+                            checked={ customItem.spicy }
+                            onChange={ (event) => onPatch({ ...customItem, spicy: event.target.checked })}
+                            type="checkbox"
+                        />
+                        <p>Spicy</p>
                     </div>
                 </div>
-                <div>
+                <div className="item-controls">
                     <div className="quantity-cont">
                         <button
                             onClick={ () => { 

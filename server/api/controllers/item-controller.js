@@ -235,10 +235,15 @@ export function objectizeItem(rawBody){
         imageLink,
         price,
         contains,
+        categoryID,
+        custom,
         vegan,
         halal,
-        categoryID,
-        custom
+        vegetarian,
+        ketoFriendly,
+        glutenFree,
+        dairyFree,
+        spicy
     } = rawBody;
 
     if(
@@ -256,10 +261,15 @@ export function objectizeItem(rawBody){
         image_link: imageLink ?? "",
         price: price,
         contains: contains.length > 0 ? JSON.parse(contains) : [],
+        category_id: categoryID,
+        custom: custom ?? false,
         vegan: vegan,
         halal: halal,
-        category_id: categoryID,
-        custom: custom ?? false
+        vegetarian: vegetarian,
+        keto_friendly: ketoFriendly,
+        gluten_free: glutenFree,
+        dairy_free: dairyFree,
+        spicy: spicy
     };
 }
 

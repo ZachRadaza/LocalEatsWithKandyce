@@ -1,0 +1,6 @@
+.indicator-comp-cont svg{
+    fill: var(--color-green);
+    color: var(--color-green);
+    width: 1.5rem;
+    height: auto;
+}
