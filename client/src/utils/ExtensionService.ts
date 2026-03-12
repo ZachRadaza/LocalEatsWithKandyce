@@ -1,7 +1,7 @@
 import type { Category, Customer, Item, Order, OrderItem, AdminItem } from "../schemas/schemas";
 
-// const apiUrl = "https://local-eats-with-kandyce.fly.dev/api";
-const apiUrl = "http://localhost:3001/api";
+const apiUrl = "https://local-eats-with-kandyce.fly.dev/api";
+// const apiUrl = "http://localhost:3001/api";
 const apiCustomer = `${apiUrl}/customer`;
 const apiCategory = `${apiUrl}/category`;
 const apiItem = `${apiUrl}/item`;
