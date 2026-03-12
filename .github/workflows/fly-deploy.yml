@@ -2,18 +2,22 @@ name: Fly Deploy
 
 on:
   push:
-    branches: [ "prod" ]
+    branches: ["prod"]
+    paths:
+      - "server/**"
+      - ".github/workflows/fly-deploy.yml"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    concurrency: deploy-group
     steps:
       - uses: actions/checkout@v4
 
       - uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy
-        run: fly deploy
+        working-directory: server
+        run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        working-directory: server
