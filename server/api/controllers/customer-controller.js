@@ -52,16 +52,16 @@ export async function getCustomerHandler(req, res){
 
 export async function addCustomerHandler(req, res){
     try{
-        const { name, email, phoneNumber } = req.body;
+        const { name, email, phone, phonePreffered } = req.body;
 
         if(
-            !name || !email || !phoneNumber ||
+            !name || !email || !phone ||
             typeof name !== "string" ||
             typeof email !== "string" ||
-            typeof phoneNumber !== "string" ||
+            typeof phone !== "string" ||
             !name.trim() ||
             !email.trim() ||
-            !phoneNumber.trim()
+            !phone.trim()
         ){
             return res.status(400).json({
                 success: false,
@@ -72,7 +72,8 @@ export async function addCustomerHandler(req, res){
         const trimmedData = {
             name: name.trim(),
             email: email.trim().toLowerCase(),
-            phoneNumber: phoneNumber.trim()
+            phone: phone.trim(),
+            phone_preffered: phonePreffered
         };
 
         const data = await customerService.addCustomer(trimmedData);
@@ -93,7 +94,7 @@ export async function addCustomerHandler(req, res){
 export async function updateCustomerHandler(req, res){
     try{
         const { id } = req.params;
-        const { name, email, phoneNumber } = req.body;
+        const { name, email, phone, phonePreffered } = req.body;
 
         if(!id){
             return res.status(400).json({
@@ -103,13 +104,13 @@ export async function updateCustomerHandler(req, res){
         }
 
         if(
-            !name || !email || !phoneNumber ||
+            !name || !email || !phone ||
             typeof name !== "string" ||
             typeof email !== "string" ||
-            typeof phoneNumber !== "string" ||
+            typeof phone !== "string" ||
             !name.trim() ||
             !email.trim() ||
-            !phoneNumber.trim()
+            !phone.trim()
         ){
             return res.status(400).json({
                 success: false,
@@ -120,7 +121,8 @@ export async function updateCustomerHandler(req, res){
         const trimmedData = {
             name: name.trim(),
             email: email.trim().toLowerCase(),
-            phoneNumber: phoneNumber.trim()
+            phone: phone.trim(),
+            phonePreffered: phonePreffered
         };
 
         const data = await customerService.updateCustomer(id, trimmedData);

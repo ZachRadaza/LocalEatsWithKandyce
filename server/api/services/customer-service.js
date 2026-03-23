@@ -8,7 +8,9 @@ export async function getAllCutomers(){
     if(error)
         throw error;
 
-    return data;
+    const customers = toFrontEndCustomerAll(data);
+
+    return customers;
 }
 
 export async function getCustomer(id){
@@ -21,16 +23,21 @@ export async function getCustomer(id){
     if(error)
         throw error;
 
-    return data;
+    const customerRet = toFrontEndCustomer(data);
+
+    console.log(customerRet);
+
+    return customerRet;
 }
 
-export async function addCustomer({ name, email, phone }){
+export async function addCustomer({ name, email, phone, phone_preffered }){
     const { data, error } = await supabase
         .from("customers")
         .insert([{
             name: name,
             email: email,
-            phone: phone
+            phone: phone,
+            phone_preffered: phone_preffered
         }])
         .select("*")
         .single();
@@ -38,16 +45,19 @@ export async function addCustomer({ name, email, phone }){
     if(error)
         throw error;
 
-    return data;
+    const customerRet = toFrontEndCustomer(data);
+
+    return customerRet;
 }
 
-export async function updateCustomer(id, { name, email, phoneNumber }){
+export async function updateCustomer(id, { name, email, phoneNumber, phone_preffered }){
     const { data, error } = await supabase
         .from("customers")
         .update({
             name: name,
             email: email,
-            phone: phoneNumber
+            phone: phoneNumber,
+            phone_preffered: phone_preffered
         })
         .eq("id", id)
         .select("*")
@@ -56,7 +66,9 @@ export async function updateCustomer(id, { name, email, phoneNumber }){
     if(error)
         throw error;
 
-    return data;
+    const customerRet = toFrontEndCustomer(data);
+
+    return customerRet;
 }
 
 export async function deleteCustomer(id){
@@ -69,4 +81,23 @@ export async function deleteCustomer(id){
         throw error;
 
     return data;
+}
+
+ export function toFrontEndCustomer(customer){
+    const customerRet = {
+        ...customer,
+        phonePreffered: customer.phone_preffered,
+        phone_preffered: undefined
+    };
+
+    return customerRet;
+}
+export function toFrontEndCustomerAll(data){
+    const customers = data.map(({ phone_preffered, ...rest }) => ({
+        ...rest,
+        phonePreffered: phone_preffered,
+        preffered_phone: undefined
+    }));
+
+    return customers;
 }

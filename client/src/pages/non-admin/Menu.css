@@ -86,6 +86,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .menu-cont .category .category-description{
@@ -111,7 +112,7 @@
 
 .menu-cont .category .category-items{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     padding: 1rem;
 }
@@ -197,6 +198,9 @@
         padding: 0.5rem 0px;
         font-size: 1rem;
     }
+
+    .menu-cont .category .category-items{ grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+
 }
 
 @media(max-width: 480px){

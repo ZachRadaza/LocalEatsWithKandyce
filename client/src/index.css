@@ -2,15 +2,15 @@
     --font-heading: "Bangers", system-ui, sans-serif; /* Bungee is the other font, already imported in index.html*/
     --font-body: "Comic Neue", cursive;
 
-    --color-bg: #0b0e13;
+    --color-bg: #0f172b;
     --color-bg-darker: #151a22;
-    --color-text: #f2f4f8;
+    --color-text: #f2ede3;
     --color-text-lighter: #9aa3b2;
 
-    --color-blue: #2f6db3;
-    --color-red: #c23b32;
-    --color-green: #3a7f6b;
-    --color-yellow: #e1b84f;
+    --color-blue: #3a5f99;
+    --color-red: #a9443a;
+    --color-green: #4a7a6a;
+    --color-yellow: #d4a94a;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;

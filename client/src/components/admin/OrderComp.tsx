@@ -88,8 +88,8 @@ export default function OrderComp({ order, acceptOrder, declineOrder, completeOr
                         <div>
                             <div className="customer-info">
                                 <p>{ order.customers.name }</p>
-                                <p>{ order.customers.email }</p>
-                                <p>{ order.customers.phone }</p>
+                                <p>{ order.customers.email } { order.customers.phonePreffered ? "" : "(Preffered)"}</p>
+                                <p>{ order.customers.phone } { order.customers.phonePreffered ? "(Preferred)" : ""}</p>
                             </div>
                             <div className="order-info">
                                 <div>
