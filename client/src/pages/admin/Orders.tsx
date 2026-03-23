@@ -5,6 +5,7 @@ import OrderComp from "../../components/admin/OrderComp";
 import DeclinePopup from "../../components/popups/DeclinePopup";
 import Popup from "../../components/popups/Popup";
 import "./Orders.css";
+import AcceptPopup from "../../components/popups/AcceptPopup";
 
 export default function Orders(){
     const [orders, setOrders] = useState<OrderFull[]>([]);
@@ -13,8 +14,9 @@ export default function Orders(){
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const [openedAccept, setOpenedAccept] = useState<boolean>(false);
     const [openedDecline, setOpenedDecline] = useState<boolean>(false);
-    const [orderIDDecline, setOrderIDDecline] = useState<string>("");
+    const [popupID, setPopupID] = useState<string>("");
     const [openedPopup, setOpenedPopup] = useState<boolean>(false);
     const [messagePopup, setMessagePopup] = useState<string>("");
     const [titlePopup, setTitlePopup] = useState<string>("");
@@ -86,7 +88,7 @@ export default function Orders(){
         return result;
     }, [orders, sortType, filterType]);
 
-    async function acceptOrder(orderID: string){
+    async function acceptOrder(orderID: string, dateDue: string){
         try{
             const matchingOrder = orders.find(order => order.id === orderID)
             if(!matchingOrder)
@@ -95,7 +97,7 @@ export default function Orders(){
             setOrders(oldOrders =>
                 oldOrders.map(order =>
                     order.id === orderID
-                        ? { ...order, accepted: true }
+                        ? { ...order, accepted: true, dateDue: dateDue }
                         : order
                 )
             )
@@ -210,7 +212,7 @@ export default function Orders(){
                     showPopup={ (proceed, message) => { 
                         setOpenedDecline(false);
                         if(proceed){
-                            declineOrder(orderIDDecline, message);
+                            declineOrder(popupID, message);
                         }
                     } }
                 />
@@ -220,6 +222,15 @@ export default function Orders(){
                     message={ messagePopup }
                     positiveMessage={ false }
                     closePopup={ () => setOpenedPopup(false) }
+                />
+                <AcceptPopup
+                    isOpened={ openedAccept }
+                    showPopup={ (proceed, dateDue) => { 
+                        setOpenedAccept(false);
+                        if(proceed){
+                            acceptOrder(popupID, dateDue);
+                        }
+                    } }
                 />
             </div>
             <div className="dashboard">
@@ -268,6 +279,8 @@ export default function Orders(){
                                     setSortType("Alphabetical");
                                     break;
                             }
+
+                            console.log("asdfadsf", orders);
                         }}
                     >
                         Sort: { sortType }
@@ -295,10 +308,13 @@ export default function Orders(){
                         <OrderComp 
                             key={ order.id } 
                             order={ order } 
-                            acceptOrder={ () => acceptOrder(order.id!) } 
+                            acceptOrder={ () => {
+                                setOpenedAccept(true);
+                                setPopupID(order.id!);
+                            } } 
                             declineOrder={ () => {
                                 setOpenedDecline(true);
-                                setOrderIDDecline(order.id!);
+                                setPopupID(order.id!);
                             } }
                             completeOrder={ () => completeOrder(order.id!) }
                         />

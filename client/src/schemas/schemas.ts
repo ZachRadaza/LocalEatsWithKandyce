@@ -43,6 +43,7 @@ export type Customer = {
     name: string;
     phone: string;
     email: string;
+    phonePreffered: boolean;
 }
 
 export type OrderItem = {

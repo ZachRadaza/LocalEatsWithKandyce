@@ -170,10 +170,12 @@ export default function RootLayout() {
         <div className="root-cont layout">
             <header>
                 <nav className="left-cont header-part">
-                    <div className="logos-cont">
-                        <img src="/favicon.jpg" className="logo" />
-                        <h6 className="logo-title">Local Eats with Kandyce</h6>
-                    </div>
+                    <NavLink to="" end className="logo-link">
+                        <div className="logos-cont">
+                            <img src="/favicon.jpg" className="logo" />
+                            <h6 className="logo-title">Local Eats with Kandyce</h6>
+                        </div>
+                    </NavLink>
                     <NavLink to="" end className={ navClass }>
                         Home
                     </NavLink>

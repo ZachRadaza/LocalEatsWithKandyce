@@ -39,6 +39,7 @@ export default function Cart(){
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const [phonePreffered, setPhonePreffered] = useState<boolean>(true);
     const [comment, setComment] = useState<string>("");
     const [dateDue, setDateDue] = useState<string>(() => {
         const now = new Date();
@@ -128,8 +129,9 @@ export default function Cart(){
                 id: null,
                 name: name,
                 phone: phoneNumber,
-                email: email
-            }
+                email: email,
+                phonePreffered: phonePreffered
+            };
 
             const order: Order = {
                 id: null,
@@ -268,6 +270,20 @@ export default function Cart(){
                             placeholder="(916) 707-7037"
                         />
                     </div>
+                    <div className="delivery-btns">
+                        <button
+                            onClick={ () => setPhonePreffered(false) }
+                            className={ phonePreffered ? "" : "active" }
+                        >
+                            Email Preferred
+                        </button>
+                        <button
+                            onClick={ () => setPhonePreffered(true) }
+                            className={ phonePreffered ? "active" : "" }
+                        >
+                            Phone Preferred
+                        </button>
+                    </div>
                     <div className="input-pair delivery-date">
                         <h6>{ isPickUp ? "Pick Up" : "Delivery" } Date</h6>
                         <input 
@@ -313,7 +329,7 @@ export default function Cart(){
                 <div className="checkout-cont">
                     <div className="subtotal">
                         <h5>Subtotal: </h5>
-                        <h5>${ totalAmount }</h5>
+                        <h5>${ Math.ceil(totalAmount * 100) / 100 }</h5>
                     </div>
                     <div className="payment-info-cont">
                         <p className="payment-info">Payment done on delivery day*</p>

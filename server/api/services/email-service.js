@@ -313,7 +313,7 @@ function buildOrderBlock(order, options = {}) {
                     <div style="margin-top: 12px; display: flex; justify-content: flex-end;">
                         <div style="min-width: 220px;">
                             <div style="display: flex; justify-content: space-between; padding: 6px 0;">
-                                <span><strong>Total </strong></span>
+                                <span><strong>Total:</strong></span>
                                 <span><strong>$${money(total)}</strong></span>
                             </div>
                             <div style="font-size: 12px; color: #555; margin-top: 6px;">

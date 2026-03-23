@@ -20,10 +20,13 @@ export async function getAllOrdersHandler(req, res){
 
                 const { orderItems, customItems } = segregateOrderItems(orderItemsAll);
 
+                const customers = customerService.toFrontEndCustomer(order.customers);
+
                 return {
                     ...order,
+                    customers,
                     orderItems,
-                    customItems
+                    customItems,
                 };
             })
         );
@@ -73,7 +76,9 @@ export async function getOrderHandler(req, res){
 
         const { orderItems, customItems } = segregateOrderItems(orderItemsAll);
 
-        const order = { ...orderData, orderItems, customItems };
+        const customers = customerService.toFrontEndCustomer(orderData.customers);
+
+        const order = { ...orderData, orderItems, customItems, customers };
         const data = convertToFrontEnd(order);
 
         res.status(200).json({
@@ -264,7 +269,8 @@ function objectizeOrder(rawBody){
         customer: {
             name: customers.name,
             email: customers.email,
-            phone: customers.phone
+            phone: customers.phone,
+            phone_preffered: customers.phonePreffered ?? false
         },
         order: {
             customer_id: customers.id ?? "",
